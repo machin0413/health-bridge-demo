@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイ進捗 - 家族健康会議システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .progress-bar {
+            height: 8px;
+            background-color: #E5E5E5;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .badge:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .badge:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .chart-container {
+            position: relative;
+            height: 200px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body style="background-color: #F9F9F9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;">
+    <div class="max-w-md mx-auto bg-white min-h-screen">
+        <!-- ヘッダー -->
+        <header class="bg-white px-4 py-4 border-b border-gray-200">
+            <h1 style="font-size: 24pt; font-weight: bold; color: #333333; text-align: center;">マイ進捗</h1>
+        </header>
+
+        <div class="px-4 pb-20">
+            <!-- AIトレーナーメッセージカード -->
+            <div style="background-color: #F0F8FF; border-radius: 12px; padding: 16px; margin: 16px 0;">
+                <div class="flex items-center">
+                    <div style="width: 40px; height: 40px; background-color: #4A90E2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                        <span style="color: white; font-size: 20px;">🤖</span>
+                    </div>
+                    <div>
+                        <div style="font-size: 14px; font-weight: 500; color: #333;">AIトレーナー</div>
+                        <div style="font-size: 16px; color: #333; margin-top: 4px;">今週も順調です！このまま続けましょう！💪</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 今週の達成状況セクション -->
+            <div class="text-center mb-6">
+                <div class="chart-container mx-auto mb-4">
+                    <canvas id="progressChart"></canvas>
+                </div>
+                <p style="font-size: 14pt; color: #666; margin-top: 8px;">2024年1月15日〜1月21日</p>
+            </div>
+
+            <!-- 目標一覧セクション -->
+            <div class="mb-6">
+                <h2 style="font-size: 18pt; font-weight: bold; color: #333; margin-bottom: 16px;">今週の目標</h2>
+                
+                <!-- 運動目標カード -->
+                <div style="background: white; border: 1px solid #E5E5E5; border-radius: 8px; padding: 16px; margin-bottom: 8px;">
+                    <div class="flex items-center mb-3">
+                        <span style="font-size: 32px; margin-right: 12px;">🏃</span>
+                        <h3 style="font-size: 16pt; font-weight: bold; color: #333;">週2回ウォーキング</h3>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 100%; background-color: #50C878;"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span style="font-size: 14pt; color: #666;">2/2回</span>
+                        <span style="font-size: 14pt; color: #50C878; font-weight: 500;">達成！✨</span>
+                    </div>
+                </div>
+
+                <!-- 食事目標カード -->
+                <div style="background: white; border: 1px solid #E5E5E5; border-radius: 8px; padding: 16px; margin-bottom: 8px;">
+                    <div class="flex items-center mb-3">
+                        <span style="font-size: 32px; margin-right: 12px;">🥗</span>
+                        <h3 style="font-size: 16pt; font-weight: bold; color: #333;">毎日野菜350g</h3>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 71%; background-color: #FFA500;"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span style="font-size: 14pt; color: #666;">5/7日</span>
+                        <span style="font-size: 14pt; color: #FFA500; font-weight: 500;">あと2日！</span>
+                    </div>
+                </div>
+
+                <!-- 睡眠目標カード -->
+                <div style="background: white; border: 1px solid #E5E5E5; border-radius: 8px; padding: 16px; margin-bottom: 8px;">
+                    <div class="flex items-center mb-3">
+                        <span style="font-size: 32px; margin-right: 12px;">😴</span>
+                        <h3 style="font-size: 16pt; font-weight: bold; color: #333;">7時間睡眠</h3>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 57%; background-color: #4A90E2;"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span style="font-size: 14pt; color: #666;">4/7日</span>
+                        <span style="font-size: 14pt; color: #4A90E2; font-weight: 500;">がんばろう</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 獲得バッジセクション -->
+            <div class="mb-6">
+                <h2 style="font-size: 18pt; font-weight: bold; color: #333; margin-bottom: 16px;">今週のバッジ</h2>
+                <div class="flex space-x-3 overflow-x-auto">
+                    <div class="badge flex-shrink-0" style="width: 80px; height: 80px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white;">
+                        <span style="font-size: 28px; margin-bottom: 4px;">🔥</span>
+                        <span style="font-size: 10px; text-align: center;">3日連続</span>
+                    </div>
+                    <div class="badge flex-shrink-0" style="width: 80px; height: 80px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white;">
+                        <span style="font-size: 28px; margin-bottom: 4px;">🤝</span>
+                        <span style="font-size: 10px; text-align: center;">グループ貢献</span>
+                    </div>
+                    <div class="badge flex-shrink-0" style="width: 80px; height: 80px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white;">
+                        <span style="font-size: 28px; margin-bottom: 4px;">⭐</span>
+                        <span style="font-size: 10px; text-align: center;">週間達成</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ボトムアクション -->
+            <div class="text-center">
+                <button onclick="postToTimeline()" style="background-color: #4A90E2; color: white; height: 56px; border-radius: 28px; width: 90%; font-size: 16pt; font-weight: 500; border: none; cursor: pointer;">
+                    タイムラインに投稿する
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 円グラフの作成
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        const progressChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [75, 25],
+                    backgroundColor: ['#4A90E2', '#E5E5E5'],
+                    borderWidth: 0,
+                    cutout: '70%'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                }
+            }
+        });
+
+        // 中央の数字を表示するプラグイン
+        Chart.register({
+            id: 'centerText',
+            beforeDraw: function(chart) {
+                const width = chart.width;
+                const height = chart.height;
+                const ctx = chart.ctx;
+                const percentage = chart.data.datasets[0].data[0];
+                
+                ctx.restore();
+                const fontSize = 36;
+                ctx.font = `${fontSize}px sans-serif`;
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#333333';
+                ctx.fontWeight = 'bold';
+                
+                const text = percentage + '%';
+                const textX = Math.round((width - ctx.measureText(text).width) / 2);
+                const textY = height / 2;
+                
+                ctx.fillText(text, textX, textY);
+                ctx.save();
+            }
+        });
+
+        function postToTimeline() {
+            alert('タイムラインに投稿します！');
+        }
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDi6aqdYBym0qSu90vMM1kZn8pUA2ZTYr59ZwLpPhOpix43Jm9jc37tSa0e26lMhtdI1jhEWYZxh6ekQzlmEAukyELU6ayBy7%2Blg9m69SMNJOgTOpfM8NoIn52fSBJ4lIzLaxXLC23C3uQXkHFcpkM5ZvF8Ci62%2FLr1Iq9UGRb5GJJuLzrxMujRNxq4ofA15bdHOxq1c2FrDe1oSOQ8VmtUN4Ce%2BnLzmtsfBHr8L8iKy7KSqdcU0EIQrxj3EX7r3M9BAT33lDI4BuWYSL1ufYid8%2F3woqSYolydens17hSQmYrLU74NvH5%2FwyzBOtA6DUIvovFFvy6tSeGwLm%2FbLEyc6WvGgSjosISdkfldVweW8cWyIgJ1xb7KddKehQTA9UVDRfrCtqFH8sGXSSxl%2BB7B5Vd7niM5IZo4WB3xZLg9%2BfImGuYVMCBLv7J%2B1N5UwrqqDgqQHozu7pmhMwSzULqg37yjlH%2F2%2B4XfE6GyY%2F2aZzJhnXU4nKzhd06GnfTyZWhA%3D%3D";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDi6aqdYBym0qSu90vMM1kZn8pUA2ZTYr59ZwLpPhOpix43Jm9jc37tSa0e26lMhtdI1jhEWYZxh6ekQzlmEAukyELU6ayBy7+lg9m69SMNJOgTOpfM8NoIn52fSBJ4lIzLaxXLC23C3uQXkHFcpkM5ZvF8Ci62/Lr1Iq9UGRb5GJJuLzrxMujRNxq4ofA15bdHOxq1c2FrDe1oSOQ8VmtUN4Ce+nLzmtsfBHr8L8iKy7KSqdcU0EIQrxj3EX7r3M9BAT33lDI4BuWYSL1ufYid8/3woqSYolydens17hSQmYrLU74NvH5/wyzBOtA6DUIvovFFvy6tSeGwLm/bLEyc6WvGgSjosISdkfldVweW8cWyIgJ1xb7KddKehQTA9UVDRfrCtqFH8sGXSSxl+B7B5Vd7niM5IZo4WB3xZLg9+fImGuYVMCBLv7J+1N5UwrqqDgqQHozu7pmhMwSzULqg37yjlH/2+4XfE6GyY/2aZzJhnXU4nKzhd06GnfTyZWhA==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

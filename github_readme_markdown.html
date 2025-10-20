@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README.md - Family Health Meeting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 2px;
+        }
+        .badge-mit { background: #ffd43b; color: #333; }
+        .badge-html5 { background: #e34f26; color: white; }
+        .badge-css3 { background: #1572b6; color: white; }
+        .badge-js { background: #f7df1e; color: #333; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 leading-relaxed">
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">
+                <i class="fas fa-hospital text-blue-500"></i> Family Health Meeting System
+            </h1>
+            <h2 class="text-xl text-gray-600 mb-4">家族健康会議システム - Interactive iOS App Mockup</h2>
+            
+            <!-- Badges -->
+            <div class="flex flex-wrap justify-center gap-2 mb-6">
+                <span class="badge badge-mit">License: MIT</span>
+                <span class="badge badge-html5">HTML5</span>
+                <span class="badge badge-css3">CSS3</span>
+                <span class="badge badge-js">JavaScript</span>
+            </div>
+            
+            <blockquote class="text-lg text-blue-600 border-l-4 border-blue-500 pl-4 italic mb-4">
+                An interactive prototype for a family health management app that promotes wellness through connection, support, and gratitude.
+            </blockquote>
+            
+            <p class="text-gray-600">
+                心身ともに健康でイキイキとした生活を実現する、家族や仲間との健康管理アプリのインタラクティブプロトタイプ
+            </p>
+        </div>
+
+        <hr class="my-8">
+
+        <!-- Demo Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4"><i class="fas fa-mobile-alt text-blue-500"></i> Demo</h2>
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <p class="font-semibold mb-2">Try it now on your mobile device:</p>
+                <p class="mb-4"><i class="fas fa-arrow-right"></i> <a href="./08_welcome.html" class="text-blue-600 underline">Open Interactive Mockup</a></p>
+                
+                <p class="font-semibold mb-2">Recommended flow:</p>
+                <ol class="list-decimal list-inside space-y-1">
+                    <li>Start with <code class="bg-gray-200 px-2 py-1 rounded">08_welcome.html</code> (Onboarding)</li>
+                    <li>Follow the on-screen buttons to navigate</li>
+                    <li>Experience the app like it's real!</li>
+                </ol>
+            </div>
+        </section>
+
+        <hr class="my-8">
+
+        <!-- Features Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4"><i class="fas fa-star text-yellow-500"></i> Features</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Core Functionality -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold mb-3"><i class="fas fa-bullseye text-blue-500"></i> Core Functionality</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-hand-wave text-orange-400"></i> <strong>Onboarding Flow</strong> - 4-slide introduction with service explanation</li>
+                        <li><i class="fas fa-mobile-alt text-blue-500"></i> <strong>Group Timeline</strong> - Social feed with posts, likes, comments, and gratitude stamps</li>
+                        <li><i class="fas fa-comments text-green-500"></i> <strong>Post Detail</strong> - Full post view with comments and reactions</li>
+                        <li><i class="fas fa-chart-bar text-purple-500"></i> <strong>My Progress</strong> - Personal goal tracking with charts and badges</li>
+                        <li><i class="fas fa-clipboard text-gray-600"></i> <strong>Weekly Report</strong> - Summary of highlights and support statistics</li>
+                    </ul>
+                </div>
+
+                <!-- Health Features -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold mb-3"><i class="fas fa-hospital text-red-500"></i> Health Features</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-upload text-blue-500"></i> <strong>Health Checkup Upload</strong> - Photo/PDF/manual data entry with OCR demo</li>
+                        <li><i class="fas fa-chart-line text-green-500"></i> <strong>Health Results</strong> - Easy-to-understand health checkup results</li>
+                        <li><i class="fas fa-video text-red-500"></i> <strong>AI Video Explanation</strong> - AI avatar explains health data in simple terms</li>
+                    </ul>
+                </div>
+
+                <!-- Social Features -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold mb-3"><i class="fas fa-handshake text-green-500"></i> Social Features</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-users text-blue-500"></i> <strong>Group Creation</strong> - Family/friends/symptom-based groups</li>
+                        <li><i class="fas fa-heart text-red-500"></i> <strong>Gratitude Stamps</strong> - Express thanks and appreciation</li>
+                        <li><i class="fas fa-handshake text-green-500"></i> <strong>Mutual Support Recognition</strong> - Highlight helping behaviors</li>
+                        <li><i class="fas fa-bullseye text-purple-500"></i> <strong>Goal Setting</strong> - Collaborative health goals</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-8">
+
+        <!-- File Structure -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4"><i class="fas fa-folder text-yellow-600"></i> File Structure</h2>
+            <div class="code-block">family-health-meeting-system/
+├── README.md                          # This file
+├── LICENSE                            # MIT License
+├── .gitignore                        # Git ignore rules
+├── index.html                        # Entry point (redirects to 08_welcome.html)
+│
+├── 00_group_timeline.html            # Main app screen
+├── 01_post_creation.html             # Create new post (modal)
+├── 02_my_progress.html               # Personal progress tracking
+├── 03_weekly_report.html             # Weekly summary
+├── 04_health_checkup_results.html    # Health checkup results
+├── 05_health_checkup_ai_video.html   # AI video explanation
+├── 06_post_detail.html               # Post detail with comments
+├── 07_health_checkup_upload.html     # Upload health data
+├── 08_welcome.html                   # Onboarding start (4 slides)
+├── 09_account_registration.html      # User registration form
+├── 10_group_creation.html            # Create/join group
+│
+└── docs/
+    └── README.html                   # Japanese documentation</div>
+        </section>
+
+        <hr class="my-8">
+
+        <!-- Screen Flow -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4"><i class="fas fa-sitemap text-blue-500"></i> Screen Flow</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Onboarding Flow -->
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2">Onboarding Flow</h3>
+                    <div class="code-block text-sm">08_welcome.html (4 slides)
+    ↓ "始める" button
+09_account_registration.html
+    ↓ "次へ" button
+10_group_creation.html
+    ↓ "完了してグループに入る" button
+00_group_timeline.html (Main App)</div>
+                </div>
+
+                <!-- Main App Flow -->
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-2">Main App Flow</h3>
+                    <div class="code-block text-sm">00_group_timeline.html (Home)
+    ├→ 06_post_detail.html (Tap post card)
+    ├→ 01_post_creation.html (Create post)
+    ├→ 02_my_progress.html (My progress)
+    └→ 03_weekly_report.html (Weekly report)</div>
+                </div>
+
+                <!-- Health Checkup Flow -->
+                <div class="bg-red-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-red-800 mb-2">Health Checkup Flow</h3>
+                    <div class="code-block text-sm">07_health_checkup_upload.html
+    ↓ "結果を確認" button
+04_health_checkup_results.html
+    ↓ "AI動画解説を見る" button
+05_health_checkup_ai_video.html</div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-8">
+
+        <!-- Getting Started -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4"><i class="fas fa-rocket text-orange-500"></i> Getting Started</h2>
+            
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="font-semibold mb-2">Prerequisites</h3>
+                <ul class="list-disc list-inside mb-4">
+                    <li>Modern web browser (Chrome, Safari, Firefox, Edge)</li>
+                    <li>For mobile testing: Local server or deploy to web</li>
+                </ul>
+
+                <h3 class="font-semibold mb-2">Installation</h3>
+                <ol class="list-decimal list-inside space-y-2">
+                    <li><strong>Clone the repository</strong>
+                        <div class="code-block mt-2">git clone https://github.com/YOUR_USERNAME/family-health-meeting-system.git
+cd family-health-meeting-system</div>
+                    </li>
+                    <li><strong>Open in browser</strong>
+                        <ul class="list-disc list-inside ml-4 mt-2 space-y-1">
+                            <li><strong>Option 1:</strong> Double-click <code>index.html</code> or <code>08_welcome.html</code></li>
+                            <li><strong>Option 2:</strong> Use a local server
+                                <div class="code-block mt-1"># Python 3
+python -m http.server 8000
+
+# Python 2
+python -m SimpleHTTPServer 8000
+
+# Node.js (with npx)
+npx http-server</div>
+                            </li>
+                            <li><strong>Option 3:</strong> Use VS Code Live Server extension</li>
+                        </ul>
+                    </li>
+                    <li><strong>View on mobile device</strong>
+                        <ul class="list-disc list-inside ml-4 mt-2">
+                            <li>Connect to same WiFi network</li>
+                            <li>Open <code>http://YOUR_LOCAL_IP:8000/08_welcome.html</code></li>
+                            <li>Or deploy to GitHub Pages / Netlify / Vercel</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <hr class="my-8">
+
+        <!-- Design Specifications -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4"><i class="fas fa-palette text-purple-500"></i> Design Specifications</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold mb-3">Visual Design</h3>
+                    <ul class="space-y-2">
+                        <li><strong>Width:</strong> 375px (iPhone standard)</li>
+                        <li><strong>Primary Color:</strong> <span class="inline-block w-4 h-4 bg-blue-500 rounded" style="background-color: #4A90E2;"></span> #4A90E2 (Gentle Blue)</li>
+                        <li><strong>Accent Color:</strong> <span class="inline-block w-4 h-4 bg-green-500 rounded" style="background-color: #50C878;"></span> #50C878 (Soft Green)</li>
+                        <li><strong>Font:</strong> System fonts (-apple-system, BlinkMacSystemFont)</li>
+                        <li><strong>Tone:</strong> Warm, supportive, encouraging</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold mb-3">Technical Stack</h3>
+                    <ul class="space-y-2">
+                        <li><i class="fas fa-check text-green-500"></i> Pure HTML5/CSS3/JavaScript</li>
+                        <li><i class="fas fa-check text-green-500"></i> No external dependencies</li>
+                        <li><i class="fas fa-check text-green-500"></i> No backend required</li>
+                        <li><i class="fas fa-check text-green-500"></i> Fully self-contained</li>
+                        <li><i class="fas fa-check text-green-500"></i> Mobile-first responsive design</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-8">
+
+        <!-- Important Notes -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4"><i class="fas fa-exclamation-triangle text-yellow-500"></i> Important Notes</h2>
+            
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <h3 class="font-bold text-yellow-800 mb-3">This is a Prototype</h3>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-semibold text-green-600 mb-2">✅ What Works</h4>
+                        <ul class="space-y-1 text-sm">
+                            <li>Screen transitions work like a real app</li>
+                            <li>Interactive elements are functional</li>
+                            <li>All files use English filenames</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-red-600 mb-2">❌ Limitations</h4>
+                        <ul class="space-y-1 text-sm">
+                            <li>No data persistence (reloading resets state)</li>
+                            <li>No backend/API integration</li>
+                            <li>OCR and AI features are demos only</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-8">
+
+        <!-- Future Enhancements -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4"><i class="fas fa-crystal-ball text-purple-500"></i> Future Enhancements</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2">Phase 2</h3>
+                    <ul class="text-sm space-y-1">
+                        <li>Backend API integration</li>
+                        <li>Real user authentication</li>
+                        <li>Data persistence (database)</li>
+                        <li>Push notifications</li>
+                        <li>Real-time updates (WebSocket)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-2">Phase 3</h3>
+                    <ul class="text-sm space-y-1">
+                        <li>Actual OCR implementation</li>
+                        <li>AI video generation</li>
+                        <li>Meeting scheduling</li>
+                        <li>Calendar integration</li>
+                        <li>Export/share reports</li>
+                    </ul>
+                </div>
+
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-800 mb-2">Phase 4</h3>
+                    <ul class="text-sm space-y-1">
+                        <li>Native iOS/Android apps</li>
+                        <li>Wearable device integration</li>
+                        <li>Advanced analytics</li>
+                        <li>Gamification features</li>
+                        <li>Community features</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-8">
+
+        <!-- Project Status -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4"><i class="fas fa-chart-line text-blue-500"></i> Project Status</h2>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span class="font-semibold">Onboarding Flow</span>
+                        <span class="text-green-600">Complete</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span class="font-semibold">Group Timeline</span>
+                        <span class="text-green-600">Complete</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span class="font-semibold">Post Detail</span>
+                        <span class="text-green-600">Complete</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span class="font-semibold">Health Checkup Flow</span>
+                        <span class="text-green-600">Complete</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-tools text-orange-500"></i>
+                        <span class="font-semibold">My Progress</span>
+                        <span class="text-orange-600">In Design</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-tools text-orange-500"></i>
+                        <span class="font-semibold">Weekly Report</span>
+                        <span class="text-orange-600">In Design</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-clock text-gray-500"></i>
+                        <span class="font-semibold">AI Trainer Setup</span>
+                        <span class="text-gray-600">Pending</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-clock text-gray-500"></i>
+                        <span class="font-semibold">Meeting Features</span>
+                        <span class="text-gray-600">Pending</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-8">
+
+        <!-- Footer -->
+        <footer class="text-center py-8">
+            <div class="mb-4">
+                <h2 class="text-xl font-bold text-gray-800 mb-2">
+                    <i class="fas fa-users text-blue-500"></i> Team
+                </h2>
+                <p class="text-gray-600">Family Health Meeting System Development Team</p>
+                <p class="text-sm text-gray-500">Project Start: October 2025 | Version: 2.0 (English Filenames Edition)</p>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="font-semibold mb-2"><i class="fas fa-envelope text-blue-500"></i> Contact & Support</h3>
+                <div class="flex flex-wrap justify-center gap-4 text-sm">
+                    <a href="#" class="text-blue-600 hover:underline">
+                        <i class="fab fa-github"></i> GitHub Issues
+                    </a>
+                    <a href="#" class="text-blue-600 hover:underline">
+                        <i class="fas fa-comments"></i> Discussions
+                    </a>
+                    <a href="mailto:your-email@example.com" class="text-blue-600 hover:underline">
+                        <i class="fas fa-envelope"></i> Email Support
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t pt-6 text-gray-600">
+                <p class="text-lg font-semibold mb-2">
+                    Made with <i class="fas fa-heart text-red-500"></i> for healthier families
+                </p>
+                <p class="text-sm">
+                    <i class="fas fa-balance-scale text-gray-500"></i>
+                    This project is licensed under the MIT License
+                </p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDhkl7HAntDh0tfzhSx7JajCXeJpwZR8IzqWJm4JCt5z6i5AxiA8ufBqM18ft5uBNVE8kaavLJg95d8nbFczbFz0wEiztmfoavdsWAY5Rx7EcsSc6CMlCY3mRuGEek%2Fqq6tsD67eOZ0LQ30cjZC%2FhqEClI%2BpqMkFATJHV2ryMnoNltS28V0pYmq7F0c2%2BuOzgD0uyphosjaS%2BK0WEecqS1f72%2BH10NqQnai3OugYvwDVrCI2RrnKGceRHV%2BZIMKW51RQRTnAuZB6LeaR3gG1bYcqVaZb9GhUBVP6js91cs327c1DCyTf8c4w73cRkU6kL59URiuw6xLZdtKX95s02vouOBz2EJAXTH2MZ7RLIGMWYIeFdnOxk88DQTr9kwZHs9IrRs79cGzh8Qbhs%2BZ7Oyso9tjZQXWWtEPG8kc1u%2FLL5MZMV7sP5lYLw5s7zWuSSHSzevrwgvl2Ohuy2Ttrf4jQSe92lLYIemiF4EjFw1hXPb8qqW1LGf132F21QN58Bc%2FH749D9dj6bk9sCazVhiqc%3D";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDhkl7HAntDh0tfzhSx7JajCXeJpwZR8IzqWJm4JCt5z6i5AxiA8ufBqM18ft5uBNVE8kaavLJg95d8nbFczbFz0wEiztmfoavdsWAY5Rx7EcsSc6CMlCY3mRuGEek/qq6tsD67eOZ0LQ30cjZC/hqEClI+pqMkFATJHV2ryMnoNltS28V0pYmq7F0c2+uOzgD0uyphosjaS+K0WEecqS1f72+H10NqQnai3OugYvwDVrCI2RrnKGceRHV+ZIMKW51RQRTnAuZB6LeaR3gG1bYcqVaZb9GhUBVP6js91cs327c1DCyTf8c4w73cRkU6kL59URiuw6xLZdtKX95s02vouOBz2EJAXTH2MZ7RLIGMWYIeFdnOxk88DQTr9kwZHs9IrRs79cGzh8Qbhs+Z7Oyso9tjZQXWWtEPG8kc1u/LL5MZMV7sP5lYLw5s7zWuSSHSzevrwgvl2Ohuy2Ttrf4jQSe92lLYIemiF4EjFw1hXPb8qqW1LGf132F21QN58Bc/H749D9dj6bk9sCazVhiqc=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

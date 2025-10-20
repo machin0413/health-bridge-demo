@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ウェルカム画面 - 家族健康会議システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 375px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .slide-container {
+            width: 1500px; /* 375px * 4 slides */
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .slide {
+            width: 375px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .slide-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .slide-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .slide-description {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            max-width: 280px;
+        }
+
+        .progress-dots {
+            position: fixed;
+            bottom: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(74, 144, 226, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .skip-btn {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .start-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .start-btn:hover {
+            background: #3a7bc8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .navigation-hint {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #888;
+            font-size: 0.875rem;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <button class="skip-btn" onclick="goToRegistration()">スキップ</button>
+    
+    <div class="overflow-hidden">
+        <div class="slide-container" id="slideContainer">
+            <!-- Slide 1 -->
+            <div class="slide">
+                <div class="slide-icon">🌟</div>
+                <h2 class="slide-title">心身ともに健康で<br>イキイキとした生活を</h2>
+                <p class="slide-description">家族や仲間と一緒に、健康活動を楽しく続けられます</p>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide">
+                <div class="slide-icon">👨‍👩‍👧‍👦</div>
+                <h2 class="slide-title">家族や仲間とつながる</h2>
+                <p class="slide-description">日々の投稿で近況をシェア。励まし合える場所</p>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide">
+                <div class="slide-icon">🤝</div>
+                <h2 class="slide-title">助け合いと感謝を可視化</h2>
+                <p class="slide-description">サポートと感謝が見える化され、充実感を実感</p>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="slide">
+                <div class="slide-icon">🤖</div>
+                <h2 class="slide-title">AIトレーナーがサポート</h2>
+                <p class="slide-description">あなた専属のAIが健康活動を応援します</p>
+                <button class="start-btn" onclick="goToRegistration()">始める</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-dots">
+        <div class="dot active" data-slide="0"></div>
+        <div class="dot" data-slide="1"></div>
+        <div class="dot" data-slide="2"></div>
+        <div class="dot" data-slide="3"></div>
+    </div>
+
+    <div class="navigation-hint">
+        左右にスワイプして次へ
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 4;
+        const slideContainer = document.getElementById('slideContainer');
+        const dots = document.querySelectorAll('.dot');
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        // Update slide position
+        function updateSlide() {
+            const translateX = -currentSlide * 375;
+            slideContainer.style.transform = `translateX(${translateX}px)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+
+            // Hide navigation hint after first interaction
+            if (currentSlide > 0) {
+                document.querySelector('.navigation-hint').style.display = 'none';
+            }
+        }
+
+        // Go to next slide
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        // Go to previous slide
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // Go to specific slide
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
+            updateSlide();
+        }
+
+        // Navigate to registration
+        function goToRegistration() {
+            window.location.href = '09_account_registration.html';
+        }
+
+        // Touch events for swipe
+        slideContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
+
+        slideContainer.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+        });
+
+        slideContainer.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const deltaX = startX - currentX;
+            const threshold = 50; // Minimum swipe distance
+            
+            if (Math.abs(deltaX) > threshold) {
+                if (deltaX > 0) {
+                    // Swipe left - next slide
+                    nextSlide();
+                } else {
+                    // Swipe right - previous slide
+                    prevSlide();
+                }
+            }
+        });
+
+        // Mouse events for desktop
+        slideContainer.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            isDragging = true;
+        });
+
+        slideContainer.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            currentX = e.clientX;
+        });
+
+        slideContainer.addEventListener('mouseup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const deltaX = startX - currentX;
+            const threshold = 50;
+            
+            if (Math.abs(deltaX) > threshold) {
+                if (deltaX > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        });
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'Enter' && currentSlide === totalSlides - 1) {
+                goToRegistration();
+            }
+        });
+
+        // Auto-advance slides (optional)
+        let autoSlideInterval;
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                if (currentSlide < totalSlides - 1) {
+                    nextSlide();
+                } else {
+                    clearInterval(autoSlideInterval);
+                }
+            }, 5000);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        // Start auto-slide after 3 seconds of no interaction
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            stopAutoSlide();
+            inactivityTimer = setTimeout(() => {
+                if (currentSlide < totalSlides - 1) {
+                    startAutoSlide();
+                }
+            }, 3000);
+        }
+
+        // Reset timer on any interaction
+        ['touchstart', 'mousedown', 'keydown'].forEach(event => {
+            document.addEventListener(event, resetInactivityTimer);
+        });
+
+        // Initialize
+        resetInactivityTimer();
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDodOsXG9AR5jDm%2FvwPDzyMPd8yCBxkTgcMlbK5FyhZYX4dTTNJJ5jaHCsPjSEip9yfSzlNkLd6sKq4DDgZ%2FyiFiZo1hDvTAKnOXCZS2U9DqQ6On4RqqOUGqd13NQ%2FiHo6OC0NeFWytwiHQc763Ub6doeLo%2FwUHOdPquYQ2ovb2FuKqU6qM%2FdcFn0x44OnNR2IXI9p5S1bo47D0GL2yjA%2BboztpCMHD2ZJAVESRpFOIjDQGISpi1qc0qvg20KpuwWXkACnYz8VVI6ivpwtlXLy7tfHy%2BL2I1vvuay8OdO13aQbMQhGpn0Iuqvj7QF1Lp4Vik5uprphNrFakExsIB20KMoKGVNjKPVyij%2Fcrp%2BowEG5QVHsFTG8iV5kAs0qw0svHhpZDMhl8jrPI7PXfupZgmB9sJYsnD7JeswmEUWm%2FrX8LUhW5S%2Fo%2Fq007TCPJcxi9bOImaJamNTZi3GmT3JPezkt7bNVLq9Fqz%2B7MzJmB37acuWbDhPoLPBsx0xkJ9DzA%3D%3D";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDodOsXG9AR5jDm/vwPDzyMPd8yCBxkTgcMlbK5FyhZYX4dTTNJJ5jaHCsPjSEip9yfSzlNkLd6sKq4DDgZ/yiFiZo1hDvTAKnOXCZS2U9DqQ6On4RqqOUGqd13NQ/iHo6OC0NeFWytwiHQc763Ub6doeLo/wUHOdPquYQ2ovb2FuKqU6qM/dcFn0x44OnNR2IXI9p5S1bo47D0GL2yjA+boztpCMHD2ZJAVESRpFOIjDQGISpi1qc0qvg20KpuwWXkACnYz8VVI6ivpwtlXLy7tfHy+L2I1vvuay8OdO13aQbMQhGpn0Iuqvj7QF1Lp4Vik5uprphNrFakExsIB20KMoKGVNjKPVyij/crp+owEG5QVHsFTG8iV5kAs0qw0svHhpZDMhl8jrPI7PXfupZgmB9sJYsnD7JeswmEUWm/rX8LUhW5S/o/q007TCPJcxi9bOImaJamNTZi3GmT3JPezkt7bNVLq9Fqz+7MzJmB37acuWbDhPoLPBsx0xkJ9DzA==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投稿作成画面 - 家族健康会議システム</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Roboto, sans-serif;
+            background-color: #F9F9F9;
+            overflow-x: hidden;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Modal Container */
+        .modal-container {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 600px;
+            background-color: #FFFFFF;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            animation: slideUp 0.3s ease-out 0.1s forwards;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Header */
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid #E5E5E5;
+            background-color: #FFFFFF;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .close-button {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 22px;
+            transition: background-color 0.2s;
+        }
+
+        .close-button:hover {
+            background-color: #F0F0F0;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        .submit-button {
+            width: 80px;
+            height: 44px;
+            background-color: #4A90E2;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 22px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .submit-button:disabled {
+            background-color: #CCCCCC;
+            cursor: not-allowed;
+        }
+
+        .submit-button:not(:disabled):hover {
+            background-color: #357ABD;
+            transform: scale(1.02);
+        }
+
+        /* Modal Content */
+        .modal-content {
+            padding: 24px 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        /* Post Type Selection */
+        .post-types {
+            margin-bottom: 24px;
+        }
+
+        .post-types-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 12px;
+        }
+
+        .post-types-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .post-type-button {
+            height: 100px;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        .post-type-button:hover {
+            transform: scale(1.02);
+        }
+
+        .post-type-button.selected {
+            border-color: #4A90E2;
+        }
+
+        .post-type-button .icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .post-type-activity {
+            background-color: #E3F2FD;
+        }
+
+        .post-type-fulfillment {
+            background-color: #FFF9E6;
+        }
+
+        .post-type-help {
+            background-color: #FFE8D6;
+        }
+
+        .post-type-cheer {
+            background-color: #FCE4EC;
+        }
+
+        /* Text Input Area */
+        .text-input-area {
+            margin-bottom: 24px;
+        }
+
+        .text-input {
+            width: 100%;
+            min-height: 150px;
+            padding: 16px;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            background-color: #F9F9F9;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #4A90E2;
+            background-color: #FFFFFF;
+        }
+
+        .text-input::placeholder {
+            color: #999999;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 14px;
+            color: #999999;
+            margin-top: 8px;
+        }
+
+        /* Options Area */
+        .options-area {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .option-button {
+            flex: 1;
+            height: 50px;
+            background-color: #FFFFFF;
+            border: 2px solid #E5E5E5;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 15px;
+            color: #333333;
+            transition: all 0.2s;
+        }
+
+        .option-button:hover {
+            border-color: #4A90E2;
+            transform: translateY(-1px);
+        }
+
+        .option-button .icon {
+            font-size: 24px;
+        }
+
+        /* Mood Panel */
+        .mood-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            margin-bottom: 16px;
+        }
+
+        .mood-panel.show {
+            max-height: 300px;
+        }
+
+        .mood-option {
+            height: 50px;
+            padding: 12px 16px;
+            margin-bottom: 4px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .mood-option:hover {
+            transform: translateX(4px);
+        }
+
+        .mood-option .icon {
+            font-size: 28px;
+        }
+
+        .mood-great { background-color: #E8F5E9; }
+        .mood-good { background-color: #F1F8E9; }
+        .mood-normal { background-color: #FFF9E6; }
+        .mood-tired { background-color: #FFE8D6; }
+        .mood-exhausted { background-color: #FFEBEE; }
+
+        /* Photo Preview */
+        .photo-preview {
+            display: none;
+            margin-bottom: 16px;
+        }
+
+        .photo-preview.show {
+            display: block;
+        }
+
+        .photo-preview-grid {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .photo-thumbnail {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #F0F0F0;
+        }
+
+        .photo-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-remove {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 20px;
+            height: 20px;
+            background-color: #FF4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Selected Mood Display */
+        .selected-mood {
+            display: none;
+            padding: 12px 16px;
+            background-color: #F0F8FF;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 15px;
+            color: #333333;
+        }
+
+        .selected-mood.show {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .selected-mood .icon {
+            font-size: 24px;
+        }
+
+        /* Hidden File Input */
+        .hidden-file-input {
+            display: none;
+        }
+
+        /* Success Animation */
+        .success-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(76, 144, 226, 0.9);
+            color: white;
+            padding: 24px;
+            border-radius: 16px;
+            font-size: 18px;
+            display: none;
+            z-index: 2000;
+        }
+
+        .success-animation.show {
+            display: block;
+            animation: successPulse 1s ease-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .modal-container {
+                width: 100vw;
+                border-radius: 20px 20px 0 0;
+            }
+            
+            .modal-content {
+                padding: 20px 16px;
+            }
+            
+            .post-types-grid {
+                gap: 6px;
+            }
+            
+            .post-type-button {
+                height: 90px;
+                font-size: 14px;
+            }
+            
+            .post-type-button .icon {
+                font-size: 32px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .modal-container {
+                bottom: 50%;
+                transform: translateX(-50%) translateY(50%);
+                border-radius: 16px;
+                max-height: 80vh;
+            }
+            
+            .modal-header {
+                border-radius: 16px 16px 0 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    
+    <!-- Modal Container -->
+    <div class="modal-container">
+        <!-- Header -->
+        <div class="modal-header">
+            <button class="close-button" onclick="closeModal()" aria-label="閉じる">×</button>
+            <h2 class="modal-title">投稿する</h2>
+            <button class="submit-button" id="submitButton" disabled onclick="submitPost()">投稿</button>
+        </div>
+        
+        <!-- Content -->
+        <div class="modal-content">
+            <!-- Post Type Selection -->
+            <div class="post-types">
+                <div class="post-types-label">投稿タイプを選択:</div>
+                <div class="post-types-grid">
+                    <button class="post-type-button post-type-activity" data-type="activity">
+                        <div class="icon">🏃</div>
+                        <div>活動記録</div>
+                    </button>
+                    <button class="post-type-button post-type-fulfillment" data-type="fulfillment">
+                        <div class="icon">⭐</div>
+                        <div>充実の瞬間</div>
+                    </button>
+                    <button class="post-type-button post-type-help" data-type="help">
+                        <div class="icon">🤝</div>
+                        <div>助け合い</div>
+                    </button>
+                    <button class="post-type-button post-type-cheer" data-type="cheer">
+                        <div class="icon">📣</div>
+                        <div>応援</div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Text Input Area -->
+            <div class="text-input-area">
+                <textarea class="text-input" id="postText" placeholder="今日の活動を共有しましょう..." maxlength="500"></textarea>
+                <div class="char-count" id="charCount">0/500</div>
+            </div>
+            
+            <!-- Selected Mood Display -->
+            <div class="selected-mood" id="selectedMood">
+                <span class="icon">😊</span>
+                <span class="text">今日の気分: とても良い</span>
+                <button onclick="clearMood()" style="margin-left: auto; background: none; border: none; color: #666; cursor: pointer;">×</button>
+            </div>
+            
+            <!-- Photo Preview -->
+            <div class="photo-preview" id="photoPreview">
+                <div class="photo-preview-grid" id="photoGrid"></div>
+            </div>
+            
+            <!-- Options Area -->
+            <div class="options-area">
+                <button class="option-button" onclick="selectPhoto()">
+                    <span class="icon">📷</span>
+                    <span>写真を追加</span>
+                </button>
+                <button class="option-button" onclick="toggleMoodPanel()">
+                    <span class="icon">😊</span>
+                    <span>気分を選択</span>
+                </button>
+            </div>
+            
+            <!-- Mood Panel -->
+            <div class="mood-panel" id="moodPanel">
+                <div class="mood-option mood-great" onclick="selectMood('great', '😊', 'とても良い')">
+                    <span class="icon">😊</span>
+                    <span>とても良い</span>
+                </div>
+                <div class="mood-option mood-good" onclick="selectMood('good', '🙂', '良い')">
+                    <span class="icon">🙂</span>
+                    <span>良い</span>
+                </div>
+                <div class="mood-option mood-normal" onclick="selectMood('normal', '😐', '普通')">
+                    <span class="icon">😐</span>
+                    <span>普通</span>
+                </div>
+                <div class="mood-option mood-tired" onclick="selectMood('tired', '😔', '少し疲れた')">
+                    <span class="icon">😔</span>
+                    <span>少し疲れた</span>
+                </div>
+                <div class="mood-option mood-exhausted" onclick="selectMood('exhausted', '😫', '疲れた')">
+                    <span class="icon">😫</span>
+                    <span>疲れた</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hidden File Input -->
+    <input type="file" class="hidden-file-input" id="fileInput" accept="image/*" multiple>
+    
+    <!-- Success Animation -->
+    <div class="success-animation" id="successAnimation">
+        <div style="text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 8px;">✅</div>
+            <div>投稿しました！</div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPostType = null;
+        let selectedMood = null;
+        let selectedPhotos = [];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSubmitButton();
+            
+            // Character count
+            const postText = document.getElementById('postText');
+            const charCount = document.getElementById('charCount');
+            
+            postText.addEventListener('input', function() {
+                const count = this.value.length;
+                charCount.textContent = `${count}/500`;
+                updateSubmitButton();
+            });
+            
+            // File input change
+            document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        });
+        
+        // Post type selection
+        document.querySelectorAll('.post-type-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove previous selection
+                document.querySelectorAll('.post-type-button').forEach(b => b.classList.remove('selected'));
+                
+                // Select current
+                this.classList.add('selected');
+                selectedPostType = this.dataset.type;
+                
+                // Update placeholder text
+                const textInput = document.getElementById('postText');
+                const placeholders = {
+                    activity: '今日の活動を共有しましょう...',
+                    fulfillment: '充実していた瞬間について教えてください...',
+                    help: 'どんな助け合いをしましたか？...',
+                    cheer: '誰を応援しますか？...'
+                };
+                textInput.placeholder = placeholders[selectedPostType];
+                
+                updateSubmitButton();
+            });
+        });
+        
+        // Toggle mood panel
+        function toggleMoodPanel() {
+            const panel = document.getElementById('moodPanel');
+            panel.classList.toggle('show');
+        }
+        
+        // Select mood
+        function selectMood(mood, icon, text) {
+            selectedMood = { mood, icon, text };
+            
+            const selectedMoodDiv = document.getElementById('selectedMood');
+            selectedMoodDiv.querySelector('.icon').textContent = icon;
+            selectedMoodDiv.querySelector('.text').textContent = `今日の気分: ${text}`;
+            selectedMoodDiv.classList.add('show');
+            
+            // Close panel
+            document.getElementById('moodPanel').classList.remove('show');
+        }
+        
+        // Clear mood
+        function clearMood() {
+            selectedMood = null;
+            document.getElementById('selectedMood').classList.remove('show');
+        }
+        
+        // Select photo
+        function selectPhoto() {
+            document.getElementById('fileInput').click();
+        }
+        
+        // Handle file selection
+        function handleFileSelect(e) {
+            const files = Array.from(e.target.files);
+            
+            files.forEach(file => {
+                if (selectedPhotos.length >= 3) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    selectedPhotos.push({
+                        file: file,
+                        url: e.target.result
+                    });
+                    updatePhotoPreview();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        // Update photo preview
+        function updatePhotoPreview() {
+            const photoPreview = document.getElementById('photoPreview');
+            const photoGrid = document.getElementById('photoGrid');
+            
+            if (selectedPhotos.length > 0) {
+                photoPreview.classList.add('show');
+                
+                photoGrid.innerHTML = selectedPhotos.map((photo, index) => `
+                    <div class="photo-thumbnail">
+                        <img src="${photo.url}" alt="Selected photo">
+                        <button class="photo-remove" onclick="removePhoto(${index})">×</button>
+                    </div>
+                `).join('');
+            } else {
+                photoPreview.classList.remove('show');
+            }
+        }
+        
+        // Remove photo
+        function removePhoto(index) {
+            selectedPhotos.splice(index, 1);
+            updatePhotoPreview();
+        }
+        
+        // Update submit button state
+        function updateSubmitButton() {
+            const submitButton = document.getElementById('submitButton');
+            const postText = document.getElementById('postText').value.trim();
+            
+            const canSubmit = selectedPostType && postText.length > 0;
+            submitButton.disabled = !canSubmit;
+        }
+        
+        // Submit post
+        function submitPost() {
+            if (!selectedPostType || !document.getElementById('postText').value.trim()) {
+                return;
+            }
+            
+            // Show success animation
+            const successAnimation = document.getElementById('successAnimation');
+            successAnimation.classList.add('show');
+            
+            // Simulate API call
+            setTimeout(() => {
+                successAnimation.classList.remove('show');
+                closeModal();
+            }, 1500);
+        }
+        
+        // Close modal
+        function closeModal() {
+            const postText = document.getElementById('postText').value.trim();
+            
+            if (postText || selectedPhotos.length > 0 || selectedMood) {
+                if (!confirm('入力した内容が失われます。本当に閉じますか？')) {
+                    return;
+                }
+            }
+            
+            // Reset form
+            document.getElementById('postText').value = '';
+            document.getElementById('charCount').textContent = '0/500';
+            document.querySelectorAll('.post-type-button').forEach(b => b.classList.remove('selected'));
+            document.getElementById('moodPanel').classList.remove('show');
+            document.getElementById('selectedMood').classList.remove('show');
+            selectedPhotos = [];
+            updatePhotoPreview();
+            selectedPostType = null;
+            selectedMood = null;
+            updateSubmitButton();
+            
+            // Hide modal with animation
+            const modalContainer = document.querySelector('.modal-container');
+            const modalOverlay = document.querySelector('.modal-overlay');
+            
+            modalContainer.style.animation = 'slideDown 0.3s ease-out forwards';
+            modalOverlay.style.animation = 'fadeOut 0.3s ease-out 0.1s forwards';
+            
+            setTimeout(() => {
+                document.body.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+                        <h1 style="color: #4A90E2; margin-bottom: 20px;">投稿作成画面</h1>
+                        <p style="color: #666; margin-bottom: 30px;">この画面は投稿作成モーダルのサンプルです</p>
+                        <button onclick="location.reload()" style="background-color: #4A90E2; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer;">再度開く</button>
+                    </div>
+                `;
+            }, 400);
+        }
+        
+        // Additional CSS animations
+        const additionalCSS = `
+            @keyframes slideDown {
+                to { transform: translateX(-50%) translateY(100%); }
+            }
+            
+            @keyframes fadeOut {
+                to { opacity: 0; }
+            }
+        `;
+        
+        const style = document.createElement('style');
+        style.textContent = additionalCSS;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDtkx40M21tiog%2B8q7oE3%2FuS2Al%2F8v5kom5MuHvl1i0W2eqbwxNsoWKNQ7uaFnh2PW3MWm3f4ELu3vt0mHvDukXXhFtikc%2F8PTxcVw2ZdxcdVJBp9tErlxezZl7L8%2Fbz3j0PTSNRzaQij0AuwLqA6E3Cb9IU4U1V0ngS3Z8lPQwgGvIEfmSCBr19NwuxISLsmoYjB3AWkJVTPzkawmiy%2B8VgzE%2FeQZPat7WWwDJ8O3tihepugUvHL23oOUWIqmGGKC%2BLuDs0cLGL3K343Cn%2B36b9taLDxns1vfRYGA08gwr7wsTI067k7eB71X7HiLBCbbpJR7aV2HYyGxDFnPTeLM1SYq74sjwBWIjqExUfUIdxTYfmMCL8VQeaWdANXU4CmPcrvdIvBbV5KJ4OeBfHQfZZPNv0SndFUjUryKl4nGrxP74%2BfHS8HV598WPhr8r0nF8UkokmHo5xmyxMTY52HvAwFgwMnM9PcR5%2BYZoYR4NacLRecDu8L7wgdd6WPg4G3lYnnI8LEgmi8%2FP1IaAgQUog%3D";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDtkx40M21tiog+8q7oE3/uS2Al/8v5kom5MuHvl1i0W2eqbwxNsoWKNQ7uaFnh2PW3MWm3f4ELu3vt0mHvDukXXhFtikc/8PTxcVw2ZdxcdVJBp9tErlxezZl7L8/bz3j0PTSNRzaQij0AuwLqA6E3Cb9IU4U1V0ngS3Z8lPQwgGvIEfmSCBr19NwuxISLsmoYjB3AWkJVTPzkawmiy+8VgzE/eQZPat7WWwDJ8O3tihepugUvHL23oOUWIqmGGKC+LuDs0cLGL3K343Cn+36b9taLDxns1vfRYGA08gwr7wsTI067k7eB71X7HiLBCbbpJR7aV2HYyGxDFnPTeLM1SYq74sjwBWIjqExUfUIdxTYfmMCL8VQeaWdANXU4CmPcrvdIvBbV5KJ4OeBfHQfZZPNv0SndFUjUryKl4nGrxP74+fHS8HV598WPhr8r0nF8UkokmHo5xmyxMTY52HvAwFgwMnM9PcR5+YZoYR4NacLRecDu8L7wgdd6WPg4G3lYnnI8LEgmi8/P1IaAgQUog=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

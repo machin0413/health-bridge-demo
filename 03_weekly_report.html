@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>週次レポート画面 - 家族健康会議システム</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #F9F9F9;
+            color: #333333;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 20px 16px;
+            text-align: center;
+            border-bottom: 1px solid #E5E5E5;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .header .period {
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .container {
+            padding: 0 16px 20px 16px;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title.small {
+            font-size: 18px;
+        }
+
+        .highlight-section {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFFFF 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin: 20px 0;
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .best-moment-card {
+            background: #FFFACD;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .best-moment-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .best-moment-icon {
+            font-size: 32px;
+        }
+
+        .best-moment-day {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .best-moment-score {
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+            margin-left: auto;
+        }
+
+        .best-moment-text {
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card.helped {
+            background: #E8F5E9;
+        }
+
+        .stat-card.received {
+            background: #E3F2FD;
+        }
+
+        .stat-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .stat-number.green {
+            color: #50C878;
+        }
+
+        .stat-number.blue {
+            color: #4A90E2;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .help-list {
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .help-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .help-item:last-child {
+            border-bottom: none;
+        }
+
+        .help-icon {
+            font-size: 24px;
+            margin-top: 4px;
+        }
+
+        .help-content {
+            flex: 1;
+        }
+
+        .help-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .help-time {
+            font-size: 12px;
+            color: #666666;
+            margin-bottom: 4px;
+        }
+
+        .help-reaction {
+            font-size: 14px;
+            color: #4A90E2;
+        }
+
+        .progress-list {
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .progress-status {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .progress-status.achieved {
+            color: #50C878;
+        }
+
+        .progress-status.partial {
+            color: #FFA500;
+        }
+
+        .progress-status.challenge {
+            color: #4A90E2;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #E5E5E5;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.green {
+            background: #50C878;
+        }
+
+        .progress-fill.orange {
+            background: #FFA500;
+        }
+
+        .progress-fill.blue {
+            background: #4A90E2;
+        }
+
+        .overall-chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            height: 200px;
+        }
+
+        .ranking-list {
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .ranking-item:last-child {
+            border-bottom: none;
+        }
+
+        .ranking-medal {
+            font-size: 24px;
+        }
+
+        .ranking-name {
+            font-size: 16px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .ranking-score {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4A90E2;
+        }
+
+        .encouragement-card {
+            background: #F0F8FF;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .ai-icon {
+            font-size: 40px;
+        }
+
+        .encouragement-text {
+            font-size: 16px;
+            flex: 1;
+        }
+
+        .bottom-actions {
+            display: flex;
+            gap: 12px;
+            padding: 0 16px 32px 16px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 28px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.primary {
+            background: #4A90E2;
+            color: #FFFFFF;
+        }
+
+        .action-btn.secondary {
+            background: #FFFFFF;
+            color: #4A90E2;
+            border: 2px solid #4A90E2;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 390px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .bottom-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>今週のレポート</h1>
+        <div class="period">2024年1月15日〜1月21日</div>
+    </div>
+
+    <div class="container">
+        <!-- イキイキハイライトセクション -->
+        <div class="section">
+            <div class="highlight-section">
+                <div class="section-title">
+                    ✨ 今週のイキイキハイライト
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="fulfillmentChart"></canvas>
+                </div>
+
+                <div class="best-moment-card">
+                    <div class="best-moment-header">
+                        <span class="best-moment-icon">⭐</span>
+                        <span class="best-moment-day">土曜日</span>
+                        <span class="best-moment-score">90点</span>
+                    </div>
+                    <div class="best-moment-text">
+                        家族みんなで公園を散歩。天気も良く最高の1日でした！
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 助け合いサマリーセクション -->
+        <div class="section">
+            <div class="section-title">
+                🤝 今週の助け合い
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card helped">
+                    <div class="stat-icon">🙋</div>
+                    <div class="stat-number green">5回</div>
+                    <div class="stat-label">あなたが助けた</div>
+                </div>
+                <div class="stat-card received">
+                    <div class="stat-icon">🙏</div>
+                    <div class="stat-number blue">3回</div>
+                    <div class="stat-label">あなたが助けられた</div>
+                </div>
+            </div>
+
+            <div class="help-list">
+                <div class="help-item">
+                    <div class="help-icon">🏃</div>
+                    <div class="help-content">
+                        <div class="help-title">お父さんを散歩に誘いました</div>
+                        <div class="help-time">水曜日 15:00</div>
+                        <div class="help-reaction">❤️ お父さんからの感謝</div>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-icon">🥗</div>
+                    <div class="help-content">
+                        <div class="help-title">お母さんが野菜たっぷりの夕食を作ってくれました</div>
+                        <div class="help-time">金曜日 19:00</div>
+                        <div class="help-reaction">ありがとう！を送りました</div>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-icon">💊</div>
+                    <div class="help-content">
+                        <div class="help-title">息子さんが薬の時間を教えてくれました</div>
+                        <div class="help-time">日曜日 8:00</div>
+                        <div class="help-reaction">❤️ 助かった！</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 達成状況セクション -->
+        <div class="section">
+            <div class="section-title">
+                📊 今週の達成状況
+            </div>
+            
+            <div class="progress-list">
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <div class="progress-title">🏃 週2回ウォーキング</div>
+                        <div class="progress-status achieved">✅ 達成！</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill green" style="width: 100%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <div class="progress-title">🥗 毎日野菜350g</div>
+                        <div class="progress-status partial">あと2日</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill orange" style="width: 71%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <div class="progress-title">😴 7時間睡眠</div>
+                        <div class="progress-status challenge">チャレンジ中</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill blue" style="width: 57%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overall-chart-container">
+                <canvas id="overallChart" width="160" height="160"></canvas>
+            </div>
+        </div>
+
+        <!-- グループ内ランキング -->
+        <div class="section">
+            <div class="section-title small">
+                🏆 グループ内達成ランキング
+            </div>
+            
+            <div class="ranking-list">
+                <div class="ranking-item">
+                    <div class="ranking-medal">🥇</div>
+                    <div class="ranking-name">お母さん</div>
+                    <div class="ranking-score">85%</div>
+                </div>
+                <div class="ranking-item">
+                    <div class="ranking-medal">🥈</div>
+                    <div class="ranking-name">あなた</div>
+                    <div class="ranking-score">76%</div>
+                </div>
+                <div class="ranking-item">
+                    <div class="ranking-medal">🥉</div>
+                    <div class="ranking-name">お父さん</div>
+                    <div class="ranking-score">68%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 来週へのエール -->
+        <div class="section">
+            <div class="encouragement-card">
+                <div class="ai-icon">🤖</div>
+                <div class="encouragement-text">
+                    今週も素晴らしい1週間でした！来週も無理せず、楽しく続けていきましょう💪
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-actions">
+        <button class="action-btn primary">タイムラインでシェア</button>
+        <button class="action-btn secondary">来週の目標を見る</button>
+    </div>
+
+    <script>
+        // 充実度グラフ
+        const fulfillmentCtx = document.getElementById('fulfillmentChart').getContext('2d');
+        const fulfillmentChart = new Chart(fulfillmentCtx, {
+            type: 'line',
+            data: {
+                labels: ['月', '火', '水', '木', '金', '土', '日'],
+                datasets: [{
+                    label: '充実度',
+                    data: [70, 75, 80, 85, 78, 90, 88],
+                    borderColor: '#FFD700',
+                    backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#FFD700',
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    shadow: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        },
+                        ticks: {
+                            color: '#666666'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#666666'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 総合達成率円グラフ
+        const overallCtx = document.getElementById('overallChart').getContext('2d');
+        const overallChart = new Chart(overallCtx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [76, 24],
+                    backgroundColor: ['#4A90E2', '#E5E5E5'],
+                    borderWidth: 0,
+                    cutout: '70%'
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            },
+            plugins: [{
+                id: 'centerText',
+                beforeDraw: function(chart) {
+                    const ctx = chart.ctx;
+                    ctx.save();
+                    
+                    const centerX = chart.width / 2;
+                    const centerY = chart.height / 2;
+                    
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    
+                    // 76%のテキスト
+                    ctx.font = 'bold 36px -apple-system, BlinkMacSystemFont, sans-serif';
+                    ctx.fillStyle = '#333333';
+                    ctx.fillText('76%', centerX, centerY - 10);
+                    
+                    // サブテキスト
+                    ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+                    ctx.fillStyle = '#666666';
+                    ctx.fillText('今週の総合達成率', centerX, centerY + 20);
+                    
+                    ctx.restore();
+                }
+            }]
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDoUwagC60U3tPVPM7kjXYPmHPw2bB5haAc2j%2Bw4sZ0ZJVF5VR8npcp0dq5pYJ%2BKJbJlBfPhFBUyT7RL%2B0BL9H4klhFJSZDCYTPSHbSMTu7shRVMNt3As%2FK%2FXzAi%2FxldW03S%2B%2Fo1M%2FKvJAdK5tK73UBvNN1NJceVVjtzgJLS3e4o%2FXOi6zK2YZdYJ%2F2C55dPyf%2F785cP8O84Y5ZZPpL57A3MbsNErffgVsLeZHZZAnym1%2Baz0od0ys%2Bwmeq7%2FdoA6vjIS%2BqEJ%2FwpdGfxtrPn5vu%2FU5IWsqf8DIjmGIt2WJ2Meyom3octaNtUkM6MZ2SUSSc2VAoPZGGOPTI20owchT1OaLnsRM5dm%2Fi%2F4nStHl3xJCda0xA512X9yegZcTfex2lurMbrsIGVaYd2p9sw0czhOLzxYNw9DllP9AEUTFFfCi4SPkH7vKCHnsK2aWkDeEsAjsJl92xAoPduhxY8WfwpC6TxNiuGUUeAut7NQOjiy7oxJt3w%2BDHe%2B98P6ZX%2BVMSPxSeS2bwTcByp%2FmU26pBY%3D";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDoUwagC60U3tPVPM7kjXYPmHPw2bB5haAc2j+w4sZ0ZJVF5VR8npcp0dq5pYJ+KJbJlBfPhFBUyT7RL+0BL9H4klhFJSZDCYTPSHbSMTu7shRVMNt3As/K/XzAi/xldW03S+/o1M/KvJAdK5tK73UBvNN1NJceVVjtzgJLS3e4o/XOi6zK2YZdYJ/2C55dPyf/785cP8O84Y5ZZPpL57A3MbsNErffgVsLeZHZZAnym1+az0od0ys+wmeq7/doA6vjIS+qEJ/wpdGfxtrPn5vu/U5IWsqf8DIjmGIt2WJ2Meyom3octaNtUkM6MZ2SUSSc2VAoPZGGOPTI20owchT1OaLnsRM5dm/i/4nStHl3xJCda0xA512X9yegZcTfex2lurMbrsIGVaYd2p9sw0czhOLzxYNw9DllP9AEUTFFfCi4SPkH7vKCHnsK2aWkDeEsAjsJl92xAoPduhxY8WfwpC6TxNiuGUUeAut7NQOjiy7oxJt3w+DHe+98P6ZX+VMSPxSeS2bwTcByp/mU26pBY=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

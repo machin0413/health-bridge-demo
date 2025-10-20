@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Mockup Complete Guide (English Filenames) - Family Health Meeting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #4A90E2 0%, #50C878 100%);
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .code-block {
+            background: #1a202c;
+            color: #cbd5e0;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .table-custom th {
+            background: #4A90E2;
+            color: white;
+        }
+        .table-custom tr:nth-child(even) {
+            background: #f7fafc;
+        }
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 24px;
+            margin: 0 auto 16px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <div class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <div class="icon-box bg-white text-blue-500 mx-auto mb-6">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">家族健康会議システム</h1>
+            <p class="text-xl md:text-2xl mb-2">Interactive Mockup Complete Guide</p>
+            <div class="inline-flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-full">
+                <i class="fas fa-tag mr-2"></i>
+                <span class="font-semibold">v2.0 English Filenames</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Alert -->
+    <div class="bg-green-50 border-l-4 border-green-500 p-6 mx-6 mt-6 rounded-r">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
+            <div>
+                <h2 class="text-2xl font-bold text-green-800 mb-2">🎉 完成しました！</h2>
+                <p class="text-green-700">すべてのファイル名を英語に統一し、スマホから画面遷移できるインタラクティブなモックアップが完成しました。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-6 py-8">
+        <!-- File Name Mapping Table -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 card-hover">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-exchange-alt text-blue-500 mr-3"></i>
+                📋 ファイル名対応表
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full table-custom rounded-lg overflow-hidden">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-3 text-left">旧ファイル名（日本語）</th>
+                            <th class="px-4 py-3 text-left">新ファイル名（英語）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="px-4 py-3 border-b">00_グループタイムライン(メイン画面).html</td><td class="px-4 py-3 border-b font-bold text-blue-600">00_group_timeline.html</td></tr>
+                        <tr><td class="px-4 py-3 border-b">01_投稿作成画面.html</td><td class="px-4 py-3 border-b font-bold text-blue-600">01_post_creation.html</td></tr>
+                        <tr><td class="px-4 py-3 border-b">02_マイ進捗画面.html</td><td class="px-4 py-3 border-b font-bold text-blue-600">02_my_progress.html</td></tr>
+                        <tr><td class="px-4 py-3 border-b">03_週次レポート画面.html</td><td class="px-4 py-3 border-b font-bold text-blue-600">03_weekly_report.html</td></tr>
+                        <tr><td class="px-4 py-3 border-b">04_健康診断結果確認画面.html</td><td class="px-4 py-3 border-b font-bold text-blue-600">04_health_checkup_results.html</td></tr>
+                        <tr><td class="px-4 py-3 border-b">05_健康診断結果AI動画解説画面.html</td><td class="px-4 py-3 border-b font-bold text-blue-600">05_health_checkup_ai_video.html</td></tr>
+                        <tr><td class="px-4 py-3 border-b">06_投稿詳細画面.html</td><td class="px-4 py-3 border-b font-bold text-blue-600">06_post_detail.html</td></tr>
+                        <tr><td class="px-4 py-3 border-b">07_健康診断アップロード画面.html</td><td class="px-4 py-3 border-b font-bold text-blue-600">07_health_checkup_upload.html</td></tr>
+                        <tr><td class="px-4 py-3 border-b">08_ウェルカム画面.html</td><td class="px-4 py-3 border-b font-bold text-blue-600">08_welcome.html</td></tr>
+                        <tr><td class="px-4 py-3 border-b">09_アカウント登録画面.html</td><td class="px-4 py-3 border-b font-bold text-blue-600">09_account_registration.html</td></tr>
+                        <tr><td class="px-4 py-3">10_グループ作成画面.html</td><td class="px-4 py-3 font-bold text-blue-600">10_group_creation.html</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Try Now Section -->
+        <div class="bg-gradient-to-r from-blue-500 to-green-500 text-white rounded-lg p-8 mb-8 card-hover">
+            <h2 class="text-3xl font-bold mb-6 flex items-center">
+                <i class="fas fa-play-circle mr-3"></i>
+                📱 今すぐ試す（推奨）
+            </h2>
+            
+            <div class="bg-white bg-opacity-20 rounded-lg p-6 mb-6">
+                <h3 class="text-xl font-bold mb-4 flex items-center">
+                    <i class="fas fa-star mr-2"></i>
+                    ✨ オンボーディング体験（最初から）
+                </h3>
+                <div class="mb-4">
+                    <a href="https://www.genspark.ai/aidrive/files/家族健康会議システム/画面サンプル" 
+                       class="inline-flex items-center bg-white text-blue-600 px-6 py-3 rounded-full font-bold hover:bg-blue-50 transition-all duration-300 text-lg">
+                        <i class="fas fa-folder-open mr-2"></i>
+                        👉 AI Driveフォルダを開く
+                    </a>
+                </div>
+                <ol class="list-decimal list-inside text-lg space-y-2">
+                    <li><code class="bg-white bg-opacity-30 px-2 py-1 rounded">08_welcome.html</code> をタップ</li>
+                    <li>画面内のボタンをタップして次々に遷移</li>
+                    <li>実際のアプリのような体験ができます！</li>
+                </ol>
+            </div>
+
+            <div class="bg-black bg-opacity-30 rounded-lg p-4">
+                <h3 class="text-lg font-bold mb-3 flex items-center">
+                    <i class="fas fa-sitemap mr-2"></i>
+                    📋 画面遷移フロー
+                </h3>
+                <pre class="text-sm font-mono">
+08_welcome.html (4スライド)
+  ↓ 「始める」ボタン
+09_account_registration.html
+  ↓ 「次へ」ボタン
+10_group_creation.html
+  ↓ 「完了してグループに入る」ボタン
+00_group_timeline.html ← メイン画面
+  ↓ 投稿カードタップ
+06_post_detail.html
+  ↓ 戻るボタン
+00_group_timeline.html に戻る
+                </pre>
+            </div>
+        </div>
+
+        <!-- File List Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 card-hover">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-folder text-blue-500 mr-3"></i>
+                📂 全ファイル一覧（英語ファイル名版）
+            </h2>
+            
+            <p class="text-gray-600 mb-6">AI Driveの <code class="bg-gray-100 px-2 py-1 rounded">/家族健康会議システム/画面サンプル/</code> に以下の11画面があります：</p>
+
+            <!-- Onboarding Flow -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <div class="icon-box bg-blue-100 text-blue-500 w-10 h-10 text-sm mr-3">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    オンボーディングフロー（初回起動時）
+                </h3>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                        <h4 class="font-bold text-blue-800">1. 08_welcome.html</h4>
+                        <ul class="text-sm text-blue-700 mt-2 space-y-1">
+                            <li>• 4スライド形式のサービス紹介</li>
+                            <li>• 左右スワイプ可能</li>
+                            <li>• リンク先: <code>09_account_registration.html</code></li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                        <h4 class="font-bold text-blue-800">2. 09_account_registration.html</h4>
+                        <ul class="text-sm text-blue-700 mt-2 space-y-1">
+                            <li>• 基本情報入力フォーム</li>
+                            <li>• バリデーション機能付き</li>
+                            <li>• 戻る→<code>08_welcome.html</code></li>
+                            <li>• 次へ→<code>10_group_creation.html</code></li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                        <h4 class="font-bold text-blue-800">3. 10_group_creation.html</h4>
+                        <ul class="text-sm text-blue-700 mt-2 space-y-1">
+                            <li>• グループタイプ選択</li>
+                            <li>• メンバー招待（QR/リンク）</li>
+                            <li>• 完了→<code>00_group_timeline.html</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main App Screens -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <div class="icon-box bg-green-100 text-green-500 w-10 h-10 text-sm mr-3">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    メインアプリ画面
+                </h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                        <h4 class="font-bold text-green-800">4. 00_group_timeline.html</h4>
+                        <ul class="text-sm text-green-700 mt-2 space-y-1">
+                            <li>• アプリの中心画面</li>
+                            <li>• 5つの投稿サンプル表示</li>
+                            <li>• いいね・コメント・感謝スタンプ機能</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                        <h4 class="font-bold text-green-800">5. 06_post_detail.html</h4>
+                        <ul class="text-sm text-green-700 mt-2 space-y-1">
+                            <li>• 投稿全文とコメント表示</li>
+                            <li>• リアクション一覧</li>
+                            <li>• 戻る→<code>00_group_timeline.html</code></li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                        <h4 class="font-bold text-green-800">6. 01_post_creation.html</h4>
+                        <ul class="text-sm text-green-700 mt-2 space-y-1">
+                            <li>• モーダル形式の投稿作成</li>
+                            <li>• 投稿タイプ選択</li>
+                            <li>• テキスト・写真添付</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                        <h4 class="font-bold text-green-800">7. 02_my_progress.html</h4>
+                        <ul class="text-sm text-green-700 mt-2 space-y-1">
+                            <li>• 目標達成状況を可視化</li>
+                            <li>• グラフとバッジ表示</li>
+                            <li>• イキイキ度の推移</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                        <h4 class="font-bold text-green-800">8. 03_weekly_report.html</h4>
+                        <ul class="text-sm text-green-700 mt-2 space-y-1">
+                            <li>• 今週のハイライト</li>
+                            <li>• 助け合いサマリー</li>
+                            <li>• 週間統計</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health Checkup Features -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <div class="icon-box bg-red-100 text-red-500 w-10 h-10 text-sm mr-3">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    健康診断機能
+                </h3>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                        <h4 class="font-bold text-red-800">9. 07_health_checkup_upload.html</h4>
+                        <ul class="text-sm text-red-700 mt-2 space-y-1">
+                            <li>• 写真・PDF・手動入力でデータ登録</li>
+                            <li>• OCR機能デモ</li>
+                            <li>• 結果確認→<code>04_health_checkup_results.html</code></li>
+                        </ul>
+                    </div>
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                        <h4 class="font-bold text-red-800">10. 04_health_checkup_results.html</h4>
+                        <ul class="text-sm text-red-700 mt-2 space-y-1">
+                            <li>• わかりやすく変換された診断結果</li>
+                            <li>• 専門用語を平易な言葉に</li>
+                            <li>• 前年比較機能</li>
+                        </ul>
+                    </div>
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                        <h4 class="font-bold text-red-800">11. 05_health_checkup_ai_video.html</h4>
+                        <ul class="text-sm text-red-700 mt-2 space-y-1">
+                            <li>• AIアバターによる動画解説</li>
+                            <li>• チャプター選択機能</li>
+                            <li>• 字幕表示、視聴完了バッジ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen Flow Maps -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 card-hover">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-project-diagram text-blue-500 mr-3"></i>
+                🔗 画面遷移マップ
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-blue-600">オンボーディングフロー</h3>
+                    <div class="code-block text-sm">
+08_welcome.html
+    ↓
+09_account_registration.html
+    ↓
+10_group_creation.html
+    ↓
+00_group_timeline.html (メイン画面)
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-green-600">メインアプリフロー</h3>
+                    <div class="code-block text-sm">
+00_group_timeline.html
+    ├→ 06_post_detail.html
+    ├→ 01_post_creation.html
+    ├→ 02_my_progress.html
+    └→ 03_weekly_report.html
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-red-600">健康診断フロー</h3>
+                    <div class="code-block text-sm">
+07_health_checkup_upload.html
+    ↓
+04_health_checkup_results.html
+    ↓
+05_health_checkup_ai_video.html
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Developer Link Structure -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 card-hover">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-code text-blue-500 mr-3"></i>
+                💡 リンク構造（開発者向け）
+            </h2>
+            
+            <p class="text-gray-600 mb-4">すべてのHTMLファイルは英語ファイル名で相対パスリンクされています：</p>
+            
+            <div class="code-block">
+<span class="text-green-400">// 例：グループ作成画面から</span>
+href=<span class="text-yellow-300">"00_group_timeline.html"</span>
+
+<span class="text-green-400">// 例：投稿詳細画面から</span>
+href=<span class="text-yellow-300">"00_group_timeline.html"</span>
+
+<span class="text-green-400">// 例：ウェルカム画面から</span>
+href=<span class="text-yellow-300">"09_account_registration.html"</span>
+
+<span class="text-green-400">// 例：健康診断アップロードから</span>
+href=<span class="text-yellow-300">"04_health_checkup_results.html"</span>
+            </div>
+        </div>
+
+        <!-- Implemented Interactions -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 card-hover">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-hand-paper text-blue-500 mr-3"></i>
+                ✨ 実装されたインタラクション
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <h3 class="font-bold text-gray-800">08_welcome.html</h3>
+                        <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                            <li>✅ 左右スワイプでスライド切り替え（4スライド）</li>
+                            <li>✅ プログレスインジケーター</li>
+                            <li>✅ スキップボタン</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-l-4 border-green-500 pl-4">
+                        <h3 class="font-bold text-gray-800">09_account_registration.html</h3>
+                        <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                            <li>✅ フォームバリデーション（必須項目チェック）</li>
+                            <li>✅ 日付ピッカー</li>
+                            <li>✅ プロフィール写真アップロード（デモ）</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-l-4 border-purple-500 pl-4">
+                        <h3 class="font-bold text-gray-800">10_group_creation.html</h3>
+                        <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                            <li>✅ グループタイプカードの選択</li>
+                            <li>✅ QRコード/リンク共有のタブ切り替え</li>
+                            <li>✅ リンクコピー機能（ワンタップでコピー、トースト通知）</li>
+                            <li>✅ トグルスイッチ（プライバシー設定）</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="border-l-4 border-red-500 pl-4">
+                        <h3 class="font-bold text-gray-800">00_group_timeline.html</h3>
+                        <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                            <li>✅ いいねボタンのアニメーション</li>
+                            <li>✅ 投稿カードタップで詳細画面へ</li>
+                            <li>✅ 5つの投稿タイプのサンプル表示</li>
+                            <li>✅ フッターナビゲーション</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-l-4 border-yellow-500 pl-4">
+                        <h3 class="font-bold text-gray-800">06_post_detail.html</h3>
+                        <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                            <li>✅ コメント表示（3件のサンプル）</li>
+                            <li>✅ リアクション一覧</li>
+                            <li>✅ コメント入力欄</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-l-4 border-indigo-500 pl-4">
+                        <h3 class="font-bold text-gray-800">07_health_checkup_upload.html</h3>
+                        <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                            <li>✅ タブ切り替え（写真/PDF/手動入力）</li>
+                            <li>✅ ファイルアップロード（デモ）</li>
+                            <li>✅ OCRローディングアニメーション</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Design Specifications & Notes -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Design Specs -->
+            <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-palette text-blue-500 mr-3"></i>
+                    🎨 デザイン仕様
+                </h2>
+                <ul class="space-y-2 text-gray-700">
+                    <li><strong>幅:</strong> 375px（iPhone基準）</li>
+                    <li><strong>カラーパレット:</strong>
+                        <ul class="ml-4 mt-1 space-y-1">
+                            <li>• プライマリ: <span class="inline-block w-4 h-4 bg-blue-500 rounded mr-1"></span>#4A90E2（優しいブルー）</li>
+                            <li>• アクセント: <span class="inline-block w-4 h-4 bg-green-500 rounded mr-1"></span>#50C878（柔らかいグリーン）</li>
+                        </ul>
+                    </li>
+                    <li><strong>フォント:</strong> システムフォント（-apple-system）</li>
+                    <li><strong>依存関係:</strong> なし（完全にスタンドアローン）</li>
+                </ul>
+            </div>
+            
+            <!-- Important Notes -->
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 card-hover">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-exclamation-triangle text-yellow-500 mr-3"></i>
+                    ⚠️ 重要な注意事項
+                </h2>
+                <div class="space-y-3">
+                    <div>
+                        <h3 class="font-semibold text-gray-800 mb-2">これはプロトタイプです</h3>
+                        <ul class="text-sm space-y-1">
+                            <li class="text-green-700">✅ 画面遷移は実際のアプリのように動作</li>
+                            <li class="text-green-700">✅ インタラクションは実装済み</li>
+                            <li class="text-green-700">✅ すべてのファイル名が英語で統一</li>
+                            <li class="text-red-700">❌ データは保存されません（リロードでリセット）</li>
+                            <li class="text-red-700">❌ 実際のAPI連携はありません</li>
+                            <li class="text-red-700">❌ OCR・AI解析は模擬動作</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800 mb-2">ファイル名の規則</h3>
+                        <ul class="text-sm space-y-1">
+                            <li>• すべて英語のスネークケース</li>
+                            <li>• 数字2桁の接頭辞（実装優先順序）</li>
+                            <li>• <code class="bg-gray-100 px-1 rounded">.html</code> 拡張子</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version History -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 card-hover">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-history text-blue-500 mr-3"></i>
+                📋 更新履歴
+            </h2>
+            
+            <div class="space-y-4">
+                <div class="border-l-4 border-green-500 pl-4 bg-green-50 p-3 rounded-r">
+                    <h3 class="font-bold text-green-800 flex items-center">
+                        <i class="fas fa-tag mr-2"></i>
+                        2025-10-20 (v2.0): 英語ファイル名版
+                    </h3>
+                    <ul class="text-sm text-green-700 mt-2 space-y-1">
+                        <li>• すべてのファイル名を英語に統一</li>
+                        <li>• リンクパスを英語ファイル名に修正</li>
+                        <li>• 11画面すべて更新完了</li>
+                    </ul>
+                </div>
+                
+                <div class="border-l-4 border-blue-500 pl-4 bg-blue-50 p-3 rounded-r">
+                    <h3 class="font-bold text-blue-800 flex items-center">
+                        <i class="fas fa-tag mr-2"></i>
+                        2025-10-20 (v1.1): リンク修正版
+                    </h3>
+                    <ul class="text-sm text-blue-700 mt-2 space-y-1">
+                        <li>• すべてのリンクパスを正しいファイル名に統一</li>
+                        <li>• メイン画面作成</li>
+                    </ul>
+                </div>
+                
+                <div class="border-l-4 border-gray-500 pl-4 bg-gray-50 p-3 rounded-r">
+                    <h3 class="font-bold text-gray-800 flex items-center">
+                        <i class="fas fa-tag mr-2"></i>
+                        2025-10-20 (v1.0): 初版作成
+                    </h3>
+                    <ul class="text-sm text-gray-700 mt-2 space-y-1">
+                        <li>• オンボーディングフロー3画面追加</li>
+                        <li>• 投稿詳細画面追加</li>
+                        <li>• 健康診断アップロード画面追加</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-4">
+                <h3 class="text-xl font-bold mb-2 flex items-center justify-center">
+                    <i class="fas fa-comments mr-2"></i>
+                    🙋 フィードバック・質問
+                </h3>
+                <p class="text-lg opacity-90">このモックアップに関するフィードバックや改善提案があれば、開発チームまでお知らせください。</p>
+            </div>
+            
+            <div class="border-t border-white border-opacity-20 pt-6 mt-6">
+                <div class="flex flex-wrap justify-center items-center space-y-2 md:space-y-0 md:space-x-8 text-sm">
+                    <div class="flex items-center">
+                        <i class="fas fa-users mr-2"></i>
+                        <strong>制作:</strong> 家族健康会議システム開発チーム
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-code-branch mr-2"></i>
+                        <strong>バージョン:</strong> 2.0（英語ファイル名統一版）
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-calendar mr-2"></i>
+                        <strong>最終更新:</strong> 2025年10月20日
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-file-code mr-2"></i>
+                        <strong>ファイル数:</strong> 全11画面 + README
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add copy functionality for code blocks
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.style.cursor = 'pointer';
+            block.title = 'Click to copy';
+            block.addEventListener('click', function() {
+                navigator.clipboard.writeText(this.textContent).then(() => {
+                    // Show temporary feedback
+                    const originalBg = this.style.background;
+                    this.style.background = '#10B981';
+                    setTimeout(() => {
+                        this.style.background = originalBg;
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDv%2Bv%2BHtjY5FbIV01z%2BuQoiMIoGTc%2BbFRVTdiyb8F1wZoicfZ3bdtFgT7ONNwgtsf0jM%2F4LpPwNImPbX4Xwc0OXpf6nkFigD0%2F8xmWsisp%2FF8fbFDDKUxMfleuIzIj3iWnVsE1DPiv%2B0nSGHvn08wy5FqWgq5w0RmHVJIeEI0ZeXcaqBfYumf%2F4rFgTswOq8cZ2K6%2Ftjjz0Mz5JILiN9RhvBKYb7AYtbCyccFRTbKYwIKo%2BSIQlo5RV9wH9ZxDdvTTIgcF%2FlOEmsWcaLrFfvaoi7w92V6ls1IIIg1a9JpQ%2BQD%2B8TxTWvdaWBUGVMtm3VSMAzjiCKF5J6jZ6ZfugQXh%2B2W0IJnNekttD03afwvEKIp3%2BAnZMwJ%2Bg7UU4nREs9ZnX5JTcaP89s0Q2P0KbZ3Iln0S%2BMhHtBwk3wyxCixTrBZ9ApG2wdrK9E1QDWSnY6ifIvScVPlOSrw3SrYVggbBgUvUtqAzdF34lDY5zk08kLyhHgKrptWEm5sK1VeRnqzGcLwngEeXuRy%2FVWtnKlCWFI%3D";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDv+v+HtjY5FbIV01z+uQoiMIoGTc+bFRVTdiyb8F1wZoicfZ3bdtFgT7ONNwgtsf0jM/4LpPwNImPbX4Xwc0OXpf6nkFigD0/8xmWsisp/F8fbFDDKUxMfleuIzIj3iWnVsE1DPiv+0nSGHvn08wy5FqWgq5w0RmHVJIeEI0ZeXcaqBfYumf/4rFgTswOq8cZ2K6/tjjz0Mz5JILiN9RhvBKYb7AYtbCyccFRTbKYwIKo+SIQlo5RV9wH9ZxDdvTTIgcF/lOEmsWcaLrFfvaoi7w92V6ls1IIIg1a9JpQ+QD+8TxTWvdaWBUGVMtm3VSMAzjiCKF5J6jZ6ZfugQXh+2W0IJnNekttD03afwvEKIp3+AnZMwJ+g7UU4nREs9ZnX5JTcaP89s0Q2P0KbZ3Iln0S+MhHtBwk3wyxCixTrBZ9ApG2wdrK9E1QDWSnY6ifIvScVPlOSrw3SrYVggbBgUvUtqAzdF34lDY5zk08kLyhHgKrptWEm5sK1VeRnqzGcLwngEeXuRy/VWtnKlCWFI=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

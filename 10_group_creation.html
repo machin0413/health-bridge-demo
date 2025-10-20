@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>グループを作成 - 家族健康会議システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --text-gray: #666;
+            --light-gray: #f5f5f5;
+            --border-gray: #e0e0e0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fafafa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .header {
+            background: white;
+            padding: 16px;
+            border-bottom: 1px solid var(--border-gray);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-btn {
+            color: var(--primary-color);
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .step-indicator {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+        
+        .content {
+            padding: 24px 16px;
+            padding-bottom: 100px;
+        }
+        
+        .form-section {
+            margin-bottom: 32px;
+        }
+        
+        .form-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+        
+        .group-type-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .group-type-card {
+            border: 2px solid var(--border-gray);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        .group-type-card:hover {
+            border-color: var(--primary-color);
+            background: #f8fbff;
+        }
+        
+        .group-type-card.selected {
+            border-color: var(--primary-color);
+            background: #f0f7ff;
+            box-shadow: 0 2px 8px rgba(74, 144, 226, 0.2);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .card-icon {
+            font-size: 24px;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .card-description {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+        
+        .tab-navigation {
+            display: flex;
+            border-bottom: 1px solid var(--border-gray);
+            margin-bottom: 16px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: none;
+            font-size: 14px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--text-gray);
+        }
+        
+        .invite-link {
+            background: var(--light-gray);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            margin-bottom: 16px;
+            word-break: break-all;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--light-gray);
+            color: #333;
+        }
+        
+        .select-field {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            background: white;
+            font-size: 16px;
+        }
+        
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .toggle-switch.active {
+            background: var(--primary-color);
+        }
+        
+        .toggle-handle {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        
+        .toggle-switch.active .toggle-handle {
+            transform: translateX(20px);
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            max-width: 100%;
+            background: white;
+            padding: 16px;
+            border-top: 1px solid var(--border-gray);
+            display: flex;
+            gap: 12px;
+        }
+        
+        .footer-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+        
+        .footer-btn.secondary {
+            background: var(--light-gray);
+            color: #666;
+        }
+        
+        .footer-btn.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .footer-btn:disabled {
+            background: #ccc;
+            color: #999;
+            cursor: not-allowed;
+        }
+        
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <i class="fas fa-arrow-left back-btn" onclick="goBack()"></i>
+            <h1 style="font-size: 18px; font-weight: 600; margin: 0;">グループを作成</h1>
+            <span class="step-indicator">ステップ 3/3</span>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Group Name -->
+            <div class="form-section">
+                <h3>グループ名</h3>
+                <input type="text" class="input-field" placeholder="例：山田家" maxlength="20" id="groupName" oninput="validateForm()">
+            </div>
+
+            <!-- Group Type -->
+            <div class="form-section">
+                <h3>グループタイプ <span style="color: red;">*</span></h3>
+                <div class="group-type-cards">
+                    <div class="group-type-card" onclick="selectGroupType(this, 'family')">
+                        <div class="card-header">
+                            <span class="card-icon">🏠</span>
+                            <span class="card-title">家族グループ</span>
+                        </div>
+                        <div class="card-description">家族で助け合い、健康を応援</div>
+                    </div>
+                    <div class="group-type-card" onclick="selectGroupType(this, 'friends')">
+                        <div class="card-header">
+                            <span class="card-icon">👥</span>
+                            <span class="card-title">友達グループ</span>
+                        </div>
+                        <div class="card-description">友人同士で励まし合う</div>
+                    </div>
+                    <div class="group-type-card" onclick="selectGroupType(this, 'condition')">
+                        <div class="card-header">
+                            <span class="card-icon">🏥</span>
+                            <span class="card-title">症状別グループ</span>
+                        </div>
+                        <div class="card-description">同じ健康課題を持つ仲間と</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member Invitation -->
+            <div class="form-section">
+                <h3>メンバーを招待</h3>
+                <div class="tab-navigation">
+                    <button class="tab-btn active" onclick="switchTab('qr')">QRコード</button>
+                    <button class="tab-btn" onclick="switchTab('link')">リンク共有</button>
+                </div>
+                
+                <div id="qr-tab" class="tab-content active">
+                    <div class="qr-code">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 16px;">このQRコードをスキャンしてもらうと参加できます</p>
+                    <button class="btn btn-secondary">QRコードを保存</button>
+                </div>
+                
+                <div id="link-tab" class="tab-content">
+                    <div class="invite-link">https://kazoku-app.jp/join/abc123</div>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 16px;">このリンクをLINEやメールで共有できます</p>
+                    <button class="btn btn-primary" onclick="copyLink()">リンクをコピー</button>
+                </div>
+            </div>
+
+            <!-- Role Setting -->
+            <div class="form-section">
+                <h3>あなたの役割を設定（任意）</h3>
+                <select class="select-field">
+                    <option>設定しない</option>
+                    <option>親</option>
+                    <option>子ども</option>
+                    <option>祖父母</option>
+                    <option>その他</option>
+                </select>
+            </div>
+
+            <!-- Privacy Setting -->
+            <div class="form-section">
+                <h3>プライバシー設定</h3>
+                <div class="toggle-container">
+                    <span>グループを非公開にする（招待された人のみ参加可能）</span>
+                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                        <div class="toggle-handle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <a href="00_group_timeline.html" class="footer-btn secondary">後で招待する</a>
+            <a href="00_group_timeline.html" class="footer-btn primary" id="completeBtn" style="pointer-events: none; background: #ccc; color: #999;">完了してグループに入る</a>
+        </div>
+
+        <!-- Toast -->
+        <div id="toast" class="toast">リンクをコピーしました</div>
+    </div>
+
+    <script>
+        let selectedGroupType = null;
+        
+        function goBack() {
+            window.location.href = '09_account_registration.html';
+        }
+        
+        function selectGroupType(card, type) {
+            // Remove selection from all cards
+            document.querySelectorAll('.group-type-card').forEach(c => c.classList.remove('selected'));
+            
+            // Add selection to clicked card
+            card.classList.add('selected');
+            selectedGroupType = type;
+            
+            validateForm();
+        }
+        
+        function switchTab(tab) {
+            // Remove active from all tabs and contents
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active to clicked tab
+            event.target.classList.add('active');
+            document.getElementById(tab + '-tab').classList.add('active');
+        }
+        
+        function copyLink() {
+            const link = 'https://kazoku-app.jp/join/abc123';
+            navigator.clipboard.writeText(link).then(() => {
+                showToast();
+            }).catch(() => {
+                // Fallback for browsers that don't support clipboard API
+                const textArea = document.createElement('textarea');
+                textArea.value = link;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast();
+            });
+        }
+        
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        function toggleSwitch(toggle) {
+            toggle.classList.toggle('active');
+        }
+        
+        function validateForm() {
+            const groupName = document.getElementById('groupName').value.trim();
+            const completeBtn = document.getElementById('completeBtn');
+            
+            if (groupName && selectedGroupType) {
+                completeBtn.style.background = 'var(--primary-color)';
+                completeBtn.style.color = 'white';
+                completeBtn.style.pointerEvents = 'auto';
+            } else {
+                completeBtn.style.background = '#ccc';
+                completeBtn.style.color = '#999';
+                completeBtn.style.pointerEvents = 'none';
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            validateForm();
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDodOsXG9AR5jDm%2FvwPDzyMPd8yCBxkTgcMlbK5FyhZYX4dTTNJJ5jaHCsPjSEip9yfSzlNkLd6sKq4DDgZ%2FyiFiZo1hDvTAKnOXCZS2U9DqQ6On4RqqOUGqd13NQ%2FiHo6OC0NeFWytwiHQc763Ub6doeLo%2FwUHOdPquYQ2ovb2FuKqU6qM%2FdcFn0x44OnNR2IXI9p5S1bo47D0GL2yjA%2BboSQmgsNjfWg2LI%2FobaqGhYr10NaKtUEROLvbQcN7RUsNYwp3oKS9Kmt4PUqbwc92Kooxel%2Fp6PXQb64%2FApTKbTKp6FOsWjHMapthFO27aCQrssRzEuX4rVffeP1KidY5K4m7f5pe0qV49kAAAfwoKPf%2FDktAmFPEcRd8tzVTSfM798rFIehxyG2tqBYE%2Fr7TOa4kfYmcUAyiEX0Kx1PL96ApBGM%2BUiNoSnriCMBoamhm9U9ozjMFI1rNVd6KnqFD%2FaUmzOzBVGkVLHBjk%2F2pa4fjUXbP%2BezasUfMnft5C5Zw%3D%3D";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDodOsXG9AR5jDm/vwPDzyMPd8yCBxkTgcMlbK5FyhZYX4dTTNJJ5jaHCsPjSEip9yfSzlNkLd6sKq4DDgZ/yiFiZo1hDvTAKnOXCZS2U9DqQ6On4RqqOUGqd13NQ/iHo6OC0NeFWytwiHQc763Ub6doeLo/wUHOdPquYQ2ovb2FuKqU6qM/dcFn0x44OnNR2IXI9p5S1bo47D0GL2yjA+boSQmgsNjfWg2LI/obaqGhYr10NaKtUEROLvbQcN7RUsNYwp3oKS9Kmt4PUqbwc92Kooxel/p6PXQb64/ApTKbTKp6FOsWjHMapthFO27aCQrssRzEuX4rVffeP1KidY5K4m7f5pe0qV49kAAAfwoKPf/DktAmFPEcRd8tzVTSfM798rFIehxyG2tqBYE/r7TOa4kfYmcUAyiEX0Kx1PL96ApBGM+UiNoSnriCMBoamhm9U9ozjMFI1rNVd6KnqFD/aUmzOzBVGkVLHBjk/2pa4fjUXbP+ezasUfMnft5C5Zw==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
