@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>目標設定 - 家族健康会議システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gray-bg: #F8F9FA;
+            --gray-border: #E9ECEF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--gray-bg);
+            max-width: 375px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 70px;
+        }
+        
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--gray-border);
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .tab-nav {
+            background: white;
+            border-bottom: 1px solid var(--gray-border);
+            display: flex;
+            position: sticky;
+            top: 49px;
+            z-index: 9;
+        }
+        
+        .tab-item {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            position: relative;
+            transition: color 0.2s;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+        
+        .content {
+            padding: 8px 16px 20px;
+        }
+        
+        .goal-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--gray-border);
+            transition: all 0.2s;
+        }
+        
+        .goal-card:active {
+            transform: scale(0.98);
+        }
+        
+        .goal-header {
+            display: flex;
+            margin-bottom: 12px;
+        }
+        
+        .goal-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .icon-blue { background: linear-gradient(135deg, #E3F2FD, #BBDEFB); }
+        .icon-green { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); }
+        .icon-orange { background: linear-gradient(135deg, #FFF3E0, #FFE0B2); }
+        .icon-purple { background: linear-gradient(135deg, #F3E5F5, #E1BEE7); }
+        
+        .goal-info {
+            flex: 1;
+        }
+        
+        .goal-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .goal-period {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 6px;
+        }
+        
+        .goal-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+        
+        .badge-active {
+            background: #E3F2FD;
+            color: #1976D2;
+        }
+        
+        .badge-family {
+            background: #FFF3E0;
+            color: #F57C00;
+        }
+        
+        .goal-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        
+        .progress-label {
+            color: #666;
+        }
+        
+        .progress-value {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #E0E0E0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-fill.blue { background: linear-gradient(90deg, var(--primary-color), #357ABD); }
+        .progress-fill.green { background: linear-gradient(90deg, var(--accent-color), #3DA960); }
+        .progress-fill.orange { background: linear-gradient(90deg, #FF9800, #F57C00); }
+        
+        .goal-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-action {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid var(--gray-border);
+            background: white;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .btn-action:active {
+            background: var(--gray-bg);
+        }
+        
+        .btn-action.primary {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-action.primary:active {
+            opacity: 0.9;
+        }
+        
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: white;
+            border-top: 1px solid var(--gray-border);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 10;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .add-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+            z-index: 9;
+            transition: all 0.2s;
+        }
+        
+        .add-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="flex items-center justify-between">
+            <div class="cursor-pointer" onclick="window.location.href='13_settings.html'">
+                <i class="fas fa-arrow-left text-gray-600"></i>
+            </div>
+            <h1 class="text-lg font-semibold">目標設定</h1>
+            <div></div>
+        </div>
+    </div>
+    
+    <div class="tab-nav">
+        <div class="tab-item active" onclick="switchTab('personal')">個人目標</div>
+        <div class="tab-item" onclick="switchTab('family')">家族目標</div>
+    </div>
+    
+    <div class="content" id="personalContent">
+        <div class="goal-card">
+            <div class="goal-header">
+                <div class="goal-icon icon-blue">🏃</div>
+                <div class="goal-info">
+                    <div class="goal-title">週3回のジョギング</div>
+                    <div class="goal-period">2025年1月1日 〜 2025年3月31日</div>
+                    <span class="goal-badge badge-active">進行中</span>
+                </div>
+            </div>
+            <div class="goal-progress">
+                <span class="progress-label">今週の進捗</span>
+                <span class="progress-value">3/3回 達成！</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill blue" style="width: 100%;"></div>
+            </div>
+            <div class="goal-actions">
+                <button class="btn-action" onclick="editGoal('running')">
+                    <i class="fas fa-edit"></i> 編集
+                </button>
+                <button class="btn-action primary" onclick="recordActivity('running')">
+                    <i class="fas fa-plus"></i> 記録する
+                </button>
+            </div>
+        </div>
+        
+        <div class="goal-card">
+            <div class="goal-header">
+                <div class="goal-icon icon-green">🥗</div>
+                <div class="goal-info">
+                    <div class="goal-title">野菜を毎日350g摂取</div>
+                    <div class="goal-period">2025年1月1日 〜 2025年12月31日</div>
+                    <span class="goal-badge badge-active">進行中</span>
+                </div>
+            </div>
+            <div class="goal-progress">
+                <span class="progress-label">今週の達成率</span>
+                <span class="progress-value">5/7日</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill green" style="width: 71%;"></div>
+            </div>
+            <div class="goal-actions">
+                <button class="btn-action" onclick="editGoal('vegetable')">
+                    <i class="fas fa-edit"></i> 編集
+                </button>
+                <button class="btn-action primary" onclick="recordActivity('vegetable')">
+                    <i class="fas fa-plus"></i> 記録する
+                </button>
+            </div>
+        </div>
+        
+        <div class="goal-card">
+            <div class="goal-header">
+                <div class="goal-icon icon-purple">😴</div>
+                <div class="goal-info">
+                    <div class="goal-title">7時間以上の睡眠</div>
+                    <div class="goal-period">2025年1月1日 〜 2025年3月31日</div>
+                    <span class="goal-badge badge-active">進行中</span>
+                </div>
+            </div>
+            <div class="goal-progress">
+                <span class="progress-label">今週の達成率</span>
+                <span class="progress-value">4/7日</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill orange" style="width: 57%;"></div>
+            </div>
+            <div class="goal-actions">
+                <button class="btn-action" onclick="editGoal('sleep')">
+                    <i class="fas fa-edit"></i> 編集
+                </button>
+                <button class="btn-action primary" onclick="recordActivity('sleep')">
+                    <i class="fas fa-plus"></i> 記録する
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content" id="familyContent" style="display: none;">
+        <div class="goal-card">
+            <div class="goal-header">
+                <div class="goal-icon icon-orange">👨‍👩‍👧</div>
+                <div class="goal-info">
+                    <div class="goal-title">月1回の家族健康会議</div>
+                    <div class="goal-period">2025年1月1日 〜 2025年12月31日</div>
+                    <span class="goal-badge badge-family">家族</span>
+                    <span class="goal-badge badge-active">進行中</span>
+                </div>
+            </div>
+            <div class="goal-progress">
+                <span class="progress-label">今月の進捗</span>
+                <span class="progress-value">1/1回 達成！</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill orange" style="width: 100%;"></div>
+            </div>
+            <div class="goal-actions">
+                <button class="btn-action" onclick="editGoal('family-meeting')">
+                    <i class="fas fa-edit"></i> 編集
+                </button>
+                <button class="btn-action primary" onclick="window.location.href='00_group_timeline.html'">
+                    <i class="fas fa-calendar"></i> 会議開始
+                </button>
+            </div>
+        </div>
+        
+        <div class="goal-card">
+            <div class="goal-header">
+                <div class="goal-icon icon-green">🚶</div>
+                <div class="goal-info">
+                    <div class="goal-title">家族で週末ウォーキング</div>
+                    <div class="goal-period">2025年1月1日 〜 2025年3月31日</div>
+                    <span class="goal-badge badge-family">家族</span>
+                    <span class="goal-badge badge-active">進行中</span>
+                </div>
+            </div>
+            <div class="goal-progress">
+                <span class="progress-label">今月の達成率</span>
+                <span class="progress-value">2/4回</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill green" style="width: 50%;"></div>
+            </div>
+            <div class="goal-actions">
+                <button class="btn-action" onclick="editGoal('family-walk')">
+                    <i class="fas fa-edit"></i> 編集
+                </button>
+                <button class="btn-action primary" onclick="recordActivity('family-walk')">
+                    <i class="fas fa-plus"></i> 記録する
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <button class="add-btn" onclick="createNewGoal()">
+        <i class="fas fa-plus"></i>
+    </button>
+    
+    <div class="footer-nav">
+        <div class="nav-item" onclick="window.location.href='00_group_timeline.html'">
+            <i class="fas fa-home"></i>
+            <span>ホーム</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='02_my_progress.html'">
+            <i class="fas fa-chart-line"></i>
+            <span>進捗</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='12_ai_consultation.html'">
+            <i class="fas fa-robot"></i>
+            <span>AI相談</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='13_settings.html'">
+            <i class="fas fa-cog"></i>
+            <span>設定</span>
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab-item');
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            if (tab === 'personal') {
+                tabs[0].classList.add('active');
+                document.getElementById('personalContent').style.display = 'block';
+                document.getElementById('familyContent').style.display = 'none';
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('personalContent').style.display = 'none';
+                document.getElementById('familyContent').style.display = 'block';
+            }
+        }
+        
+        function createNewGoal() {
+            alert('新しい目標作成画面へ遷移します');
+        }
+        
+        function editGoal(goalId) {
+            alert(`目標「${goalId}」の編集画面へ遷移します`);
+        }
+        
+        function recordActivity(goalId) {
+            alert(`「${goalId}」の活動を記録しました！\n\nタイムラインに投稿しますか？`);
+        }
+    </script>
+</body>
+</html>

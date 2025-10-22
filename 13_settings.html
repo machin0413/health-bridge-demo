@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設定 - 家族健康会議システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gray-bg: #F8F9FA;
+            --gray-border: #E9ECEF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--gray-bg);
+            max-width: 375px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 70px;
+        }
+        
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--gray-border);
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .content {
+            padding-bottom: 20px;
+        }
+        
+        .section-header {
+            padding: 8px 16px;
+            background: white;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+        }
+        
+        .settings-group {
+            background: white;
+            border-top: 1px solid var(--gray-border);
+            border-bottom: 1px solid var(--gray-border);
+        }
+        
+        .settings-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--gray-border);
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        
+        .settings-item:active {
+            background: var(--gray-bg);
+        }
+        
+        .item-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .icon-blue { background: #E3F2FD; }
+        .icon-green { background: #E8F5E9; }
+        .icon-purple { background: #F3E5F5; }
+        .icon-orange { background: #FFF3E0; }
+        .icon-red { background: #FFEBEE; }
+        .icon-teal { background: #E0F2F1; }
+        
+        .item-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .item-title {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .item-subtitle {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .item-badge {
+            background: #FF3B30;
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-right: 8px;
+        }
+        
+        .item-arrow {
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 28px;
+            margin-right: 8px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.3s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+        
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: white;
+            border-top: 1px solid var(--gray-border);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 10;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .version-info {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="flex items-center justify-between">
+            <div></div>
+            <h1 class="text-lg font-semibold">設定</h1>
+            <div class="cursor-pointer" onclick="window.location.href='14_my_page.html'">
+                <i class="fas fa-user-circle text-gray-500 text-xl"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="section-header">健康管理</div>
+        <div class="settings-group">
+            <a href="07_health_checkup_upload.html" class="settings-item">
+                <div class="item-icon icon-blue"><i class="fas fa-file-medical text-blue-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">健康診断アップロード</div>
+                    <div class="item-subtitle">診断結果を登録・管理</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="15_goal_setting.html" class="settings-item">
+                <div class="item-icon icon-green"><i class="fas fa-bullseye text-green-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">目標設定</div>
+                    <div class="item-subtitle">個人・家族の健康目標</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="03_weekly_report.html" class="settings-item">
+                <div class="item-icon icon-purple"><i class="fas fa-chart-bar text-purple-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">週次レポート</div>
+                    <div class="item-subtitle">活動の振り返り</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+        </div>
+        
+        <div class="section-header">会議・コミュニケーション</div>
+        <div class="settings-group">
+            <div class="settings-item" onclick="alert('会議準備画面へ遷移します')">
+                <div class="item-icon icon-orange"><i class="fas fa-calendar-alt text-orange-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">会議を開始</div>
+                    <div class="item-subtitle">月次健康会議の準備</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </div>
+            <div class="settings-item" onclick="alert('グループ管理画面へ遷移します')">
+                <div class="item-icon icon-teal"><i class="fas fa-users text-teal-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">グループ管理</div>
+                    <div class="item-subtitle">メンバー・設定の変更</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </div>
+            <div class="settings-item">
+                <div class="item-icon icon-blue"><i class="fas fa-bell text-blue-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">通知設定</div>
+                    <div class="item-subtitle">プッシュ通知の管理</div>
+                </div>
+                <label class="toggle-switch" onclick="event.stopPropagation()">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="section-header">キャンペーン・特典</div>
+        <div class="settings-group">
+            <div class="settings-item" onclick="alert('キャンペーン一覧画面へ遷移します')">
+                <div class="item-icon icon-purple"><i class="fas fa-gift text-purple-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">キャンペーン一覧</div>
+                    <div class="item-subtitle">参加可能なイベント</div>
+                </div>
+                <span class="item-badge">3</span>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </div>
+            <div class="settings-item" onclick="alert('貢献ログ画面へ遷移します')">
+                <div class="item-icon icon-orange"><i class="fas fa-trophy text-orange-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">貢献ログ</div>
+                    <div class="item-subtitle">獲得バッジと履歴</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </div>
+        </div>
+        
+        <div class="section-header">AIトレーナー</div>
+        <div class="settings-group">
+            <a href="11_ai_trainer_setup.html" class="settings-item">
+                <div class="item-icon icon-green"><i class="fas fa-robot text-green-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">AIトレーナー設定</div>
+                    <div class="item-subtitle">性格・頻度のカスタマイズ</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <a href="12_ai_consultation.html" class="settings-item">
+                <div class="item-icon icon-blue"><i class="fas fa-comments text-blue-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">AI相談履歴</div>
+                    <div class="item-subtitle">過去の相談を確認</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+        </div>
+        
+        <div class="section-header">アカウント</div>
+        <div class="settings-group">
+            <a href="14_my_page.html" class="settings-item">
+                <div class="item-icon icon-blue"><i class="fas fa-user text-blue-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">プロフィール編集</div>
+                    <div class="item-subtitle">個人情報の変更</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </a>
+            <div class="settings-item">
+                <div class="item-icon icon-purple"><i class="fas fa-lock text-purple-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">プライバシー設定</div>
+                    <div class="item-subtitle">公開範囲の管理</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </div>
+            <div class="settings-item">
+                <div class="item-icon icon-orange"><i class="fas fa-database text-orange-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">データ管理</div>
+                    <div class="item-subtitle">バックアップ・エクスポート</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </div>
+        </div>
+        
+        <div class="section-header">その他</div>
+        <div class="settings-group">
+            <div class="settings-item">
+                <div class="item-icon icon-teal"><i class="fas fa-question-circle text-teal-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">ヘルプ・サポート</div>
+                    <div class="item-subtitle">使い方・FAQ</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </div>
+            <div class="settings-item">
+                <div class="item-icon icon-blue"><i class="fas fa-file-alt text-blue-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">利用規約・プライバシーポリシー</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </div>
+            <div class="settings-item">
+                <div class="item-icon icon-red"><i class="fas fa-sign-out-alt text-red-600"></i></div>
+                <div class="item-content">
+                    <div class="item-title">ログアウト</div>
+                </div>
+                <i class="fas fa-chevron-right item-arrow"></i>
+            </div>
+        </div>
+        
+        <div class="version-info">
+            家族健康会議システム v1.0.0<br>
+            © 2025 Family Health Conference
+        </div>
+    </div>
+    
+    <div class="footer-nav">
+        <div class="nav-item" onclick="window.location.href='00_group_timeline.html'">
+            <i class="fas fa-home"></i>
+            <span>ホーム</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='02_my_progress.html'">
+            <i class="fas fa-chart-line"></i>
+            <span>進捗</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='12_ai_consultation.html'">
+            <i class="fas fa-robot"></i>
+            <span>AI相談</span>
+        </div>
+        <div class="nav-item active">
+            <i class="fas fa-cog"></i>
+            <span>設定</span>
+        </div>
+    </div>
+</body>
+</html>

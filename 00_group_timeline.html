@@ -223,10 +223,10 @@
     <div class="header">
         <div class="flex items-center justify-between">
             <div></div>
-            <h1 class="text-lg font-semibold">山田家</h1>
+            <h1 class="text-lg font-semibold">田中家</h1>
             <div class="flex gap-4">
-                <i class="fas fa-bell text-gray-500 text-lg"></i>
-                <i class="fas fa-cog text-gray-500 text-lg"></i>
+                <i class="fas fa-bell text-gray-500 text-lg" style="cursor: pointer;"></i>
+                <i class="fas fa-user-circle text-gray-500 text-lg" style="cursor: pointer;" onclick="window.location.href='14_my_page.html'"></i>
             </div>
         </div>
     </div>
@@ -236,7 +236,7 @@
         <div class="flex">
             <div class="tab-item active flex-1">タイムライン</div>
             <div class="tab-item flex-1">会議</div>
-            <div class="tab-item flex-1" onclick="window.open('02_my_progress.html', '_blank')">マイ進捗</div>
+            <div class="tab-item flex-1" onclick="window.location.href='02_my_progress.html'">マイ進捗</div>
         </div>
     </div>
 
@@ -355,23 +355,23 @@
             <i class="fas fa-home"></i>
             <span>ホーム</span>
         </div>
-        <div class="nav-item" onclick="window.open('03_weekly_report.html', '_blank')">
+        <div class="nav-item" onclick="window.location.href='02_my_progress.html'">
             <i class="fas fa-chart-bar"></i>
-            <span>週次レポート</span>
+            <span>進捗</span>
         </div>
         <div class="nav-item">
             <div class="create-btn" onclick="window.open('01_post_creation.html', '_blank')">
                 <i class="fas fa-plus"></i>
             </div>
-            <span style="margin-top: 4px;">投稿作成</span>
+            <span style="margin-top: 4px;">投稿</span>
         </div>
-        <div class="nav-item">
-            <i class="fas fa-calendar"></i>
-            <span>会議履歴</span>
+        <div class="nav-item" onclick="window.location.href='12_ai_consultation.html'">
+            <i class="fas fa-robot"></i>
+            <span>AI相談</span>
         </div>
-        <div class="nav-item">
-            <i class="fas fa-user"></i>
-            <span>マイページ</span>
+        <div class="nav-item" onclick="window.location.href='13_settings.html'">
+            <i class="fas fa-cog"></i>
+            <span>設定</span>
         </div>
     </div>
 

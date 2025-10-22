@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI相談 - 家族健康会議システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gray-bg: #F8F9FA;
+            --gray-border: #E9ECEF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--gray-bg);
+            max-width: 375px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 130px;
+        }
+        
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--gray-border);
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .chat-container {
+            padding: 16px;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .message {
+            display: flex;
+            margin-bottom: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.ai {
+            justify-content: flex-start;
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .message.ai .message-avatar {
+            background: linear-gradient(135deg, var(--accent-color), #3DA960);
+            margin-right: 8px;
+        }
+        
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+            margin-left: 8px;
+        }
+        
+        .message-content {
+            max-width: 70%;
+        }
+        
+        .message-bubble {
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        
+        .message.ai .message-bubble {
+            background: white;
+            color: #333;
+            border: 1px solid var(--gray-border);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message.user .message-bubble {
+            background: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message-time {
+            font-size: 10px;
+            color: #999;
+            margin-top: 4px;
+            padding: 0 4px;
+        }
+        
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        
+        .chip {
+            background: white;
+            border: 1px solid var(--gray-border);
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .chip:hover {
+            background: #F0F7FF;
+            border-color: var(--primary-color);
+        }
+        
+        .typing-indicator {
+            display: none;
+            padding: 10px 14px;
+            background: white;
+            border: 1px solid var(--gray-border);
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            width: fit-content;
+        }
+        
+        .typing-indicator.active {
+            display: block;
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 3px;
+        }
+        
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: #ccc;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+        
+        .input-area {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: white;
+            border-top: 1px solid var(--gray-border);
+            padding: 10px 16px;
+            z-index: 10;
+        }
+        
+        .input-wrapper {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--gray-border);
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        .message-input:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .send-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: white;
+            border-top: 1px solid var(--gray-border);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 10;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="flex items-center justify-between">
+            <div class="cursor-pointer" onclick="window.location.href='00_group_timeline.html'">
+                <i class="fas fa-arrow-left text-gray-600"></i>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-lg font-semibold">AIトレーナー</span>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white">
+                🤖
+            </div>
+        </div>
+    </div>
+    
+    <div class="chat-container" id="chatContainer">
+        <div class="message ai">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+                <div class="message-bubble">
+                    こんにちは！ヘルシーさんです😊<br>健康に関することなら何でも聞いてくださいね。
+                </div>
+                <div class="message-time">10:00</div>
+            </div>
+        </div>
+        
+        <div class="message ai">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+                <div class="message-bubble">
+                    最近の活動記録を見ると、ジョギングを続けていて素晴らしいですね！🏃‍♂️<br>何かお手伝いできることはありますか？
+                </div>
+                <div class="suggestion-chips">
+                    <div class="chip" onclick="sendSuggestion('運動のアドバイスが欲しい')">💪 運動のアドバイス</div>
+                    <div class="chip" onclick="sendSuggestion('食事について相談したい')">🥗 食事の相談</div>
+                    <div class="chip" onclick="sendSuggestion('睡眠の質を改善したい')">😴 睡眠改善</div>
+                    <div class="chip" onclick="sendSuggestion('健康診断の結果を見て欲しい')">📋 診断結果</div>
+                </div>
+                <div class="message-time">10:00</div>
+            </div>
+        </div>
+        
+        <div class="message user">
+            <div class="message-content">
+                <div class="message-bubble">運動のアドバイスが欲しいです</div>
+                <div class="message-time">10:05</div>
+            </div>
+            <div class="message-avatar">👤</div>
+        </div>
+        
+        <div class="message ai">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+                <div class="message-bubble">
+                    素晴らしいですね！🎯<br><br>
+                    現在、週3回のジョギングを継続されていますね。次のステップとして以下を提案します：<br><br>
+                    1️⃣ 距離を10%ずつ増やす<br>
+                    2️⃣ ストレッチを習慣化<br>
+                    3️⃣ 週1回の筋トレを追加<br><br>
+                    どれから始めますか？
+                </div>
+                <div class="suggestion-chips">
+                    <div class="chip" onclick="sendSuggestion('距離を増やしたい')">📏 距離を増やす</div>
+                    <div class="chip" onclick="sendSuggestion('ストレッチを教えて')">🧘 ストレッチ</div>
+                    <div class="chip" onclick="sendSuggestion('筋トレメニューが知りたい')">💪 筋トレ</div>
+                </div>
+                <div class="message-time">10:05</div>
+            </div>
+        </div>
+        
+        <div class="message ai">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="input-area">
+        <div class="input-wrapper">
+            <input 
+                type="text" 
+                class="message-input" 
+                id="messageInput" 
+                placeholder="メッセージを入力..."
+                onkeypress="if(event.key==='Enter') sendMessage()"
+            >
+            <button class="send-btn" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="footer-nav">
+        <div class="nav-item" onclick="window.location.href='00_group_timeline.html'">
+            <i class="fas fa-home"></i>
+            <span>ホーム</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='02_my_progress.html'">
+            <i class="fas fa-chart-line"></i>
+            <span>進捗</span>
+        </div>
+        <div class="nav-item active">
+            <i class="fas fa-robot"></i>
+            <span>AI相談</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='13_settings.html'">
+            <i class="fas fa-cog"></i>
+            <span>設定</span>
+        </div>
+    </div>
+    
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            addUserMessage(message);
+            input.value = '';
+            
+            setTimeout(() => {
+                showTypingIndicator();
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    addAIResponse(message);
+                }, 2000);
+            }, 500);
+        }
+        
+        function sendSuggestion(text) {
+            addUserMessage(text);
+            setTimeout(() => {
+                showTypingIndicator();
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    addAIResponse(text);
+                }, 2000);
+            }, 500);
+        }
+        
+        function addUserMessage(text) {
+            const container = document.getElementById('chatContainer');
+            const time = new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user';
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="message-bubble">${text}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+                <div class="message-avatar">👤</div>
+            `;
+            container.insertBefore(messageDiv, container.lastElementChild);
+            scrollToBottom();
+        }
+        
+        function addAIResponse(userMessage) {
+            const container = document.getElementById('chatContainer');
+            const time = new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+            let response = 'ありがとうございます！その質問について詳しくアドバイスしますね😊';
+            
+            if (userMessage.includes('距離')) {
+                response = '素晴らしい選択です！👍<br><br>現在の距離から10%ずつ増やしていくのが安全で効果的です。例えば、今3kmなら次は3.3kmに挑戦しましょう。<br><br>無理せず、体調と相談しながら進めてくださいね！';
+            } else if (userMessage.includes('ストレッチ')) {
+                response = 'ストレッチは運動の前後に欠かせませんね！🧘<br><br>特にジョギング前は動的ストレッチ、後は静的ストレッチがおすすめです。<br><br>動画で詳しく説明しましょうか？';
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message ai';
+            messageDiv.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div class="message-bubble">${response}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+            `;
+            container.insertBefore(messageDiv, container.lastElementChild);
+            scrollToBottom();
+        }
+        
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').classList.add('active');
+            scrollToBottom();
+        }
+        
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+        
+        function scrollToBottom() {
+            const container = document.getElementById('chatContainer');
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        scrollToBottom();
+    </script>
+</body>
+</html>

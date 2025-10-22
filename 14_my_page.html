@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイページ - 家族健康会議システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gray-bg: #F8F9FA;
+            --gray-border: #E9ECEF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--gray-bg);
+            max-width: 375px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 70px;
+        }
+        
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--gray-border);
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+            padding: 24px 16px;
+            text-align: center;
+            color: white;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 12px;
+            position: relative;
+        }
+        
+        .edit-avatar-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 16px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+        
+        .info-card {
+            background: white;
+            margin: 8px 16px;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--gray-border);
+        }
+        
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-border);
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .info-value {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .badge-item {
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .badge-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 6px;
+        }
+        
+        .badge-item.locked .badge-icon {
+            background: #E0E0E0;
+            filter: grayscale(100%);
+            opacity: 0.4;
+        }
+        
+        .badge-name {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .wellness-score {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .score-value {
+            font-size: 40px;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .score-label {
+            font-size: 13px;
+            color: #666;
+            margin: 8px 0;
+        }
+        
+        .wellness-bar {
+            width: 100%;
+            height: 6px;
+            background: #E0E0E0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+        
+        .wellness-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), #3DA960);
+            width: 82%;
+            border-radius: 3px;
+        }
+        
+        .btn-edit {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.2s;
+        }
+        
+        .btn-edit:hover {
+            opacity: 0.9;
+        }
+        
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: white;
+            border-top: 1px solid var(--gray-border);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 10;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="flex items-center justify-between">
+            <div class="cursor-pointer" onclick="window.location.href='13_settings.html'">
+                <i class="fas fa-arrow-left text-gray-600"></i>
+            </div>
+            <h1 class="text-lg font-semibold">マイページ</h1>
+            <div></div>
+        </div>
+    </div>
+    
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <span>👤</span>
+            <div class="edit-avatar-btn">
+                <i class="fas fa-pen text-white"></i>
+            </div>
+        </div>
+        <div class="text-xl font-semibold mb-1">太郎</div>
+        <div class="text-sm opacity-90">田中家グループ　メンバー</div>
+        
+        <div class="profile-stats">
+            <div class="stat-item">
+                <div class="stat-value">127</div>
+                <div class="stat-label">投稿数</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">89</div>
+                <div class="stat-label">継続日数</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">12</div>
+                <div class="stat-label">バッジ</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="info-card">
+        <div class="card-title">基本情報</div>
+        <div class="info-row">
+            <span class="info-label">生年月日</span>
+            <span class="info-value">1975年5月15日</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">年齢</span>
+            <span class="info-value">49歳</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">性別</span>
+            <span class="info-value">男性</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">身長</span>
+            <span class="info-value">172 cm</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">体重</span>
+            <span class="info-value">68 kg</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">メールアドレス</span>
+            <span class="info-value">taro@example.com</span>
+        </div>
+        <button class="btn-edit" onclick="alert('プロフィール編集機能は開発中です')">プロフィールを編集</button>
+    </div>
+    
+    <div class="info-card">
+        <div class="card-title">イキイキ度</div>
+        <div class="wellness-score">
+            <div class="score-value">82<span class="text-lg">点</span></div>
+            <div class="score-label">非常に良い状態です！</div>
+            <div class="wellness-bar">
+                <div class="wellness-fill"></div>
+            </div>
+            <div class="text-xs text-gray-600">
+                継続的な運動と規則正しい生活で、<br>
+                とても健康的な状態を保っています。
+            </div>
+        </div>
+    </div>
+    
+    <div class="info-card">
+        <div class="card-title">獲得バッジ</div>
+        <div class="badges-grid">
+            <div class="badge-item">
+                <div class="badge-icon">🏃</div>
+                <div class="badge-name">ランナー</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon">🔥</div>
+                <div class="badge-name">継続王</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon">💪</div>
+                <div class="badge-name">筋トレ</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon">🥗</div>
+                <div class="badge-name">健康食</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon">😴</div>
+                <div class="badge-name">睡眠マスター</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon">📊</div>
+                <div class="badge-name">記録魔</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon">👨‍👩‍👧</div>
+                <div class="badge-name">家族思い</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon">🎯</div>
+                <div class="badge-name">目標達成</div>
+            </div>
+            <div class="badge-item locked">
+                <div class="badge-icon">🏆</div>
+                <div class="badge-name">未獲得</div>
+            </div>
+            <div class="badge-item locked">
+                <div class="badge-icon">⭐</div>
+                <div class="badge-name">未獲得</div>
+            </div>
+            <div class="badge-item locked">
+                <div class="badge-icon">🎖️</div>
+                <div class="badge-name">未獲得</div>
+            </div>
+            <div class="badge-item locked">
+                <div class="badge-icon">👑</div>
+                <div class="badge-name">未獲得</div>
+            </div>
+        </div>
+    </div>
+    
+    <div style="height: 20px;"></div>
+    
+    <div class="footer-nav">
+        <div class="nav-item" onclick="window.location.href='00_group_timeline.html'">
+            <i class="fas fa-home"></i>
+            <span>ホーム</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='02_my_progress.html'">
+            <i class="fas fa-chart-line"></i>
+            <span>進捗</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='12_ai_consultation.html'">
+            <i class="fas fa-robot"></i>
+            <span>AI相談</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='13_settings.html'">
+            <i class="fas fa-cog"></i>
+            <span>設定</span>
+        </div>
+    </div>
+</body>
+</html>
