@@ -3,141 +3,379 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>画面一覧インデックス</title>
+    <title>家族健康会議システム - 画面サンプル一覧</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gray-bg: #F8F9FA;
+            --gray-border: #E9ECEF;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            line-height: 1.6;
-            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--gray-bg);
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
-            background-color: #f8f9fa;
-            color: #212529;
         }
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 30px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
         }
-        h1 {
-            font-size: 28px;
-            color: #343a40;
-            border-bottom: 2px solid #dee2e6;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+        
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--gray-border);
         }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            margin-bottom: 10px;
-            border: 1px solid #e9ecef;
-            border-radius: 5px;
-            transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
-        }
-        li:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-        a {
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            padding: 15px 20px;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .screen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+        }
+        
+        .screen-card {
+            background: white;
+            border: 1px solid var(--gray-border);
+            border-radius: 8px;
+            padding: 15px;
             text-decoration: none;
-            color: #007bff;
-            font-size: 16px;
+            color: inherit;
+            transition: all 0.2s;
+            cursor: pointer;
         }
-        a:hover {
-            background-color: #f1f3f5;
-            border-radius: 5px;
+        
+        .screen-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+            transform: translateY(-2px);
         }
-        .file-name {
-            font-family: "SF Mono", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
+        
+        .screen-number {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            font-size: 11px;
             font-weight: 600;
-            color: #495057;
-            min-width: 280px; /* ファイル名の幅を揃える */
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-bottom: 8px;
         }
-        .description {
-            color: #6c757d;
+        
+        .screen-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .screen-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .badge {
+            display: inline-block;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+        
+        .badge-new {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .badge-updated {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .quick-start {
+            background: linear-gradient(135deg, var(--accent-color), #3DA960);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .quick-start h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .quick-start p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .btn-start {
+            background: white;
+            color: var(--accent-color);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-start:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid var(--gray-border);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>画面一覧</h1>
-        <ul>
-            <li>
-                <a href="00_group_timeline.html">
-                    <span class="file-name">00_group_timeline.html</span>
-                    <span class="description">Main app screen</span>
-                </a>
-            </li>
-            <li>
-                <a href="01_post_creation.html">
-                    <span class="file-name">01_post_creation.html</span>
-                    <span class="description">Create new post (modal)</span>
-                </a>
-            </li>
-            <li>
-                <a href="02_my_progress.html">
-                    <span class="file-name">02_my_progress.html</span>
-                    <span class="description">Personal progress tracking</span>
-                </a>
-            </li>
-            <li>
-                <a href="03_weekly_report.html">
-                    <span class="file-name">03_weekly_report.html</span>
-                    <span class="description">Weekly summary</span>
-                </a>
-            </li>
-            <li>
-                <a href="04_health_checkup_results.html">
-                    <span class="file-name">04_health_checkup_results.html</span>
-                    <span class="description">Health checkup results</span>
-                </a>
-            </li>
-            <li>
-                <a href="05_health_checkup_ai_video.html">
-                    <span class="file-name">05_health_checkup_ai_video.html</span>
-                    <span class="description">AI video explanation</span>
-                </a>
-            </li>
-            <li>
-                <a href="06_post_detail.html">
-                    <span class="file-name">06_post_detail.html</span>
-                    <span class="description">Post detail with comments</span>
-                </a>
-            </li>
-            <li>
-                <a href="07_health_checkup_upload.html">
-                    <span class="file-name">07_health_checkup_upload.html</span>
-                    <span class="description">Upload health data</span>
-                </a>
-            </li>
-            <li>
-                <a href="08_welcome.html">
-                    <span class="file-name">08_welcome.html</span>
-                    <span class="description">Onboarding start (4 slides)初期画面</span>
-                </a>
-            </li>
-            <li>
-                <a href="09_account_registration.html">
-                    <span class="file-name">09_account_registration.html</span>
-                    <span class="description">User registration form</span>
-                </a>
-            </li>
-            <li>
-                <a href="10_group_creation.html">
-                    <span class="file-name">10_group_creation.html</span>
-                    <span class="description">Create/join group</span>
-                </a>
-            </li>
-        </ul>
+    <div class="header">
+        <h1 style="font-size: 28px; font-weight: 600; margin-bottom: 10px;">
+            🏥 家族健康会議システム
+        </h1>
+        <p style="font-size: 16px; opacity: 0.9;">
+            Interactive Mockup - All Screens v3.0
+        </p>
     </div>
-
+    
+    <div class="quick-start">
+        <h2>✨ オンボーディングから体験</h2>
+        <p>ウェルカム画面から始めて、実際のアプリのような体験をしましょう</p>
+        <a href="08_welcome.html" class="btn-start">
+            <i class="fas fa-play-circle"></i> スタート
+        </a>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-value">16</div>
+            <div class="stat-label">画面数</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">5</div>
+            <div class="stat-label">新規追加</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">リンク接続率</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-title">
+            <i class="fas fa-rocket"></i>
+            オンボーディングフロー（4画面）
+        </div>
+        <div class="screen-grid">
+            <a href="08_welcome.html" class="screen-card">
+                <span class="screen-number">08</span>
+                <div class="screen-title">ウェルカム画面</div>
+                <div class="screen-desc">4スライド形式のサービス紹介。左右スワイプ可能</div>
+            </a>
+            <a href="09_account_registration.html" class="screen-card">
+                <span class="screen-number">09</span>
+                <div class="screen-title">アカウント登録画面</div>
+                <div class="screen-desc">基本情報入力フォーム、バリデーション機能付き</div>
+            </a>
+            <a href="10_group_creation.html" class="screen-card">
+                <span class="screen-number">10</span>
+                <div class="screen-title">グループ作成画面</div>
+                <div class="screen-desc">グループタイプ選択・メンバー招待（QR/リンク）</div>
+            </a>
+            <a href="11_ai_trainer_setup.html" class="screen-card">
+                <span class="screen-number">11</span>
+                <span class="badge badge-new">NEW</span>
+                <div class="screen-title">AIトレーナー設定画面</div>
+                <div class="screen-desc">AI性格4種・頻度3種のカスタマイズ</div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-title">
+            <i class="fas fa-home"></i>
+            メインアプリ画面（8画面）
+        </div>
+        <div class="screen-grid">
+            <a href="00_group_timeline.html" class="screen-card">
+                <span class="screen-number">00</span>
+                <span class="badge badge-updated">更新</span>
+                <div class="screen-title">グループタイムライン</div>
+                <div class="screen-desc">アプリの中心画面。投稿一覧・いいね・コメント</div>
+            </a>
+            <a href="06_post_detail.html" class="screen-card">
+                <span class="screen-number">06</span>
+                <div class="screen-title">投稿詳細画面</div>
+                <div class="screen-desc">投稿全文・コメント表示・リアクション一覧</div>
+            </a>
+            <a href="01_post_creation.html" class="screen-card">
+                <span class="screen-number">01</span>
+                <span class="badge badge-updated">修正</span>
+                <div class="screen-title">投稿作成画面</div>
+                <div class="screen-desc">モーダル形式の投稿作成（位置固定済み）</div>
+            </a>
+            <a href="02_my_progress.html" class="screen-card">
+                <span class="screen-number">02</span>
+                <span class="badge badge-updated">更新</span>
+                <div class="screen-title">マイ進捗画面</div>
+                <div class="screen-desc">目標達成状況の可視化・グラフとバッジ表示</div>
+            </a>
+            <a href="03_weekly_report.html" class="screen-card">
+                <span class="screen-number">03</span>
+                <div class="screen-title">週次レポート画面</div>
+                <div class="screen-desc">今週のハイライト・助け合いサマリー・週間統計</div>
+            </a>
+            <a href="12_ai_consultation.html" class="screen-card">
+                <span class="screen-number">12</span>
+                <span class="badge badge-new">NEW</span>
+                <div class="screen-title">AI相談画面</div>
+                <div class="screen-desc">24時間対応チャット・提案チップ・タイピング表示</div>
+            </a>
+            <a href="13_settings.html" class="screen-card">
+                <span class="screen-number">13</span>
+                <span class="badge badge-new">NEW</span>
+                <div class="screen-title">設定画面</div>
+                <div class="screen-desc">包括的な設定メニュー・トグルスイッチ</div>
+            </a>
+            <a href="14_my_page.html" class="screen-card">
+                <span class="screen-number">14</span>
+                <span class="badge badge-new">NEW</span>
+                <div class="screen-title">マイページ</div>
+                <div class="screen-desc">プロフィール管理・バッジシステム・イキイキ度</div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-title">
+            <i class="fas fa-heartbeat"></i>
+            健康診断機能（3画面）
+        </div>
+        <div class="screen-grid">
+            <a href="07_health_checkup_upload.html" class="screen-card">
+                <span class="screen-number">07</span>
+                <div class="screen-title">健康診断アップロード画面</div>
+                <div class="screen-desc">写真・PDF・手動入力でデータ登録、OCR機能デモ</div>
+            </a>
+            <a href="04_health_checkup_results.html" class="screen-card">
+                <span class="screen-number">04</span>
+                <div class="screen-title">健康診断結果確認画面</div>
+                <div class="screen-desc">わかりやすく変換された診断結果・前年比較</div>
+            </a>
+            <a href="05_health_checkup_ai_video.html" class="screen-card">
+                <span class="screen-number">05</span>
+                <div class="screen-title">AI動画解説画面</div>
+                <div class="screen-desc">AIアバター動画解説・チャプター選択・字幕表示</div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-title">
+            <i class="fas fa-bullseye"></i>
+            目標管理機能（1画面）
+        </div>
+        <div class="screen-grid">
+            <a href="15_goal_setting.html" class="screen-card">
+                <span class="screen-number">15</span>
+                <span class="badge badge-new">NEW</span>
+                <div class="screen-title">目標設定画面</div>
+                <div class="screen-desc">個人・家族の目標管理・進捗トラッキング</div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-title">
+            <i class="fas fa-info-circle"></i>
+            推奨フロー
+        </div>
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+            <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px;">📱 オンボーディング → ホーム</h3>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+                <a href="08_welcome.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">08_welcome</a>
+                <span>→</span>
+                <a href="09_account_registration.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">09_account</a>
+                <span>→</span>
+                <a href="10_group_creation.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">10_group</a>
+                <span>→</span>
+                <a href="11_ai_trainer_setup.html" style="background: var(--accent-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">11_ai_trainer</a>
+                <span>→</span>
+                <a href="00_group_timeline.html" style="background: #FF9800; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">00_timeline</a>
+            </div>
+            
+            <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px;">🏥 健康診断フロー</h3>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <a href="07_health_checkup_upload.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">07_upload</a>
+                <span>→</span>
+                <a href="04_health_checkup_results.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">04_results</a>
+                <span>→</span>
+                <a href="05_health_checkup_ai_video.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">05_ai_video</a>
+            </div>
+        </div>
+    </div>
+    
+    <div style="text-align: center; padding: 30px 20px; color: #999; font-size: 13px;">
+        <p><strong>家族健康会議システム v3.0</strong></p>
+        <p>全16画面 | 完全リンク統合版</p>
+        <p style="margin-top: 10px;">© 2025 Family Health Conference</p>
+    </div>
 </body>
 </html>
