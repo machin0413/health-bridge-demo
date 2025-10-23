@@ -703,10 +703,11 @@
             const successAnimation = document.getElementById('successAnimation');
             successAnimation.classList.add('show');
             
-            // Simulate API call
+            // Simulate API call and close window
             setTimeout(() => {
                 successAnimation.classList.remove('show');
-                closeModal();
+                // Close the tab/window after posting
+                window.close();
             }, 1500);
         }
         
@@ -720,34 +721,8 @@
                 }
             }
             
-            // Reset form
-            document.getElementById('postText').value = '';
-            document.getElementById('charCount').textContent = '0/500';
-            document.querySelectorAll('.post-type-button').forEach(b => b.classList.remove('selected'));
-            document.getElementById('moodPanel').classList.remove('show');
-            document.getElementById('selectedMood').classList.remove('show');
-            selectedPhotos = [];
-            updatePhotoPreview();
-            selectedPostType = null;
-            selectedMood = null;
-            updateSubmitButton();
-            
-            // Hide modal with animation
-            const modalContainer = document.querySelector('.modal-container');
-            const modalOverlay = document.querySelector('.modal-overlay');
-            
-            modalContainer.style.animation = 'slideDown 0.3s ease-out forwards';
-            modalOverlay.style.animation = 'fadeOut 0.3s ease-out 0.1s forwards';
-            
-            setTimeout(() => {
-                document.body.innerHTML = `
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
-                        <h1 style="color: #4A90E2; margin-bottom: 20px;">投稿作成画面</h1>
-                        <p style="color: #666; margin-bottom: 30px;">この画面は投稿作成モーダルのサンプルです</p>
-                        <button onclick="location.reload()" style="background-color: #4A90E2; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer;">再度開く</button>
-                    </div>
-                `;
-            }, 400);
+            // Close the tab/window when canceling
+            window.close();
         }
         
         // Additional CSS animations
