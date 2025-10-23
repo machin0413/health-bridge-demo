@@ -19,7 +19,7 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: var(--gray-bg);
-            max-width: 430px;
+            max-width: 375px;
             margin: 0 auto;
             min-height: 100vh;
             position: relative;
@@ -215,7 +215,7 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 430px;
+            width: 375px;
             background: white;
             border-top: 1px solid var(--gray-border);
             display: flex;
@@ -292,6 +292,24 @@
         input, textarea {
             -webkit-user-select: text;
             user-select: text;
+        }
+
+        .create-btn {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -8px;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+        }
+        
+        .create-btn i {
+            font-size: 24px !important;
+            margin-bottom: 0 !important;
         }
     </style>
 </head>
@@ -451,14 +469,19 @@
         <i class="fas fa-plus"></i>
     </button>
     
-    <div class="footer-nav">
+        <div class="footer-nav">
         <div class="nav-item" onclick="window.location.href='00_group_timeline.html'">
             <i class="fas fa-home"></i>
             <span>ホーム</span>
         </div>
         <div class="nav-item" onclick="window.location.href='02_my_progress.html'">
-            <i class="fas fa-chart-line"></i>
+            <i class="fas fa-chart-bar"></i>
             <span>進捗</span>
+        </div>
+        <div class="nav-item">
+            <div class="create-btn" onclick="window.open('01_post_creation.html', '_blank')">
+                <i class="fas fa-plus"></i>
+            </div>
         </div>
         <div class="nav-item" onclick="window.location.href='12_ai_consultation.html'">
             <i class="fas fa-robot"></i>
@@ -468,9 +491,7 @@
             <i class="fas fa-cog"></i>
             <span>メニュー</span>
         </div>
-    </div>
-    
-    <script>
+    </div><script>
         function switchTab(tab) {
             const tabs = document.querySelectorAll('.tab-item');
             tabs.forEach(t => t.classList.remove('active'));
