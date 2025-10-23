@@ -2,7 +2,9 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>投稿作成画面 - 家族健康会議システム</title>
     <style>
         * {
@@ -419,6 +421,34 @@
                 border-radius: 16px 16px 0 0;
             }
         }
+    
+        /* iOS Optimization */
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none;
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        button, a, input, textarea, select {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        input, textarea {
+            -webkit-user-select: text;
+            user-select: text;
+        }
     </style>
 </head>
 <body>
@@ -737,12 +767,3 @@
     </script>
 </body>
 </html>
-    <script id="html_badge_script1">
-        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDtkx40M21tiog%2B8q7oE3%2FuS2Al%2F8v5kom5MuHvl1i0W2eqbwxNsoWKNQ7uaFnh2PW3MWm3f4ELu3vt0mHvDukXXhFtikc%2F8PTxcVw2ZdxcdVJBp9tErlxezZl7L8%2Fbz3j0PTSNRzaQij0AuwLqA6E3Cb9IU4U1V0ngS3Z8lPQwgGvIEfmSCBr19NwuxISLsmoYjB3AWkJVTPzkawmiy%2B8VgzE%2FeQZPat7WWwDJ8O3tihepugUvHL23oOUWIqmGGKC%2BLuDs0cLGL3K343Cn%2B36b9taLDxns1vfRYGA08gwr7wsTI067k7eB71X7HiLBCbbpJR7aV2HYyGxDFnPTeLM1SYq74sjwBWIjqExUfUIdxTYfmMCL8VQeaWdANXU4CmPcrvdIvBbV5KJ4OeBfHQfZZPNv0SndFUjUryKl4nGrxP74%2BfHS8HV598WPhr8r0nF8UkokmHo5xmyxMTY52HvAwFgwMnM9PcR5%2BYZoYR4NacLRecDu8L7wgdd6WPg4G3lYnnI8LEgmi8%2FP1IaAgQUog%3D";
-        window.__genspark_locale = "ja-JP";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDtkx40M21tiog+8q7oE3/uS2Al/8v5kom5MuHvl1i0W2eqbwxNsoWKNQ7uaFnh2PW3MWm3f4ELu3vt0mHvDukXXhFtikc/8PTxcVw2ZdxcdVJBp9tErlxezZl7L8/bz3j0PTSNRzaQij0AuwLqA6E3Cb9IU4U1V0ngS3Z8lPQwgGvIEfmSCBr19NwuxISLsmoYjB3AWkJVTPzkawmiy+8VgzE/eQZPat7WWwDJ8O3tihepugUvHL23oOUWIqmGGKC+LuDs0cLGL3K343Cn+36b9taLDxns1vfRYGA08gwr7wsTI067k7eB71X7HiLBCbbpJR7aV2HYyGxDFnPTeLM1SYq74sjwBWIjqExUfUIdxTYfmMCL8VQeaWdANXU4CmPcrvdIvBbV5KJ4OeBfHQfZZPNv0SndFUjUryKl4nGrxP74+fHS8HV598WPhr8r0nF8UkokmHo5xmyxMTY52HvAwFgwMnM9PcR5+YZoYR4NacLRecDu8L7wgdd6WPg4G3lYnnI8LEgmi8/P1IaAgQUog=";
-    </script>
-    
-    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
-    

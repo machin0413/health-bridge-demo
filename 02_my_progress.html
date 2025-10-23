@@ -2,7 +2,9 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>マイ進捗 - 家族健康会議システム</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
@@ -57,6 +59,34 @@
             position: sticky;
             top: 0;
             z-index: 10;
+        }
+    
+        /* iOS Optimization */
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none;
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        button, a, input, textarea, select {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        input, textarea {
+            -webkit-user-select: text;
+            user-select: text;
         }
     </style>
 </head>
@@ -247,12 +277,3 @@
     </div>
 </body>
 </html>
-    <script id="html_badge_script1">
-        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDi6aqdYBym0qSu90vMM1kZn8pUA2ZTYr59ZwLpPhOpix43Jm9jc37tSa0e26lMhtdI1jhEWYZxh6ekQzlmEAukyELU6ayBy7%2Blg9m69SMNJOgTOpfM8NoIn52fSBJ4lIzLaxXLC23C3uQXkHFcpkM5ZvF8Ci62%2FLr1Iq9UGRb5GJJuLzrxMujRNxq4ofA15bdHOxq1c2FrDe1oSOQ8VmtUN4Ce%2BnLzmtsfBHr8L8iKy7KSqdcU0EIQrxj3EX7r3M9BAT33lDI4BuWYSL1ufYid8%2F3woqSYolydens17hSQmYrLU74NvH5%2FwyzBOtA6DUIvovFFvy6tSeGwLm%2FbLEyc6WvGgSjosISdkfldVweW8cWyIgJ1xb7KddKehQTA9UVDRfrCtqFH8sGXSSxl%2BB7B5Vd7niM5IZo4WB3xZLg9%2BfImGuYVMCBLv7J%2B1N5UwrqqDgqQHozu7pmhMwSzULqg37yjlH%2F2%2B4XfE6GyY%2F2aZzJhnXU4nKzhd06GnfTyZWhA%3D%3D";
-        window.__genspark_locale = "ja-JP";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDi6aqdYBym0qSu90vMM1kZn8pUA2ZTYr59ZwLpPhOpix43Jm9jc37tSa0e26lMhtdI1jhEWYZxh6ekQzlmEAukyELU6ayBy7+lg9m69SMNJOgTOpfM8NoIn52fSBJ4lIzLaxXLC23C3uQXkHFcpkM5ZvF8Ci62/Lr1Iq9UGRb5GJJuLzrxMujRNxq4ofA15bdHOxq1c2FrDe1oSOQ8VmtUN4Ce+nLzmtsfBHr8L8iKy7KSqdcU0EIQrxj3EX7r3M9BAT33lDI4BuWYSL1ufYid8/3woqSYolydens17hSQmYrLU74NvH5/wyzBOtA6DUIvovFFvy6tSeGwLm/bLEyc6WvGgSjosISdkfldVweW8cWyIgJ1xb7KddKehQTA9UVDRfrCtqFH8sGXSSxl+B7B5Vd7niM5IZo4WB3xZLg9+fImGuYVMCBLv7J+1N5UwrqqDgqQHozu7pmhMwSzULqg37yjlH/2+4XfE6GyY/2aZzJhnXU4nKzhd06GnfTyZWhA==";
-    </script>
-    
-    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
-    
