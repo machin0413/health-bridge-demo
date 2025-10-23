@@ -190,9 +190,21 @@
         .post-image {
             width: 100%;
             height: 180px;
-            background: linear-gradient(135deg, #E3F2FD, #E8F5E8);
             border-radius: 8px;
             margin: 12px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .post-image.placeholder {
+            background: linear-gradient(135deg, #E3F2FD, #E8F5E8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -285,7 +297,9 @@
                 </div>
             </div>
             <p class="text-gray-800 mb-3">今日は公園を30分ジョギングしました！気持ちよかったです😊</p>
-            <div class="post-image">🌳 公園の風景写真</div>
+            <div class="post-image">
+                <img src="assets/images/jogging-park.jpg" alt="公園でジョギング">
+            </div>
             <div class="flex flex-wrap">
                 <button class="reaction-btn" onclick="event.stopPropagation(); likePost(this)">❤️ 5</button>
                 <button class="reaction-btn" onclick="event.stopPropagation(); window.open('06_post_detail.html', '_blank')">💬 2</button>
@@ -326,7 +340,9 @@
                 </div>
             </div>
             <p class="text-gray-800 mb-3">今日のランチは野菜たっぷりサラダ🥗 健康的！</p>
-            <div class="post-image">🥗 サラダの写真</div>
+            <div class="post-image">
+                <img src="assets/images/healthy-salad.jpg" alt="野菜たっぷりサラダ">
+            </div>
             <div class="flex flex-wrap">
                 <button class="reaction-btn" onclick="event.stopPropagation(); likePost(this)">❤️ 7</button>
                 <button class="reaction-btn" onclick="event.stopPropagation(); window.open('06_post_detail.html', '_blank')">💬 1</button>

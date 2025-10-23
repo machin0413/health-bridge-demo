@@ -86,14 +86,26 @@
         .post-image {
             width: 100%;
             height: 200px;
-            background: linear-gradient(135deg, #a7f3d0, #60d394);
             border-radius: 8px;
+            margin: 12px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .post-image.placeholder {
+            background: linear-gradient(135deg, #a7f3d0, #60d394);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 18px;
-            margin: 12px 0;
         }
         
         @keyframes bounce {
@@ -186,7 +198,7 @@
             </p>
             
             <div class="post-image">
-                🌳🏃‍♂️ 公園でのジョギング風景
+                <img src="assets/images/jogging-park.jpg" alt="公園でジョギング">
             </div>
             
             <div class="text-xs text-gray-500 mt-2">
