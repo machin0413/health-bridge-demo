@@ -703,11 +703,11 @@
             const successAnimation = document.getElementById('successAnimation');
             successAnimation.classList.add('show');
             
-            // Simulate API call and close window
+            // Simulate API call and return to timeline
             setTimeout(() => {
                 successAnimation.classList.remove('show');
-                // Close the tab/window after posting
-                window.close();
+                // Return to timeline after posting
+                window.location.href = '00_group_timeline.html';
             }, 1500);
         }
         
@@ -721,8 +721,8 @@
                 }
             }
             
-            // Close the tab/window when canceling
-            window.close();
+            // Return to timeline when canceling
+            window.location.href = '00_group_timeline.html';
         }
         
         // Additional CSS animations
