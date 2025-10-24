@@ -100,12 +100,13 @@
             background: white;
             border-top: 1px solid var(--gray-border);
             display: flex;
-            justify-content: space-around;
+            justify-content: space-evenly;
             padding: 8px 0;
             z-index: 10;
         }
         
         .nav-item {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -155,7 +156,7 @@
     <!-- Header -->
     <div class="header">
         <div style="position: relative;">
-            <h1 class="text-lg font-semibold">進捗</h1>
+            <h1 class="text-lg font-semibold" style="text-align: center">進捗</h1>
         </div>
         
         <!-- Tab Navigation -->
