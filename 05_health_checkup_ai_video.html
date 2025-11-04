@@ -30,14 +30,12 @@
         }
         
         .ai-avatar {
-            font-size: 120px;
             animation: bounce 2s infinite ease-in-out;
-            cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .ai-avatar:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         
         @keyframes bounce {
@@ -296,7 +294,7 @@
             <div class="video-player mb-4">
                 <div class="flex flex-col items-center justify-center h-full relative">
                     <!-- AIアバター -->
-                    <div class="ai-avatar mb-4" id="aiAvatar">🤖</div>
+                    <img src="assets/images/ai-trainer-avatar.jpg" alt="AI Trainer" id="aiAvatar" class="ai-avatar mb-4" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer;">
                     <div class="text-xl font-bold text-gray-800 mb-4">健康サポートAI ケンタ</div>
                     
                     <!-- 吹き出し -->
@@ -435,13 +433,13 @@
             <div class="mb-6">
                 <h3 class="text-lg font-bold mb-4 text-gray-800">次のステップ</h3>
                 <div class="grid grid-cols-1 gap-3">
-                    <button class="action-button text-white" style="background: #4A90E2;">
+                    <button class="action-button text-white" style="background: #4A90E2;" onclick="handleNextStep('goal')">
                         🎯 目標を設定する
                     </button>
-                    <button class="action-button text-white" style="background: #50C878;">
+                    <button class="action-button text-white" style="background: #50C878;" onclick="handleNextStep('share')">
                         👨‍👩‍👧‍👦 家族に共有する
                     </button>
-                    <button class="action-button" style="background: white; color: #4A90E2; border: 2px solid #4A90E2;">
+                    <button class="action-button" style="background: white; color: #4A90E2; border: 2px solid #4A90E2;" onclick="handleNextStep('ai')">
                         💬 AI相談する
                     </button>
                 </div>
@@ -575,9 +573,11 @@
                 speechText.textContent = speech;
                 subtitleText.textContent = speech;
                 
-                // アバターの表情変更
-                const emotions = ['🤖', '😊', '🤔', '💡', '✨'];
-                aiAvatar.textContent = emotions[Math.floor(Math.random() * emotions.length)];
+                // アバターにアニメーション効果を追加
+                aiAvatar.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    aiAvatar.style.transform = 'scale(1)';
+                }, 300);
                 
                 currentSpeechIndex++;
                 if (currentSpeechIndex >= chapter.speeches.length) {
@@ -682,6 +682,23 @@
         aiAvatar.addEventListener('click', () => {
             playButton.click();
         });
+        
+        // Handle next step buttons
+        function handleNextStep(action) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isFirstTime = urlParams.get('firstTime') === 'true';
+            
+            if (isFirstTime && action === 'share') {
+                // First-time flow: go to family meeting
+                window.location.href = '16_meeting.html?firstTime=true&action=share';
+            } else if (action === 'goal') {
+                window.location.href = '15_goal_setting.html';
+            } else if (action === 'share') {
+                window.location.href = '16_meeting.html';
+            } else if (action === 'ai') {
+                window.location.href = '12_ai_consultation.html';
+            }
+        }
     </script>
 
     <!-- Footer Navigation -->

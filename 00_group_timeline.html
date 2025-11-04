@@ -496,6 +496,189 @@
                 }, 1000);
             }
         });
+        
+        // Tutorial modal for first-time users
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isFirstTime = urlParams.get('firstTime') === 'true';
+            
+            if (isFirstTime) {
+                showTutorial();
+            }
+        });
+        
+        let tutorialStep = 0;
+        const tutorialSteps = [
+            {
+                title: 'ようこそ！🎉',
+                content: 'ここがあなたの<strong>ホーム(タイムライン)</strong>です。<br>家族の健康活動や投稿が表示されます。',
+                highlightElement: null
+            },
+            {
+                title: '投稿を見よう👀',
+                content: '家族の投稿をタップすると、詳細が見られます。<br><strong>いいね</strong>や<strong>コメント</strong>で応援しましょう！',
+                highlightElement: '.post-card'
+            },
+            {
+                title: '投稿してみよう✍️',
+                content: '真ん中の<strong>＋ボタン</strong>をタップして、<br>あなたの健康活動を共有しましょう！',
+                highlightElement: '.create-btn'
+            },
+            {
+                title: 'AIトレーナーに相談💬',
+                content: '<strong>AI相談</strong>タブから、いつでも健康についてAIに相談できます。',
+                highlightElement: '.nav-item:nth-child(4)'
+            },
+            {
+                title: '準備完了！🚀',
+                content: 'それでは、家族と一緒に健康的な生活を楽しみましょう！',
+                highlightElement: null
+            }
+        ];
+        
+        function showTutorial() {
+            const modal = document.createElement('div');
+            modal.id = 'tutorialModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: fadeIn 0.3s ease-out;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                border-radius: 20px;
+                max-width: 320px;
+                margin: 20px;
+                padding: 30px;
+                text-align: center;
+                animation: slideUp 0.3s ease-out;
+                position: relative;
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+            
+            updateTutorialContent(content);
+        }
+        
+        function updateTutorialContent(content) {
+            const step = tutorialSteps[tutorialStep];
+            
+            // Remove previous highlights
+            document.querySelectorAll('.tutorial-highlight').forEach(el => {
+                el.classList.remove('tutorial-highlight');
+            });
+            
+            // Add highlight to target element
+            if (step.highlightElement) {
+                const targetElement = document.querySelector(step.highlightElement);
+                if (targetElement) {
+                    targetElement.style.position = 'relative';
+                    targetElement.style.zIndex = '10001';
+                    targetElement.classList.add('tutorial-highlight');
+                }
+            }
+            
+            content.innerHTML = `
+                <div style="font-size: 48px; margin-bottom: 20px;">
+                    ${tutorialStep === 0 ? '👋' : tutorialStep === tutorialSteps.length - 1 ? '🎉' : '💡'}
+                </div>
+                <h2 style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 12px;">
+                    ${step.title}
+                </h2>
+                <p style="font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 24px;">
+                    ${step.content}
+                </p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div style="display: flex; gap: 6px;">
+                        ${tutorialSteps.map((_, i) => `
+                            <div style="width: ${i === tutorialStep ? '20px' : '8px'}; height: 8px; border-radius: 4px; background: ${i === tutorialStep ? 'var(--primary-color)' : '#ddd'}; transition: all 0.3s;"></div>
+                        `).join('')}
+                    </div>
+                    <div style="font-size: 13px; color: #999;">
+                        ${tutorialStep + 1}/${tutorialSteps.length}
+                    </div>
+                </div>
+                ${tutorialStep < tutorialSteps.length - 1 ? `
+                    <button onclick="nextTutorialStep()" style="width: 100%; background: var(--primary-color); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-bottom: 10px;">
+                        次へ
+                    </button>
+                    <button onclick="skipTutorial()" style="width: 100%; background: transparent; color: #666; border: none; padding: 10px; font-size: 13px; cursor: pointer;">
+                        スキップ
+                    </button>
+                ` : `
+                    <button onclick="closeTutorial()" style="width: 100%; background: var(--primary-color); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                        始める
+                    </button>
+                `}
+            `;
+        }
+        
+        function nextTutorialStep() {
+            tutorialStep++;
+            const content = document.querySelector('#tutorialModal > div');
+            updateTutorialContent(content);
+        }
+        
+        function skipTutorial() {
+            closeTutorial();
+        }
+        
+        function closeTutorial() {
+            const modal = document.getElementById('tutorialModal');
+            if (modal) {
+                modal.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                    // Remove highlights
+                    document.querySelectorAll('.tutorial-highlight').forEach(el => {
+                        el.classList.remove('tutorial-highlight');
+                        el.style.zIndex = '';
+                    });
+                }, 300);
+            }
+            
+            // Remove firstTime parameter from URL
+            const url = new URL(window.location);
+            url.searchParams.delete('firstTime');
+            window.history.replaceState({}, '', url);
+        }
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+            @keyframes slideUp {
+                from { transform: translateY(30px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            .tutorial-highlight {
+                box-shadow: 0 0 0 4px var(--primary-color), 0 0 0 8px rgba(74, 144, 226, 0.3) !important;
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0%, 100% { box-shadow: 0 0 0 4px var(--primary-color), 0 0 0 8px rgba(74, 144, 226, 0.3); }
+                50% { box-shadow: 0 0 0 4px var(--primary-color), 0 0 0 12px rgba(74, 144, 226, 0.5); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>

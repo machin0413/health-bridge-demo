@@ -478,7 +478,17 @@
 
         function goToResults() {
             if (hasData) {
-                window.location.href = '04_health_checkup_results.html';
+                // Check if this is first-time flow
+                const urlParams = new URLSearchParams(window.location.search);
+                const isFirstTime = urlParams.get('firstTime') === 'true';
+                
+                if (isFirstTime) {
+                    // First-time flow: go directly to AI video explanation
+                    window.location.href = '05_health_checkup_ai_video.html?firstTime=true';
+                } else {
+                    // Regular flow: go to results page
+                    window.location.href = '04_health_checkup_results.html';
+                }
             }
         }
 

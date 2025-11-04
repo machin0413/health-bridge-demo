@@ -266,8 +266,39 @@
         </div>
     </div>
 
+    <!-- First Time Flow: Health Checkup Share Card -->
+    <div id="firstTimeShareCard" style="display: none; margin: 16px; background: linear-gradient(135deg, #E3F2FD 0%, #F0F7FF 100%); border-radius: 16px; padding: 24px; border: 2px solid var(--primary-color); box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="assets/images/family-meeting.jpg" alt="Family Meeting" style="width: 100%; max-width: 300px; height: 160px; border-radius: 12px; object-fit: cover; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <h2 style="font-size: 20px; font-weight: bold; color: #333; margin-bottom: 8px;">健康診断結果を家族と共有しましょう</h2>
+            <p style="font-size: 14px; color: #666; line-height: 1.6;">
+                家族と一緒に健康について話し合うことで、<br>お互いにサポートし合えます。
+            </p>
+        </div>
+        
+        <div style="background: white; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                <div style="width: 40px; height: 40px; background: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">📋</div>
+                <div style="flex: 1;">
+                    <div style="font-size: 15px; font-weight: 600; color: #333; margin-bottom: 4px;">健康診断結果の共有</div>
+                    <div style="font-size: 13px; color: #666;">あなたの健康状態を家族に共有</div>
+                </div>
+            </div>
+            <div style="font-size: 13px; color: #666; line-height: 1.6; padding-left: 52px;">
+                血糖値がやや高めという結果について、家族のサポートをお願いしましょう。
+            </div>
+        </div>
+        
+        <button onclick="startFamilyMeeting()" style="width: 100%; background: var(--primary-color); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);">
+            家族会議を始める
+        </button>
+        <button onclick="skipFamilyMeeting()" style="width: 100%; background: transparent; color: #666; border: none; padding: 10px; font-size: 13px; cursor: pointer;">
+            後で共有する
+        </button>
+    </div>
+
     <!-- Meeting List -->
-    <div class="py-4">
+    <div class="py-4" id="meetingList">
         <!-- Upcoming Meeting 1 -->
         <div class="meeting-card">
             <div class="meeting-badge badge-scheduled">📅 予定</div>
@@ -403,6 +434,38 @@
     </div>
 
     <script>
+        // Check if this is first-time flow
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isFirstTime = urlParams.get('firstTime') === 'true';
+            const action = urlParams.get('action');
+            
+            if (isFirstTime && action === 'share') {
+                // Show first-time share card
+                document.getElementById('firstTimeShareCard').style.display = 'block';
+            }
+        });
+        
+        // Start family meeting from first-time flow
+        function startFamilyMeeting() {
+            // Show confirmation
+            if (confirm('家族会議を開始します。準備はよろしいですか？')) {
+                // Simulate meeting start
+                alert('家族会議を開始しました！\n\n家族メンバーに通知が送信されました。\nみんなが参加したら、健康診断結果について話し合いましょう。');
+                
+                // After meeting, go to home timeline with tutorial
+                setTimeout(() => {
+                    window.location.href = '00_group_timeline.html?firstTime=true';
+                }, 1000);
+            }
+        }
+        
+        // Skip family meeting
+        function skipFamilyMeeting() {
+            // Go directly to home timeline with tutorial
+            window.location.href = '00_group_timeline.html?firstTime=true';
+        }
+        
         // Tab switching
         document.querySelectorAll('.tab-item').forEach((tab, index) => {
             tab.addEventListener('click', function() {
