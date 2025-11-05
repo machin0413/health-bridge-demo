@@ -23,7 +23,7 @@
         }
 
         .slide-container {
-            width: 1720px; /* 375px * 4 slides */
+            width: 1500px; /* 375px * 4 slides */
             display: flex;
             transition: transform 0.3s ease-in-out;
         }
@@ -217,7 +217,7 @@
 
         // Update slide position
         function updateSlide() {
-            const translateX = -currentSlide * 430;
+            const translateX = -currentSlide * 375;
             slideContainer.style.transform = `translateX(${translateX}px)`;
 
             // Update dots
