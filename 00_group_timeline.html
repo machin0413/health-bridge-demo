@@ -266,7 +266,7 @@
     <!-- Header -->
     <div class="header">
         <div style="position: relative;">
-            <h1 class="text-lg font-semibold" style="text-align: center;">田中家</h1>
+            <h1 class="text-lg font-semibold" style="text-align: center;">山田家</h1>
             <div class="flex gap-4" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%);">
                 <i class="fas fa-bell text-gray-500 text-lg" style="cursor: pointer;"></i>
                 <i class="fas fa-user-circle text-gray-500 text-lg" style="cursor: pointer;" onclick="window.location.href='14_my_page.html'"></i>
@@ -285,68 +285,75 @@
 
     <!-- Post Feed -->
     <div class="py-4">
-        <!-- Post 1: Health Activity -->
-        <div class="post-card" onclick="window.location.href='06_post_detail.html'">
-            <div class="flex items-start mb-3">
-                <div class="user-avatar">太</div>
-                <div class="flex-1">
-                    <div class="flex items-center gap-2">
-                        <span class="font-semibold">太郎</span>
-                        <span class="text-gray-500 text-sm">2時間前</span>
-                    </div>
-                    <div class="post-badge badge-health">🏃‍♂️ 健康活動</div>
-                </div>
-            </div>
-            <p class="text-gray-800 mb-3">今日は公園を30分ジョギングしました！気持ちよかったです😊</p>
-            <div class="post-image">
-                <img src="assets/images/jogging-park.jpg" alt="公園でジョギング">
-            </div>
-            <div class="flex flex-wrap">
-                <button class="reaction-btn" onclick="event.stopPropagation(); likePost(this)">❤️ 5</button>
-                <button class="reaction-btn" onclick="event.stopPropagation(); window.location.href='06_post_detail.html'">💬 2</button>
-                <button class="reaction-btn" onclick="event.stopPropagation(); sendGratitude(this)">🙏 1</button>
-            </div>
-        </div>
-
-        <!-- Post 2: Request/Question -->
-        <div class="post-card" onclick="window.location.href='06_post_detail.html'">
-            <div class="flex items-start mb-3">
-                <div class="user-avatar">花</div>
-                <div class="flex-1">
-                    <div class="flex items-center gap-2">
-                        <span class="font-semibold">花子</span>
-                        <span class="text-gray-500 text-sm">1日前</span>
-                    </div>
-                    <div class="post-badge badge-request">🙋 お願い・質問</div>
-                </div>
-            </div>
-            <p class="text-gray-800 mb-3">週末の健康診断、誰か一緒に行ってくれませんか？</p>
-            <div class="flex flex-wrap">
-                <button class="reaction-btn" onclick="event.stopPropagation(); likePost(this)">❤️ 3</button>
-                <button class="reaction-btn" onclick="event.stopPropagation(); window.location.href='06_post_detail.html'">💬 4</button>
-                <button class="reaction-btn" onclick="event.stopPropagation(); helpOut(this)">👍 助け合い認定 1</button>
-            </div>
-        </div>
-
-        <!-- Post 3: Daily Update -->
+        <!-- Post 1: Sakura's Support Message -->
         <div class="post-card" onclick="window.location.href='06_post_detail.html'">
             <div class="flex items-start mb-3">
                 <div class="user-avatar">さ</div>
                 <div class="flex-1">
                     <div class="flex items-center gap-2">
-                        <span class="font-semibold">さくら</span>
-                        <span class="text-gray-500 text-sm">3時間前</span>
+                        <span class="font-semibold">山田さくら</span>
+                        <span class="text-gray-500 text-xs">（21歳・大学生・娘）</span>
                     </div>
-                    <div class="post-badge badge-daily">📝 日常</div>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-gray-500 text-sm">30分前</span>
+                        <div class="post-badge badge-health">💕 応援メッセージ</div>
+                    </div>
                 </div>
             </div>
-            <p class="text-gray-800 mb-3">今日のランチは野菜たっぷりサラダ🥗 健康的！</p>
+            <p class="text-gray-800 mb-3">パパ、今朝もジョギングしてたの見たよ！続けててすごい！私も一緒に走りたいな🏃‍♀️✨ 週末一緒にどう？</p>
+            <div class="flex flex-wrap">
+                <button class="reaction-btn" onclick="event.stopPropagation(); likePost(this)">❤️ 8</button>
+                <button class="reaction-btn" onclick="event.stopPropagation(); window.location.href='06_post_detail.html'">💬 3</button>
+                <button class="reaction-btn" onclick="event.stopPropagation(); sendGratitude(this)">🙏 2</button>
+            </div>
+        </div>
+
+        <!-- Post 2: Papa's Health Activity -->
+        <div class="post-card" onclick="window.location.href='06_post_detail.html'">
+            <div class="flex items-start mb-3">
+                <div class="user-avatar">太</div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold">山田太郎</span>
+                        <span class="text-gray-500 text-xs">（50歳・会社員・父親）</span>
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-gray-500 text-sm">2時間前</span>
+                        <div class="post-badge badge-health">🏃‍♂️ 健康活動</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-gray-800 mb-3">今日は公園を30分ジョギングしました！気持ちよかったです😊 さくらが応援してくれるから続けられます</p>
             <div class="post-image">
-                <img src="assets/images/healthy-salad.jpg" alt="野菜たっぷりサラダ">
+                <img src="assets/images/jogging-park.jpg" alt="公園でジョギング">
             </div>
             <div class="flex flex-wrap">
-                <button class="reaction-btn" onclick="event.stopPropagation(); likePost(this)">❤️ 7</button>
-                <button class="reaction-btn" onclick="event.stopPropagation(); window.location.href='06_post_detail.html'">💬 1</button>
+                <button class="reaction-btn" onclick="event.stopPropagation(); likePost(this)">❤️ 12</button>
+                <button class="reaction-btn" onclick="event.stopPropagation(); window.location.href='06_post_detail.html'">💬 5</button>
+                <button class="reaction-btn" onclick="event.stopPropagation(); sendGratitude(this)">🙏 3</button>
+            </div>
+        </div>
+
+        <!-- Post 3: Mama's Support -->
+        <div class="post-card" onclick="window.location.href='06_post_detail.html'">
+            <div class="flex items-start mb-3">
+                <div class="user-avatar">花</div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold">山田花子</span>
+                        <span class="text-gray-500 text-xs">（48歳・パート主婦・母親）</span>
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-gray-500 text-sm">5時間前</span>
+                        <div class="post-badge badge-daily">🍲 食事サポート</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-gray-800 mb-3">今夜は太郎さんの好きな魚料理と野菜たっぷりのメニューです🐟🥗 健康的にサポートします！</p>
+            <div class="flex flex-wrap">
+                <button class="reaction-btn" onclick="event.stopPropagation(); likePost(this)">❤️ 10</button>
+                <button class="reaction-btn" onclick="event.stopPropagation(); window.location.href='06_post_detail.html'">💬 4</button>
+                <button class="reaction-btn" onclick="event.stopPropagation(); sendGratitude(this)">🙏 5</button>
             </div>
         </div>
 
@@ -365,7 +372,7 @@
             <p class="text-gray-800 mb-3 whitespace-pre-line">今週の健康会議のご提案です。
 
 議題：
-1. 太郎さんの健康診断結果の確認
+1. 山田太郎さんの健康診断結果の確認
 2. 家族全員の運動目標の見直し
 3. 来月の健康イベント計画</p>
             <div class="flex flex-wrap">
@@ -380,14 +387,17 @@
                 <div class="user-avatar">太</div>
                 <div class="flex-1">
                     <div class="flex items-center gap-2">
-                        <span class="font-semibold">太郎</span>
+                        <span class="font-semibold">山田太郎</span>
+                        <span class="text-gray-500 text-xs">（50歳・会社員・父親）</span>
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
                         <span class="text-gray-500 text-sm">昨日</span>
                         <span class="achievement-badge">🏆 達成</span>
                     </div>
                     <div class="post-badge badge-achievement">🎯 目標達成</div>
                 </div>
             </div>
-            <p class="text-gray-800 mb-3">週3回のジョギング目標、達成しました！🎉 みんなの応援のおかげです</p>
+            <p class="text-gray-800 mb-3">週3回のジョギング目標、達成しました！🎉 さくらと花子の応援が力になりました。ありがとう！</p>
             <div class="flex flex-wrap">
                 <button class="reaction-btn" onclick="event.stopPropagation(); likePost(this)">❤️ 12</button>
                 <button class="reaction-btn" onclick="event.stopPropagation(); window.location.href='06_post_detail.html'">💬 5</button>
