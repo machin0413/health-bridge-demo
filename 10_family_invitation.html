@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <title>グループを作成 - 家族健康会議システム</title>
+    <title>家族を招待 - 家族健康会議システム</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -344,26 +344,18 @@
         <!-- Header -->
         <div class="header">
             <i class="fas fa-arrow-left back-btn" onclick="goBack()"></i>
-            <h1 style="font-size: 18px; font-weight: 600; margin: 0;">グループを作成</h1>
+            <h1 style="font-size: 18px; font-weight: 600; margin: 0;">家族を招待</h1>
             <span class="step-indicator">ステップ 3/3</span>
         </div>
 
         <!-- Content -->
         <div class="content">
-            <!-- Group Name -->
+            <!-- Welcome Message -->
             <div class="form-section">
-                <h3>グループ名</h3>
-                <input type="text" class="input-field" placeholder="例：山田家" maxlength="20" id="groupName" oninput="validateForm()">
-            </div>
-
-            <!-- Group Type Info (Family Only) -->
-            <div class="form-section">
-                <div style="background: #E3F2FD; border-left: 4px solid #4A90E2; padding: 16px; border-radius: 8px;">
-                    <div class="flex items-center gap-3 mb-2">
-                        <span style="font-size: 28px;">🏠</span>
-                        <h3 style="font-size: 18px; font-weight: 600; color: #333; margin: 0;">家族専用グループ</h3>
-                    </div>
-                    <p style="font-size: 14px; color: #666; margin: 0;">家族みんなで健康を支え合いましょう</p>
+                <div style="background: linear-gradient(135deg, #E3F2FD 0%, #E8F5E8 100%); padding: 24px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 48px; margin-bottom: 12px;">👨‍👩‍👧‍👦</div>
+                    <h2 style="font-size: 20px; font-weight: 600; color: #333; margin-bottom: 8px;">あなたが主役です</h2>
+                    <p style="font-size: 15px; color: #666; line-height: 1.6; margin: 0;">家族にサポートしてもらいながら、<br>一緒に健康になりましょう</p>
                 </div>
             </div>
 
@@ -402,22 +394,13 @@
                 </select>
             </div>
 
-            <!-- Privacy Setting -->
-            <div class="form-section">
-                <h3>プライバシー設定</h3>
-                <div class="toggle-container">
-                    <span>グループを非公開にする（招待された人のみ参加可能）</span>
-                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
-                        <div class="toggle-handle"></div>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
         <!-- Footer -->
         <div class="footer">
             <a href="00_group_timeline.html" class="footer-btn secondary">後で招待する</a>
-            <a href="11_ai_trainer_setup.html" class="footer-btn primary" id="completeBtn" style="pointer-events: none; background: #ccc; color: #999;">完了してグループに入る</a>
+            <a href="11_ai_trainer_setup.html" class="footer-btn primary" id="completeBtn">次へ</a>
         </div>
 
         <!-- Toast -->
@@ -470,26 +453,7 @@
             toggle.classList.toggle('active');
         }
         
-        function validateForm() {
-            const groupName = document.getElementById('groupName').value.trim();
-            const completeBtn = document.getElementById('completeBtn');
-            
-            // Group type is always 'family', so only check group name
-            if (groupName) {
-                completeBtn.style.background = 'var(--primary-color)';
-                completeBtn.style.color = 'white';
-                completeBtn.style.pointerEvents = 'auto';
-            } else {
-                completeBtn.style.background = '#ccc';
-                completeBtn.style.color = '#999';
-                completeBtn.style.pointerEvents = 'none';
-            }
-        }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            validateForm();
-        });
+        // No validation needed - user can proceed without inviting family members
     </script>
 </body>
 </html>
