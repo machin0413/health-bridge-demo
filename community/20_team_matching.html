@@ -364,6 +364,7 @@
                 slot.classList.add('matched');
                 
                 const avatar = slot.querySelector('.member-avatar');
+                avatar.innerHTML = ''; // Clear the ? icon
                 avatar.style.backgroundImage = `url('${memberImages[currentSlot - 1]}')`;
                 avatar.style.backgroundSize = 'cover';
                 avatar.style.backgroundPosition = 'center';
