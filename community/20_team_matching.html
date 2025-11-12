@@ -345,14 +345,14 @@
                 // All members matched - redirect to mission intro
                 setTimeout(() => {
                     window.location.href = '21_mission_intro.html';
-                }, 750);
+                }, 375);
                 return;
             }
             
             const slot = document.getElementById(`slot${currentSlot}`);
             slot.classList.add('matching');
             
-            // Simulate matching delay
+            // Simulate matching delay (halved from 1000ms to 500ms)
             setTimeout(() => {
                 slot.classList.remove('matching');
                 slot.classList.add('matched');
@@ -372,16 +372,16 @@
                 
                 // Match next member
                 if (currentSlot <= 5) {
-                    setTimeout(matchNextMember, 500);
+                    setTimeout(matchNextMember, 250);
                 } else {
                     matchNextMember();
                 }
-            }, 1000);
+            }, 500);
         }
         
         // Start matching after page load
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(matchNextMember, 500);
+            setTimeout(matchNextMember, 250);
         });
     </script>
 </body>
