@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <title>家族健康会議システム - 画面サンプル一覧</title>
+    <title>健康管理サービス - スタート</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -18,174 +18,161 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--gray-bg);
-            max-width: 800px;
-            margin: 0 auto;
+            background: linear-gradient(135deg, #E3F2FD 0%, #E8F5E8 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
             padding: 20px;
         }
         
         .header {
-            background: linear-gradient(135deg, var(--primary-color), #357ABD);
-            color: white;
-            padding: 30px 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
             text-align: center;
+            margin-bottom: 40px;
         }
         
-        .section {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid var(--gray-border);
+        .logo {
+            font-size: 48px;
+            margin-bottom: 16px;
         }
         
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
+        .title {
+            font-size: 28px;
+            font-weight: 700;
             color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .section-title i {
-            margin-right: 10px;
-            color: var(--primary-color);
-        }
-        
-        .screen-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 12px;
-        }
-        
-        .screen-card {
-            background: white;
-            border: 1px solid var(--gray-border);
-            border-radius: 8px;
-            padding: 15px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-        
-        .screen-card:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        .screen-number {
-            display: inline-block;
-            background: var(--primary-color);
-            color: white;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 12px;
             margin-bottom: 8px;
         }
         
-        .screen-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 4px;
-        }
-        
-        .screen-desc {
-            font-size: 12px;
+        .subtitle {
+            font-size: 16px;
             color: #666;
-            line-height: 1.4;
         }
         
-        .badge {
-            display: inline-block;
-            font-size: 10px;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-weight: 600;
-            margin-left: 6px;
-        }
-        
-        .badge-new {
-            background: #FF9800;
-            color: white;
-        }
-        
-        .badge-updated {
-            background: #4CAF50;
-            color: white;
-        }
-        
-        .quick-start {
-            background: linear-gradient(135deg, var(--accent-color), #3DA960);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .quick-start h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .quick-start p {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 15px;
-        }
-        
-        .btn-start {
+        .selection-card {
             background: white;
-            color: var(--accent-color);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
+            border-radius: 16px;
+            padding: 32px 24px;
+            margin-bottom: 20px;
+            border: 3px solid transparent;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
             text-decoration: none;
-            display: inline-block;
+            display: block;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
         
-        .btn-start:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        .selection-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 24px rgba(74, 144, 226, 0.2);
+            transform: translateY(-4px);
         }
         
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
-            border: 1px solid var(--gray-border);
+        .selection-card.family:hover {
+            border-color: var(--primary-color);
         }
         
-        .stat-item {
+        .selection-card.community:hover {
+            border-color: var(--accent-color);
+        }
+        
+        .card-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
             text-align: center;
         }
         
-        .stat-value {
-            font-size: 32px;
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        
+        .card-description {
+            font-size: 15px;
+            color: #666;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .card-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .family .card-badge {
+            background: #E3F2FD;
             color: var(--primary-color);
         }
         
-        .stat-label {
-            font-size: 13px;
-            color: #666;
-            margin-top: 5px;
+        .community .card-badge {
+            background: #E8F5E8;
+            color: var(--accent-color);
         }
-    
+        
+        .features {
+            margin-top: 12px;
+            text-align: left;
+        }
+        
+        .feature-item {
+            font-size: 14px;
+            color: #666;
+            margin: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .feature-item::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .family .feature-item::before {
+            color: var(--primary-color);
+        }
+        
+        .community .feature-item::before {
+            color: var(--accent-color);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .selection-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .selection-card:nth-child(2) {
+            animation-delay: 0.2s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        
         /* iOS Optimization */
         * {
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -202,203 +189,48 @@
             -moz-osx-font-smoothing: grayscale;
             -webkit-overflow-scrolling: touch;
         }
-        
-        button, a {
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1 style="font-size: 28px; font-weight: 600; margin-bottom: 10px;">
-            🏥 家族健康会議システム
-        </h1>
-        <p style="font-size: 16px; opacity: 0.9;">
-            Interactive Mockup - All Screens v3.0
-        </p>
-    </div>
-    
-    <div class="quick-start">
-        <h2>✨ オンボーディングから体験</h2>
-        <p>ウェルカム画面から始めて、実際のアプリのような体験をしましょう</p>
-        <a href="08_welcome.html" class="btn-start">
-            <i class="fas fa-play-circle"></i> スタート
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🏥</div>
+            <h1 class="title">健康管理サービス</h1>
+            <p class="subtitle">あなたに合ったスタイルを選んでください</p>
+        </div>
+        
+        <!-- Family Option -->
+        <a href="family/08_welcome.html" class="selection-card family">
+            <div class="card-icon">👨‍👩‍👧‍👦</div>
+            <h2 class="card-title">家族で健康管理</h2>
+            <p class="card-description">
+                家族にサポートしてもらいながら、<br>
+                一緒に健康になる
+            </p>
+            <div class="card-badge">家族版</div>
+            <div class="features">
+                <div class="feature-item">家族がサポーター</div>
+                <div class="feature-item">いつでも応援してもらえる</div>
+                <div class="feature-item">長期的な健康管理</div>
+            </div>
         </a>
-    </div>
-    
-    <div class="stats">
-        <div class="stat-item">
-            <div class="stat-value">16</div>
-            <div class="stat-label">画面数</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value">5</div>
-            <div class="stat-label">新規追加</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value">100%</div>
-            <div class="stat-label">リンク接続率</div>
-        </div>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">
-            <i class="fas fa-rocket"></i>
-            オンボーディングフロー（4画面）
-        </div>
-        <div class="screen-grid">
-            <a href="08_welcome.html" class="screen-card">
-                <span class="screen-number">08</span>
-                <div class="screen-title">ウェルカム画面</div>
-                <div class="screen-desc">4スライド形式のサービス紹介。左右スワイプ可能</div>
-            </a>
-            <a href="09_account_registration.html" class="screen-card">
-                <span class="screen-number">09</span>
-                <div class="screen-title">アカウント登録画面</div>
-                <div class="screen-desc">基本情報入力フォーム、バリデーション機能付き</div>
-            </a>
-            <a href="10_family_invitation.html" class="screen-card">
-                <span class="screen-number">10</span>
-                <div class="screen-title">家族招待画面</div>
-                <div class="screen-desc">グループタイプ選択・メンバー招待（QR/リンク）</div>
-            </a>
-            <a href="11_ai_trainer_setup.html" class="screen-card">
-                <span class="screen-number">11</span>
-                <span class="badge badge-new">NEW</span>
-                <div class="screen-title">AIトレーナー設定画面</div>
-                <div class="screen-desc">AI性格4種・頻度3種のカスタマイズ</div>
-            </a>
-        </div>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">
-            <i class="fas fa-home"></i>
-            メインアプリ画面（8画面）
-        </div>
-        <div class="screen-grid">
-            <a href="00_group_timeline.html" class="screen-card">
-                <span class="screen-number">00</span>
-                <span class="badge badge-updated">更新</span>
-                <div class="screen-title">グループタイムライン</div>
-                <div class="screen-desc">アプリの中心画面。投稿一覧・いいね・コメント</div>
-            </a>
-            <a href="06_post_detail.html" class="screen-card">
-                <span class="screen-number">06</span>
-                <div class="screen-title">投稿詳細画面</div>
-                <div class="screen-desc">投稿全文・コメント表示・リアクション一覧</div>
-            </a>
-            <a href="01_post_creation.html" class="screen-card">
-                <span class="screen-number">01</span>
-                <span class="badge badge-updated">修正</span>
-                <div class="screen-title">投稿作成画面</div>
-                <div class="screen-desc">モーダル形式の投稿作成（位置固定済み）</div>
-            </a>
-            <a href="02_my_progress.html" class="screen-card">
-                <span class="screen-number">02</span>
-                <span class="badge badge-updated">更新</span>
-                <div class="screen-title">マイ進捗画面</div>
-                <div class="screen-desc">目標達成状況の可視化・グラフとバッジ表示</div>
-            </a>
-            <a href="03_weekly_report.html" class="screen-card">
-                <span class="screen-number">03</span>
-                <div class="screen-title">週次レポート画面</div>
-                <div class="screen-desc">今週のハイライト・助け合いサマリー・週間統計</div>
-            </a>
-            <a href="12_ai_consultation.html" class="screen-card">
-                <span class="screen-number">12</span>
-                <span class="badge badge-new">NEW</span>
-                <div class="screen-title">AI相談画面</div>
-                <div class="screen-desc">24時間対応チャット・提案チップ・タイピング表示</div>
-            </a>
-            <a href="13_settings.html" class="screen-card">
-                <span class="screen-number">13</span>
-                <span class="badge badge-new">NEW</span>
-                <div class="screen-title">設定画面</div>
-                <div class="screen-desc">包括的な設定メニュー・トグルスイッチ</div>
-            </a>
-            <a href="14_my_page.html" class="screen-card">
-                <span class="screen-number">14</span>
-                <span class="badge badge-new">NEW</span>
-                <div class="screen-title">マイページ</div>
-                <div class="screen-desc">プロフィール管理・バッジシステム・イキイキ度</div>
-            </a>
-        </div>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">
-            <i class="fas fa-heartbeat"></i>
-            健康診断機能（3画面）
-        </div>
-        <div class="screen-grid">
-            <a href="07_health_checkup_upload.html" class="screen-card">
-                <span class="screen-number">07</span>
-                <div class="screen-title">健康診断アップロード画面</div>
-                <div class="screen-desc">写真・PDF・手動入力でデータ登録、OCR機能デモ</div>
-            </a>
-            <a href="04_health_checkup_results.html" class="screen-card">
-                <span class="screen-number">04</span>
-                <div class="screen-title">健康診断結果確認画面</div>
-                <div class="screen-desc">わかりやすく変換された診断結果・前年比較</div>
-            </a>
-            <a href="05_health_checkup_ai_video.html" class="screen-card">
-                <span class="screen-number">05</span>
-                <div class="screen-title">AI動画解説画面</div>
-                <div class="screen-desc">AIアバター動画解説・チャプター選択・字幕表示</div>
-            </a>
-        </div>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">
-            <i class="fas fa-bullseye"></i>
-            目標管理機能（1画面）
-        </div>
-        <div class="screen-grid">
-            <a href="15_goal_setting.html" class="screen-card">
-                <span class="screen-number">15</span>
-                <span class="badge badge-new">NEW</span>
-                <div class="screen-title">目標設定画面</div>
-                <div class="screen-desc">個人・家族の目標管理・進捗トラッキング</div>
-            </a>
-        </div>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">
-            <i class="fas fa-info-circle"></i>
-            推奨フロー
-        </div>
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
-            <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px;">📱 オンボーディング → ホーム</h3>
-            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-                <a href="08_welcome.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">08_welcome</a>
-                <span>→</span>
-                <a href="09_account_registration.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">09_account</a>
-                <span>→</span>
-                <a href="10_family_invitation.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">10_family</a>
-                <span>→</span>
-                <a href="11_ai_trainer_setup.html" style="background: var(--accent-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">11_ai_trainer</a>
-                <span>→</span>
-                <a href="00_group_timeline.html" style="background: #FF9800; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">00_timeline</a>
+        
+        <!-- Community Option -->
+        <a href="community/08_welcome.html" class="selection-card community">
+            <div class="card-icon">🤝</div>
+            <h2 class="card-title">似たもの同士で達成</h2>
+            <p class="card-description">
+                同じ悩みを持つ仲間と一緒に、<br>
+                1weekミッションに挑戦
+            </p>
+            <div class="card-badge">コミュニティ版</div>
+            <div class="features">
+                <div class="feature-item">AIが自動マッチング</div>
+                <div class="feature-item">匿名で安心</div>
+                <div class="feature-item">小さな成功体験を積み重ねる</div>
             </div>
-            
-            <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px;">🏥 健康診断フロー</h3>
-            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
-                <a href="07_health_checkup_upload.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">07_upload</a>
-                <span>→</span>
-                <a href="04_health_checkup_results.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">04_results</a>
-                <span>→</span>
-                <a href="05_health_checkup_ai_video.html" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px;">05_ai_video</a>
-            </div>
-        </div>
-    </div>
-    
-    <div style="text-align: center; padding: 30px 20px; color: #999; font-size: 13px;">
-        <p><strong>家族健康会議システム v3.0</strong></p>
-        <p>全16画面 | 完全リンク統合版</p>
-        <p style="margin-top: 10px;">© 2025 Family Health Conference</p>
+        </a>
     </div>
 </body>
 </html>

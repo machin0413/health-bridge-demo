@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>健康診断結果AI動画解説画面 - 家族健康会議システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #F9F9F9;
+            padding-bottom: 150px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+        }
+        
+        .video-player {
+            background: url('https://cdn1.genspark.ai/user-upload-image/22_generated/3ac029bd-b746-42c2-b54b-da2786cc940e.jpeg') center/cover no-repeat;
+            border-radius: 12px;
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+        
+        .ai-avatar {
+            animation: bounce 2s infinite ease-in-out;
+            transition: all 0.3s ease;
+        }
+        
+        .ai-avatar:hover {
+            transform: scale(1.05);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .speech-bubble {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            max-width: 300px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .subtitle {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+            position: absolute;
+            bottom: 80px;
+            left: 16px;
+            right: 16px;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+        
+        .progress-bar {
+            background: #E5E5E5;
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: #4A90E2;
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .chapter-card {
+            border: 1px solid #E5E5E5;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chapter-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .chapter-card.active {
+            background: #E3F2FD;
+            border-left: 4px solid #4A90E2;
+        }
+        
+        .control-button {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            background: #4A90E2;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .control-button:hover {
+            background: #357abd;
+            transform: scale(1.05);
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            animation: scaleIn 0.5s ease-out;
+            display: none;
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .action-button {
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .script-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .script-content.expanded {
+            max-height: 500px;
+        }
+    
+        /* iOS Optimization */
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none;
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        button, a, input, textarea, select {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        input, textarea {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+    
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gray-bg: #F8F9FA;
+            --gray-border: #E9ECEF;
+        }
+
+        /* Footer Navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-top: 1px solid var(--gray-border);
+            display: flex;
+            justify-content: space-evenly;
+            padding: 8px 0;
+            z-index: 10;
+        }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .create-btn {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -8px;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .create-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+        }
+        
+        .create-btn i {
+            font-size: 24px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <div class="flex items-center p-4 bg-white border-b">
+            <button class="text-2xl text-gray-600 mr-4" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="text-2xl font-bold text-gray-800">AIによる結果解説</h1>
+        </div>
+        
+        <!-- 動画プレイヤーエリア -->
+        <div class="p-4">
+            <div class="video-player mb-4">
+                <div class="flex flex-col items-center justify-center h-full relative" style="background: rgba(0,0,0,0.3); backdrop-filter: blur(2px);">
+                    <!-- AIアバター -->
+                    <div class="text-xl font-bold mb-4" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">AIトレーナー 氷室レイナ</div>
+                    
+                    <!-- 吹き出し -->
+                    <div class="speech-bubble" id="speechBubble">
+                        <p class="text-gray-800 text-base leading-relaxed" id="speechText">
+                            こんにちは！今年の健康診断結果を一緒に見ていきましょう😊
+                        </p>
+                    </div>
+                    
+                    <!-- 字幕 -->
+                    <div class="subtitle" id="subtitle" style="display: none;">
+                        <div id="subtitleText">字幕がここに表示されます</div>
+                    </div>
+                </div>
+                
+                <!-- 再生コントロール -->
+                <div class="absolute bottom-4 left-4 right-4">
+                    <div class="flex items-center gap-4 bg-white bg-opacity-90 p-3 rounded-lg">
+                        <button class="control-button" id="playButton">
+                            <i class="fas fa-play" id="playIcon"></i>
+                        </button>
+                        <div class="flex-1">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-600 mt-1">
+                                <span id="currentTime">0:00</span>
+                                <span id="duration">9:30</span>
+                            </div>
+                        </div>
+                        <select id="speedSelect" class="text-sm bg-transparent">
+                            <option value="0.75">0.75x</option>
+                            <option value="1" selected>1.0x</option>
+                            <option value="1.25">1.25x</option>
+                            <option value="1.5">1.5x</option>
+                        </select>
+                        <button id="subtitleToggle" class="text-sm px-2 py-1 rounded bg-gray-200">字幕</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- チャプターリスト -->
+            <div class="mb-6">
+                <h2 class="text-xl font-bold mb-4 text-gray-800">📚 解説動画の内容</h2>
+                
+                <div class="chapter-card active" data-chapter="1">
+                    <div class="flex items-center gap-4">
+                        <div class="text-4xl">✅</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800">1. 今年の健康診断 総合評価</h3>
+                            <p class="text-sm text-gray-600 mb-2">全体的な結果と良かった点について</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm text-gray-500">2分00秒</span>
+                                <span class="text-sm text-blue-600 font-bold">▶️ 再生中</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-gray-600" onclick="addMemo(1)">
+                            <i class="fas fa-sticky-note"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chapter-card" data-chapter="2">
+                    <div class="flex items-center gap-4">
+                        <div class="text-4xl">🍬</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800">2. 血糖値について</h3>
+                            <p class="text-sm text-gray-600 mb-2">やや高めの理由と改善方法</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm text-gray-500">3分15秒</span>
+                                <span class="text-sm text-gray-400">未再生</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-gray-600" onclick="addMemo(2)">
+                            <i class="fas fa-sticky-note"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chapter-card" data-chapter="3">
+                    <div class="flex items-center gap-4">
+                        <div class="text-4xl">💪</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800">3. おすすめの改善方法</h3>
+                            <p class="text-sm text-gray-600 mb-2">無理なく続けられる健康習慣</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm text-gray-500">2分30秒</span>
+                                <span class="text-sm text-gray-400">未再生</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-gray-600" onclick="addMemo(3)">
+                            <i class="fas fa-sticky-note"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chapter-card" data-chapter="4">
+                    <div class="flex items-center gap-4">
+                        <div class="text-4xl">🤝</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800">4. 家族にサポートしてもらいたいこと</h3>
+                            <p class="text-sm text-gray-600 mb-2">家族と一緒に取り組むポイント</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm text-gray-500">1分45秒</span>
+                                <span class="text-sm text-gray-400">未再生</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-gray-600" onclick="addMemo(4)">
+                            <i class="fas fa-sticky-note"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 解説テキスト -->
+            <div class="mb-6">
+                <button class="flex items-center gap-2 text-lg font-bold text-gray-800 mb-4" onclick="toggleScript()">
+                    📝 解説の全文を読む
+                    <i class="fas fa-chevron-down" id="scriptToggleIcon"></i>
+                </button>
+                <div class="script-content" id="scriptContent">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold mb-3">【総合評価】</h4>
+                        <p class="mb-3">こんにちは！今年の健康診断結果を見ていきましょう。</p>
+                        <p class="mb-3">まず全体的な評価ですが、とても良好です！大きな問題は見当たりませんので、安心してくださいね。</p>
+                        <p class="mb-3">血圧、コレステロール、肝機能、BMI、すべて正常範囲内に収まっています。素晴らしいですね！</p>
+                        <p class="mb-3">ただ、1点だけ気をつけたい項目があります。それが「血糖値」です。</p>
+                        <p class="mb-3">今年の血糖値は105 mg/dLで、基準値の100 mg/dLを少しだけ超えています。</p>
+                        <p class="mb-3">でも心配しないでくださいね。これは「やや高め」という程度で、今から気をつければ十分改善できるレベルです。</p>
+                        <p>次の章で、血糖値について詳しく説明していきますね。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- アクションボタン -->
+            <div class="mb-6" style="margin-bottom: 100px;">
+                <h3 class="text-lg font-bold mb-4 text-gray-800">次のステップ</h3>
+                <div class="grid grid-cols-1 gap-3">
+                    <button class="action-button text-white" style="background: #4A90E2;" onclick="handleNextStep('goal')">
+                        🎯 目標を設定する
+                    </button>
+                    <button class="action-button text-white" style="background: #50C878;" onclick="handleNextStep('share')">
+                        👨‍👩‍👧‍👦 家族に共有する
+                    </button>
+                    <button class="action-button" style="background: white; color: #4A90E2; border: 2px solid #4A90E2;" onclick="handleNextStep('ai')">
+                        💬 AI相談する
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 視聴完了バッジ -->
+            <div class="badge" id="completionBadge">
+                <div class="text-6xl mb-4">🏆</div>
+                <h3 class="text-2xl font-bold text-white mb-2">健康診断解説 視聴完了！</h3>
+                <p class="text-white">次のステップ：目標設定をしましょう</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 動画データ
+        const chapters = [
+            {
+                id: 1,
+                title: "総合評価",
+                duration: 120,
+                speeches: [
+                    "こんにちは！今年の健康診断結果を一緒に見ていきましょう😊",
+                    "まず全体的な評価ですが、とても良好です！",
+                    "大きな問題は見当たりませんので、安心してくださいね✨",
+                    "血圧、コレステロール、肝機能、BMI、すべて正常範囲内です",
+                    "ただ、1点だけ気をつけたい項目があります🤔",
+                    "それが「血糖値」です。次の章で詳しく説明しますね"
+                ]
+            },
+            {
+                id: 2,
+                title: "血糖値について",
+                duration: 195,
+                speeches: [
+                    "血糖値について詳しく見ていきましょう🍬",
+                    "今年の血糖値は105 mg/dLで、基準値を少し超えています",
+                    "でも心配しないでください！改善できるレベルです💪",
+                    "甘いものを控えめにして、運動を続けることが大切です"
+                ]
+            },
+            {
+                id: 3,
+                title: "改善方法",
+                duration: 150,
+                speeches: [
+                    "無理なく続けられる改善方法をお伝えします💡",
+                    "週2回のウォーキングから始めてみましょう🚶",
+                    "食事では野菜を多めに取り、甘いものは控えめに",
+                    "小さな変化の積み重ねが大切です✨"
+                ]
+            },
+            {
+                id: 4,
+                title: "家族のサポート",
+                duration: 105,
+                speeches: [
+                    "家族のサポートがとても重要です🤝",
+                    "一緒にウォーキングをしたり、健康的な食事を作ったり",
+                    "お互いに励まし合うことで、続けやすくなります😊",
+                    "みんなで健康になっていきましょう！"
+                ]
+            }
+        ];
+        
+        let isPlaying = false;
+        let currentChapter = 1;
+        let currentSpeechIndex = 0;
+        let currentTime = 0;
+        let totalDuration = chapters.reduce((sum, chapter) => sum + chapter.duration, 0);
+        let playInterval;
+        let speechInterval;
+        
+        // 要素の取得
+        const playButton = document.getElementById('playButton');
+        const playIcon = document.getElementById('playIcon');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const speechText = document.getElementById('speechText');
+        const subtitleText = document.getElementById('subtitleText');
+        const subtitle = document.getElementById('subtitle');
+        const aiAvatar = document.getElementById('aiAvatar');
+        const completionBadge = document.getElementById('completionBadge');
+        
+        // 再生/一時停止
+        playButton.addEventListener('click', () => {
+            if (isPlaying) {
+                pauseVideo();
+            } else {
+                playVideo();
+            }
+        });
+        
+        function playVideo() {
+            isPlaying = true;
+            playIcon.className = 'fas fa-pause';
+            
+            // 進捗更新
+            playInterval = setInterval(() => {
+                currentTime++;
+                updateProgress();
+                
+                if (currentTime >= totalDuration) {
+                    completeVideo();
+                }
+            }, 1000);
+            
+            // 音声更新
+            updateSpeech();
+            speechInterval = setInterval(updateSpeech, 3000);
+        }
+        
+        function pauseVideo() {
+            isPlaying = false;
+            playIcon.className = 'fas fa-play';
+            clearInterval(playInterval);
+            clearInterval(speechInterval);
+        }
+        
+        function updateProgress() {
+            const progress = (currentTime / totalDuration) * 100;
+            progressFill.style.width = progress + '%';
+            currentTimeEl.textContent = formatTime(currentTime);
+        }
+        
+        function updateSpeech() {
+            const chapter = chapters[currentChapter - 1];
+            const speech = chapter.speeches[currentSpeechIndex];
+            
+            if (speech) {
+                speechText.textContent = speech;
+                subtitleText.textContent = speech;
+                
+                // アバターにアニメーション効果を追加
+                aiAvatar.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    aiAvatar.style.transform = 'scale(1)';
+                }, 300);
+                
+                currentSpeechIndex++;
+                if (currentSpeechIndex >= chapter.speeches.length) {
+                    // 次のチャプターへ
+                    if (currentChapter < chapters.length) {
+                        currentChapter++;
+                        currentSpeechIndex = 0;
+                        updateChapterDisplay();
+                    }
+                }
+            }
+        }
+        
+        function updateChapterDisplay() {
+            // チャプターカードの更新
+            document.querySelectorAll('.chapter-card').forEach((card, index) => {
+                card.classList.remove('active');
+                if (index + 1 === currentChapter) {
+                    card.classList.add('active');
+                }
+            });
+        }
+        
+        function completeVideo() {
+            pauseVideo();
+            completionBadge.style.display = 'block';
+            
+            // キラキラエフェクト
+            setTimeout(() => {
+                completionBadge.style.animation = 'scaleIn 0.5s ease-out, pulse 2s infinite';
+            }, 500);
+        }
+        
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        // チャプター選択
+        document.querySelectorAll('.chapter-card').forEach((card, index) => {
+            card.addEventListener('click', () => {
+                currentChapter = index + 1;
+                currentSpeechIndex = 0;
+                
+                // 該当チャプターの開始時間を計算
+                let chapterStartTime = 0;
+                for (let i = 0; i < index; i++) {
+                    chapterStartTime += chapters[i].duration;
+                }
+                currentTime = chapterStartTime;
+                
+                updateProgress();
+                updateChapterDisplay();
+                updateSpeech();
+            });
+        });
+        
+        // 字幕ON/OFF
+        document.getElementById('subtitleToggle').addEventListener('click', (e) => {
+            if (subtitle.style.display === 'none') {
+                subtitle.style.display = 'block';
+                e.target.textContent = '字幕OFF';
+                e.target.classList.add('bg-blue-500', 'text-white');
+                e.target.classList.remove('bg-gray-200');
+            } else {
+                subtitle.style.display = 'none';
+                e.target.textContent = '字幕ON';
+                e.target.classList.remove('bg-blue-500', 'text-white');
+                e.target.classList.add('bg-gray-200');
+            }
+        });
+        
+        // 解説テキスト展開/折りたたみ
+        function toggleScript() {
+            const content = document.getElementById('scriptContent');
+            const icon = document.getElementById('scriptToggleIcon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.className = 'fas fa-chevron-down';
+            } else {
+                content.classList.add('expanded');
+                icon.className = 'fas fa-chevron-up';
+            }
+        }
+        
+        // メモ機能
+        function addMemo(chapterNumber) {
+            const memo = prompt(`チャプター${chapterNumber}についてのメモ:`, '');
+            if (memo) {
+                localStorage.setItem(`memo_chapter_${chapterNumber}`, memo);
+                alert('メモを保存しました！');
+            }
+        }
+        
+        // 初期設定
+        document.getElementById('duration').textContent = formatTime(totalDuration);
+        updateChapterDisplay();
+        
+        // アバターをクリックで再生/一時停止
+        aiAvatar.addEventListener('click', () => {
+            playButton.click();
+        });
+        
+        // Handle next step buttons
+        function handleNextStep(action) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isFirstTime = urlParams.get('firstTime') === 'true';
+            
+            if (isFirstTime && action === 'share') {
+                // First-time flow: go to family meeting
+                window.location.href = '16_meeting.html?firstTime=true&action=share';
+            } else if (action === 'goal') {
+                window.location.href = '15_goal_setting.html';
+            } else if (action === 'share') {
+                window.location.href = '16_meeting.html';
+            } else if (action === 'ai') {
+                window.location.href = '12_ai_consultation.html';
+            }
+        }
+    </script>
+
+    <!-- Footer Navigation -->
+    <div class="footer-nav">
+        <div class="nav-item" onclick="window.location.href='00_group_timeline.html'">
+            <i class="fas fa-home"></i>
+            <span>ホーム</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='02_my_progress.html'">
+            <i class="fas fa-chart-bar"></i>
+            <span>進捗</span>
+        </div>
+        <div class="nav-item">
+            <div class="create-btn" onclick="window.location.href='01_post_creation.html'">
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+        <div class="nav-item" onclick="window.location.href='12_ai_consultation.html'">
+            <i class="fas fa-robot"></i>
+            <span>AI相談</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='13_settings.html'">
+            <i class="fas fa-cog"></i>
+            <span>メニュー</span>
+        </div>
+    </div>
+
+</body>
+</html>
