@@ -479,16 +479,17 @@
 
         function goToResults() {
             if (hasData) {
-                // Check if this is first-time flow
+                // Community version: always go to AI video explanation
+                // Check if this is first-time flow (for team matching)
                 const urlParams = new URLSearchParams(window.location.search);
                 const isFirstTime = urlParams.get('firstTime') === 'true';
                 
                 if (isFirstTime) {
-                    // First-time flow: go directly to AI video explanation
+                    // First-time flow: AI video then team matching
                     window.location.href = '05_health_checkup_ai_video.html?firstTime=true';
                 } else {
-                    // Regular flow: go to results page
-                    window.location.href = '04_health_checkup_results.html';
+                    // Regular update: just show AI video
+                    window.location.href = '05_health_checkup_ai_video.html';
                 }
             }
         }

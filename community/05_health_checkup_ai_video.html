@@ -689,12 +689,12 @@
             const isFirstTime = urlParams.get('firstTime') === 'true';
             
             if (isFirstTime && action === 'share') {
-                // First-time flow: go to family meeting
-                window.location.href = '16_meeting.html?firstTime=true&action=share';
+                // Community version: First-time flow goes to team matching
+                window.location.href = '20_team_matching.html';
             } else if (action === 'goal') {
                 window.location.href = '15_goal_setting.html';
             } else if (action === 'share') {
-                window.location.href = '16_meeting.html';
+                window.location.href = '00_mission_timeline.html';
             } else if (action === 'ai') {
                 window.location.href = '12_ai_consultation.html';
             }
