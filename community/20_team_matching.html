@@ -364,13 +364,11 @@
                 slot.classList.add('matched');
                 
                 const avatar = slot.querySelector('.member-avatar');
-                avatar.innerHTML = ''; // Clear the ? icon
                 const imageUrl = memberImages[currentSlot - 1];
                 console.log(`Setting member ${currentSlot} image:`, imageUrl);
-                avatar.style.backgroundImage = `url('${imageUrl}')`;
-                avatar.style.backgroundSize = 'cover';
-                avatar.style.backgroundPosition = 'center';
-                avatar.style.backgroundRepeat = 'no-repeat';
+                
+                // Use img tag instead of background-image to avoid ORB issues
+                avatar.innerHTML = `<img src="${imageUrl}" alt="${memberNames[currentSlot - 1]}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
                 
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'member-name';
