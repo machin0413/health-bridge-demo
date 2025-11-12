@@ -294,7 +294,12 @@
         <div class="p-4">
             <div class="video-player mb-4">
                 <div class="flex flex-col items-center justify-center h-full relative" style="background: rgba(0,0,0,0.3); backdrop-filter: blur(2px);">
-                    <!-- AIアバター -->
+                    <!-- AIアバター写真 -->
+                    <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3); margin-bottom: 16px;">
+                        <img src="https://www.genspark.ai/api/files/s/7bLq4jBS" alt="春井優太" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    
+                    <!-- AIトレーナー名 -->
                     <div class="text-xl font-bold mb-4" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">AIトレーナー 春井優太</div>
                     
                     <!-- 吹き出し -->
@@ -432,17 +437,9 @@
             <!-- アクションボタン -->
             <div class="mb-6" style="margin-bottom: 100px;">
                 <h3 class="text-lg font-bold mb-4 text-gray-800">次のステップ</h3>
-                <div class="grid grid-cols-1 gap-3">
-                    <button class="action-button text-white" style="background: #4A90E2;" onclick="handleNextStep('goal')">
-                        🎯 目標を設定する
-                    </button>
-                    <button class="action-button text-white" style="background: #50C878;" onclick="handleNextStep('share')">
-                        🤝 チームマッチングへ
-                    </button>
-                    <button class="action-button" style="background: white; color: #4A90E2; border: 2px solid #4A90E2;" onclick="handleNextStep('ai')">
-                        💬 AI相談する
-                    </button>
-                </div>
+                <button class="action-button text-white" style="background: #50C878; width: 100%; font-size: 18px; padding: 16px;" onclick="handleNextStep('share')">
+                    🤝 チームマッチングへ
+                </button>
             </div>
             
             <!-- 視聴完了バッジ -->

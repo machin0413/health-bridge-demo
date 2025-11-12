@@ -305,8 +305,7 @@
         <!-- Post 2: Trainer Encouragement -->
         <div class="post-card">
             <div class="post-header">
-                <div class="user-avatar trainer-avatar">
-                    <i class="fas fa-user-tie"></i>
+                <div class="user-avatar trainer-avatar" style="background-image: url('https://www.genspark.ai/api/files/s/7bLq4jBS'); background-size: cover; background-position: center;">
                 </div>
                 <div class="post-info">
                     <div class="post-user">春井優太</div>
@@ -365,8 +364,7 @@
         <!-- Post 5: Trainer Tips -->
         <div class="post-card">
             <div class="post-header">
-                <div class="user-avatar trainer-avatar">
-                    <i class="fas fa-user-tie"></i>
+                <div class="user-avatar trainer-avatar" style="background-image: url('https://www.genspark.ai/api/files/s/7bLq4jBS'); background-size: cover; background-position: center;">
                 </div>
                 <div class="post-info">
                     <div class="post-user">春井優太</div>
@@ -413,12 +411,21 @@
     </div>
 
     <script>
-        // Simulate mission completion after 3 seconds (for demo)
-        setTimeout(() => {
-            if (confirm('ミッション期間が終了しました！\n結果を確認しますか？')) {
-                window.location.href = '23_mission_completion.html';
+        // Show mission completion button when clicking anywhere on the timeline
+        let clickCount = 0;
+        document.addEventListener('click', function(e) {
+            // Ignore clicks on navigation buttons
+            if (e.target.closest('.footer-nav')) {
+                return;
             }
-        }, 5000);
+            
+            clickCount++;
+            if (clickCount >= 3) {
+                if (confirm('ミッション期間が終了しました！\n結果を確認しますか？')) {
+                    window.location.href = '23_mission_completion.html';
+                }
+            }
+        });
     </script>
 </body>
 </html>
