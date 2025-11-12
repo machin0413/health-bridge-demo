@@ -345,7 +345,7 @@
                 // All members matched - redirect to mission intro
                 setTimeout(() => {
                     window.location.href = '21_mission_intro.html';
-                }, 1500);
+                }, 750);
                 return;
             }
             
@@ -372,16 +372,16 @@
                 
                 // Match next member
                 if (currentSlot <= 5) {
-                    setTimeout(matchNextMember, 1000);
+                    setTimeout(matchNextMember, 500);
                 } else {
                     matchNextMember();
                 }
-            }, 2000);
+            }, 1000);
         }
         
         // Start matching after page load
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(matchNextMember, 1000);
+            setTimeout(matchNextMember, 500);
         });
     </script>
 </body>
