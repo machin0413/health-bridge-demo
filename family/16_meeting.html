@@ -448,16 +448,8 @@
         
         // Start family meeting from first-time flow
         function startFamilyMeeting() {
-            // Show confirmation
-            if (confirm('家族会議を開始します。準備はよろしいですか？')) {
-                // Simulate meeting start
-                alert('家族会議を開始しました！\n\n家族メンバーに通知が送信されました。\nみんなが参加したら、健康診断結果について話し合いましょう。');
-                
-                // After meeting, go to home timeline with tutorial
-                setTimeout(() => {
-                    window.location.href = '00_group_timeline.html?firstTime=true';
-                }, 1000);
-            }
+            // Go to family meeting session screen
+            window.location.href = '17_family_meeting_session.html';
         }
         
         // Skip family meeting

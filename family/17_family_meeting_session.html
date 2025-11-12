@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>家族会議 - 家族健康会議システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gray-bg: #F8F9FA;
+            --gray-border: #E9ECEF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #E3F2FD 0%, #F0F7FF 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            padding: 20px;
+        }
+        
+        .meeting-header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+            margin: -20px -20px 30px -20px;
+            border-radius: 0 0 24px 24px;
+            color: white;
+        }
+        
+        .meeting-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .meeting-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .meeting-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .member-card {
+            background: var(--gray-bg);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .member-card:nth-child(1) { animation-delay: 0.1s; }
+        .member-card:nth-child(2) { animation-delay: 0.2s; }
+        .member-card:nth-child(3) { animation-delay: 0.3s; }
+        .member-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .member-card.joined {
+            border-color: var(--accent-color);
+            background: linear-gradient(135deg, #E8F5E8 0%, #F0FFF0 100%);
+        }
+        
+        .member-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 12px;
+        }
+        
+        .member-card.joined .member-avatar {
+            background: linear-gradient(135deg, var(--accent-color), #3BA55D);
+        }
+        
+        .member-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .member-status {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .member-card.joined .member-status {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .status-icon {
+            font-size: 20px;
+            margin-top: 8px;
+        }
+        
+        .message-box {
+            background: var(--gray-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .message-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .message-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .action-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-color), #3BA55D);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(80, 200, 120, 0.3);
+            margin-top: 20px;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(80, 200, 120, 0.4);
+        }
+        
+        .action-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .celebration {
+            text-align: center;
+            padding: 20px;
+            animation: scaleIn 0.5s ease-out;
+            display: none;
+        }
+        
+        .celebration.show {
+            display: block;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .celebration-icon {
+            font-size: 80px;
+            margin-bottom: 16px;
+        }
+        
+        .celebration-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .celebration-subtext {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Meeting Header -->
+        <div class="meeting-header">
+            <div class="meeting-icon">👨‍👩‍👧‍👦</div>
+            <h1 class="meeting-title">家族会議</h1>
+            <p class="meeting-subtitle">メンバーが集まっています</p>
+        </div>
+        
+        <!-- Members Grid -->
+        <div class="members-grid" id="membersGrid">
+            <div class="member-card" id="member1">
+                <div class="member-avatar">太</div>
+                <div class="member-name">太郎</div>
+                <div class="member-status">参加待ち...</div>
+                <div class="status-icon">⏳</div>
+            </div>
+            
+            <div class="member-card" id="member2">
+                <div class="member-avatar">花</div>
+                <div class="member-name">花子</div>
+                <div class="member-status">参加待ち...</div>
+                <div class="status-icon">⏳</div>
+            </div>
+            
+            <div class="member-card" id="member3">
+                <div class="member-avatar">さ</div>
+                <div class="member-name">さくら</div>
+                <div class="member-status">参加待ち...</div>
+                <div class="status-icon">⏳</div>
+            </div>
+            
+            <div class="member-card" id="member4">
+                <div class="member-avatar">AI</div>
+                <div class="member-name">レイナ</div>
+                <div class="member-status">参加待ち...</div>
+                <div class="status-icon">⏳</div>
+            </div>
+        </div>
+        
+        <!-- Meeting Topic -->
+        <div class="message-box" id="topicBox" style="display: none;">
+            <div class="message-title">
+                <i class="fas fa-clipboard-list" style="color: var(--primary-color);"></i>
+                今日の議題
+            </div>
+            <div class="message-text">
+                太郎さんの健康診断結果について<br>
+                • 血糖値がやや高めの状態<br>
+                • 家族でサポートできること<br>
+                • 一緒に取り組む健康習慣
+            </div>
+        </div>
+        
+        <!-- Celebration -->
+        <div class="celebration" id="celebration">
+            <div class="celebration-icon">🎉</div>
+            <div class="celebration-text">全員集合！</div>
+            <div class="celebration-subtext">家族みんなで健康づくりを始めましょう</div>
+        </div>
+        
+        <!-- Start Button -->
+        <button class="action-button" id="startButton" disabled>
+            <i class="fas fa-spinner fa-spin"></i> メンバーを待っています...
+        </button>
+    </div>
+
+    <script>
+        let joinedCount = 0;
+        const members = ['member1', 'member2', 'member3', 'member4'];
+        
+        // Simulate members joining
+        function joinMember(index) {
+            if (index >= members.length) {
+                // All joined - show celebration
+                setTimeout(() => {
+                    document.getElementById('celebration').classList.add('show');
+                    document.getElementById('topicBox').style.display = 'block';
+                    
+                    const button = document.getElementById('startButton');
+                    button.disabled = false;
+                    button.innerHTML = '<i class="fas fa-rocket"></i> いよいよ活動スタート！';
+                }, 500);
+                return;
+            }
+            
+            setTimeout(() => {
+                const memberCard = document.getElementById(members[index]);
+                memberCard.classList.add('joined');
+                
+                const status = memberCard.querySelector('.member-status');
+                status.textContent = '参加中';
+                
+                const icon = memberCard.querySelector('.status-icon');
+                icon.textContent = '✓';
+                
+                joinedCount++;
+                
+                // Update button text
+                const button = document.getElementById('startButton');
+                button.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${joinedCount}/4 人参加中...`;
+                
+                // Join next member
+                joinMember(index + 1);
+            }, 800);
+        }
+        
+        // Start joining animation
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                joinMember(0);
+            }, 500);
+        });
+        
+        // Start activity button
+        document.getElementById('startButton').addEventListener('click', function() {
+            if (!this.disabled) {
+                window.location.href = '00_group_timeline.html?firstTime=true';
+            }
+        });
+    </script>
+</body>
+</html>
