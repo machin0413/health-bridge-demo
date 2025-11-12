@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>ゆるっと継続モード - 似たもの同士で達成</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gray-bg: #F8F9FA;
+            --gray-border: #E9ECEF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gray-bg);
+            max-width: 375px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--gray-border);
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .header-icons {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .header-icon {
+            color: #666;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .status-banner {
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+            color: white;
+            padding: 16px;
+            margin: 12px 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .banner-info {
+            flex: 1;
+        }
+        
+        .banner-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .banner-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .mission-button {
+            background: white;
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .post-card {
+            background: white;
+            margin: 12px 16px;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--gray-border);
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            margin-right: 12px;
+        }
+        
+        .trainer-avatar {
+            font-size: 20px;
+        }
+        
+        .post-info {
+            flex: 1;
+        }
+        
+        .post-user {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .post-time {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .post-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        
+        .badge-advice {
+            background: #E3F2FD;
+            color: var(--primary-color);
+        }
+        
+        .badge-activity {
+            background: #E8F5E8;
+            color: var(--accent-color);
+        }
+        
+        .badge-daily {
+            background: #F5F5F5;
+            color: #666;
+        }
+        
+        .post-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        
+        .reaction-bar {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .reaction-btn {
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: var(--gray-bg);
+            border: none;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .reaction-btn:hover {
+            background: #E9ECEF;
+            transform: scale(1.05);
+        }
+        
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            width: 375px;
+            background: white;
+            border-top: 1px solid var(--gray-border);
+            display: flex;
+            justify-content: space-evenly;
+            padding: 8px 0;
+            z-index: 10;
+        }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .create-btn {
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -8px;
+            box-shadow: 0 4px 12px rgba(80, 200, 120, 0.3);
+        }
+        
+        .create-btn i {
+            font-size: 24px !important;
+            margin-bottom: 0 !important;
+        }
+        
+        /* iOS Optimization */
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body {
+            -webkit-font-smoothing: antialiased;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <h1 class="header-title">マイページ</h1>
+            <div class="header-icons">
+                <i class="fas fa-bell header-icon"></i>
+                <i class="fas fa-cog header-icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Banner -->
+    <div class="status-banner">
+        <div class="banner-info">
+            <div class="banner-title">次のミッションが近づいています</div>
+            <div class="banner-subtitle">新しい仲間と挑戦しませんか？</div>
+        </div>
+        <button class="mission-button" onclick="window.location.href='20_team_matching.html'">
+            参加する
+        </button>
+    </div>
+
+    <!-- Timeline -->
+    <div class="py-2">
+        <!-- Trainer Post 1 -->
+        <div class="post-card">
+            <div class="post-header">
+                <div class="user-avatar trainer-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="post-info">
+                    <div class="post-user">春井優太</div>
+                    <div class="post-time">今日</div>
+                    <div class="post-badge badge-advice">💡 今日のアドバイス</div>
+                </div>
+            </div>
+            <p class="post-text">
+                おはようございます！<br>
+                今日は天気が良いですね。通勤や買い物のついでに、少し歩く距離を伸ばしてみませんか？<br>
+                小さな積み重ねが大きな変化につながります✨
+            </p>
+            <div class="reaction-bar">
+                <button class="reaction-btn">👍 いいね</button>
+                <button class="reaction-btn">💬 コメント</button>
+            </div>
+        </div>
+
+        <!-- Your Activity Post -->
+        <div class="post-card">
+            <div class="post-header">
+                <div class="user-avatar" style="background: linear-gradient(135deg, var(--accent-color), #3BA55D);">
+                    あ
+                </div>
+                <div class="post-info">
+                    <div class="post-user">あなた</div>
+                    <div class="post-time">昨日</div>
+                    <div class="post-badge badge-activity">📝 活動記録</div>
+                </div>
+            </div>
+            <p class="post-text">
+                昨日は20分ウォーキングできました。<br>
+                続けていきます！
+            </p>
+            <div class="reaction-bar">
+                <button class="reaction-btn">👏 5</button>
+                <button class="reaction-btn">💬 1</button>
+            </div>
+        </div>
+
+        <!-- Trainer Post 2 -->
+        <div class="post-card">
+            <div class="post-header">
+                <div class="user-avatar trainer-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="post-info">
+                    <div class="post-user">春井優太</div>
+                    <div class="post-time">昨日</div>
+                    <div class="post-badge badge-advice">💡 健康トピック</div>
+                </div>
+            </div>
+            <p class="post-text">
+                【階段を使うメリット】<br>
+                エレベーターより階段を選ぶことで：<br>
+                • カロリー消費量UP<br>
+                • 下半身の筋力強化<br>
+                • 心肺機能の向上<br>
+                日常の小さな選択が健康につながります💪
+            </p>
+            <div class="reaction-bar">
+                <button class="reaction-btn">👍 12</button>
+                <button class="reaction-btn">📌 保存</button>
+            </div>
+        </div>
+
+        <!-- Trainer Post 3 -->
+        <div class="post-card">
+            <div class="post-header">
+                <div class="user-avatar trainer-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="post-info">
+                    <div class="post-user">春井優太</div>
+                    <div class="post-time">2日前</div>
+                    <div class="post-badge badge-advice">💡 モチベーション</div>
+                </div>
+            </div>
+            <p class="post-text">
+                完璧を目指さなくて大丈夫です。<br>
+                今日できなくても、明日やればいい。<br>
+                続けることが何より大切です。<br>
+                あなたのペースで、ゆるっと続けていきましょう😊
+            </p>
+            <div class="reaction-bar">
+                <button class="reaction-btn">❤️ 15</button>
+                <button class="reaction-btn">💬 3</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Navigation -->
+    <div class="footer-nav">
+        <div class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>ホーム</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-chart-line"></i>
+            <span>記録</span>
+        </div>
+        <div class="nav-item">
+            <div class="create-btn">
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>相談</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-user-circle"></i>
+            <span>マイページ</span>
+        </div>
+    </div>
+</body>
+</html>

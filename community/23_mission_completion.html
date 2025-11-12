@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>ミッション完了 - 似たもの同士で達成</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gold: #FFD700;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFE6CC 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 120px;
+        }
+        
+        .celebration-header {
+            text-align: center;
+            margin-bottom: 32px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .trophy-icon {
+            font-size: 96px;
+            margin-bottom: 16px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        .completion-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .completion-subtitle {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .achievement-item {
+            text-align: center;
+        }
+        
+        .achievement-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+        }
+        
+        .achievement-label {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .reward-section {
+            background: linear-gradient(135deg, #FFF9E6, white);
+            border-radius: 12px;
+            padding: 16px;
+            border-left: 4px solid var(--gold);
+        }
+        
+        .reward-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .reward-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .reward-item {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .reward-item::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+        }
+        
+        .team-farewell {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .farewell-message {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .farewell-text {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .team-member {
+            text-align: center;
+        }
+        
+        .team-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E9ECEF, #DEE2E6);
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, var(--accent-color), #3BA55D);
+        }
+        
+        .trainer-avatar {
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+        }
+        
+        .team-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .trainer-message {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+        
+        .trainer-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .trainer-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .trainer-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .message-text {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .action-footer {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 375px;
+            background: white;
+            padding: 16px 20px;
+            border-top: 1px solid #E9ECEF;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .continue-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent-color), #3BA55D);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(80, 200, 120, 0.3);
+        }
+        
+        .continue-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(80, 200, 120, 0.4);
+        }
+        
+        /* iOS Optimization */
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body {
+            -webkit-font-smoothing: antialiased;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Celebration Header -->
+        <div class="celebration-header">
+            <div class="trophy-icon">🏆</div>
+            <h1 class="completion-title">ミッション完了！</h1>
+            <p class="completion-subtitle">お疲れ様でした！</p>
+        </div>
+        
+        <!-- Result Card -->
+        <div class="result-card">
+            <h2 class="result-title">
+                📊 あなたの成果
+            </h2>
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <div class="achievement-value">3/3</div>
+                    <div class="achievement-label">達成回数</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-value">100%</div>
+                    <div class="achievement-label">達成率</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-value">135</div>
+                    <div class="achievement-label">累計分数</div>
+                </div>
+            </div>
+            
+            <div class="reward-section">
+                <div class="reward-title">
+                    <span>🎁 獲得した報酬</span>
+                </div>
+                <ul class="reward-list">
+                    <li class="reward-item">デジタルバッジ「1週間完走」</li>
+                    <li class="reward-item">次回ミッション優先参加権</li>
+                    <li class="reward-item">健康ポイント 500pt</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Team Farewell -->
+        <div class="team-farewell">
+            <div class="farewell-message">
+                <p class="farewell-text">
+                    1週間、一緒に頑張った仲間たち。<br>
+                    お互いに励まし合って、<br>
+                    小さな成功体験を積むことができました。
+                </p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-avatar">た</div>
+                    <div class="team-name">たけし</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar">ひ</div>
+                    <div class="team-name">ひろし</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar">ま</div>
+                    <div class="team-name">まさお</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar">け</div>
+                    <div class="team-name">けんじ</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar">し</div>
+                    <div class="team-name">しんちゃん</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar trainer-avatar">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="team-name">春井優太</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Trainer Message -->
+        <div class="trainer-message">
+            <div class="trainer-header">
+                <div class="trainer-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="trainer-name">春井優太からのメッセージ</div>
+            </div>
+            <p class="message-text">
+                お疲れ様でした！<br><br>
+                みなさん、本当によく頑張りました。この1週間で得た「やればできる！」という感覚を大切にしてください。<br><br>
+                これから「ゆるっと継続モード」で、あなたのペースで健康習慣を続けていきましょう。<br><br>
+                また次のミッションでお会いしましょう！
+            </p>
+        </div>
+        
+        <!-- Action Footer -->
+        <div class="action-footer">
+            <button class="continue-button" onclick="window.location.href='00_mission_timeline.html'">
+                <i class="fas fa-check-circle"></i> ゆるっと継続モードへ
+            </button>
+        </div>
+    </div>
+</body>
+</html>
