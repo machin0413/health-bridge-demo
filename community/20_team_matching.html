@@ -319,8 +319,7 @@
                     
                     <!-- AI Trainer -->
                     <div class="member-slot trainer-slot matched">
-                        <div class="member-avatar trainer-avatar">
-                            <i class="fas fa-user-tie"></i>
+                        <div class="member-avatar trainer-avatar" style="background-image: url('https://www.genspark.ai/api/files/s/h0AxBnf7'); background-size: cover; background-position: center; overflow: hidden;">
                         </div>
                         <div class="member-name">春井優太</div>
                         <div class="member-label">応援団長</div>
@@ -338,6 +337,13 @@
     <script>
         // Simulate matching process
         const memberNames = ['たけし', 'ひろし', 'まさお', 'けんじ', 'しんちゃん'];
+        const memberImages = [
+            'https://www.genspark.ai/api/files/s/3FkM0Ah7',
+            'https://www.genspark.ai/api/files/s/ABQO4j71',
+            'https://www.genspark.ai/api/files/s/iE8DkBXW',
+            'https://www.genspark.ai/api/files/s/oEDlw8Ep',
+            'https://www.genspark.ai/api/files/s/eOnoehdB'
+        ];
         let currentSlot = 1;
         
         function matchNextMember() {
@@ -358,7 +364,9 @@
                 slot.classList.add('matched');
                 
                 const avatar = slot.querySelector('.member-avatar');
-                avatar.innerHTML = memberNames[currentSlot - 1].charAt(0);
+                avatar.style.backgroundImage = `url('${memberImages[currentSlot - 1]}')`;
+                avatar.style.backgroundSize = 'cover';
+                avatar.style.backgroundPosition = 'center';
                 
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'member-name';
