@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>チームマッチング - 似たもの同士で達成</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gray-bg: #F8F9FA;
+            --gray-border: #E9ECEF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #E3F2FD 0%, #E8F5E8 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 100px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .header-subtitle {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 32px 20px;
+        }
+        
+        .status-message {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .status-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .status-subtext {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .matching-container {
+            background: var(--gray-bg);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .matching-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .member-slot {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid var(--gray-border);
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .member-slot.matched {
+            border-color: var(--accent-color);
+            background: linear-gradient(135deg, #E8F5E8 0%, white 100%);
+        }
+        
+        .member-slot.matching {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        
+        .member-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E9ECEF, #DEE2E6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 32px;
+        }
+        
+        .member-slot.matched .member-avatar {
+            background: linear-gradient(135deg, var(--accent-color), #3BA55D);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .member-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .member-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .matching-icon {
+            font-size: 40px;
+            color: var(--primary-color);
+            animation: spin 2s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .trainer-slot {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #E3F2FD, white);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .trainer-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+            color: white;
+        }
+        
+        .info-card {
+            background: #FFF9E6;
+            border-left: 4px solid #FFD700;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .info-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-text {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #E9ECEF;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            animation: progressFlow 2s infinite;
+        }
+        
+        @keyframes progressFlow {
+            0% { width: 20%; }
+            50% { width: 80%; }
+            100% { width: 20%; }
+        }
+        
+        /* iOS Optimization */
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none;
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">🎲</div>
+            <h1 class="header-title">チームをマッチング中</h1>
+            <p class="header-subtitle">あなたに最適な仲間を探しています</p>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <!-- Status Message -->
+            <div class="status-message">
+                <p class="status-text">AIがあなたに合った仲間を探しています</p>
+                <p class="status-subtext">同じ健康課題や似た特性を持つ5人を選出中...</p>
+            </div>
+            
+            <!-- Info Card -->
+            <div class="info-card">
+                <div class="info-title">
+                    <i class="fas fa-lightbulb" style="color: #FFD700;"></i>
+                    マッチングについて
+                </div>
+                <p class="info-text">
+                    あなたと同じような健康課題を持ち、生活スタイルが近い仲間をAIが自動選出します。匿名なので安心して参加できます。
+                </p>
+            </div>
+            
+            <!-- Matching Container -->
+            <div class="matching-container">
+                <div class="matching-grid">
+                    <!-- Member 1 -->
+                    <div class="member-slot matching" id="slot1">
+                        <div class="member-avatar">
+                            <i class="matching-icon fas fa-sync-alt"></i>
+                        </div>
+                        <div class="member-label">マッチング中...</div>
+                    </div>
+                    
+                    <!-- Member 2 -->
+                    <div class="member-slot" id="slot2">
+                        <div class="member-avatar">
+                            <span>?</span>
+                        </div>
+                        <div class="member-label">待機中</div>
+                    </div>
+                    
+                    <!-- Member 3 -->
+                    <div class="member-slot" id="slot3">
+                        <div class="member-avatar">
+                            <span>?</span>
+                        </div>
+                        <div class="member-label">待機中</div>
+                    </div>
+                    
+                    <!-- Member 4 -->
+                    <div class="member-slot" id="slot4">
+                        <div class="member-avatar">
+                            <span>?</span>
+                        </div>
+                        <div class="member-label">待機中</div>
+                    </div>
+                    
+                    <!-- Member 5 -->
+                    <div class="member-slot" id="slot5">
+                        <div class="member-avatar">
+                            <span>?</span>
+                        </div>
+                        <div class="member-label">待機中</div>
+                    </div>
+                    
+                    <!-- AI Trainer -->
+                    <div class="member-slot trainer-slot matched">
+                        <div class="member-avatar trainer-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="member-name">春井優太</div>
+                        <div class="member-label">応援団長</div>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simulate matching process
+        const memberNames = ['たけし', 'ひろし', 'まさお', 'けんじ', 'しんちゃん'];
+        let currentSlot = 1;
+        
+        function matchNextMember() {
+            if (currentSlot > 5) {
+                // All members matched - redirect to mission intro
+                setTimeout(() => {
+                    window.location.href = '21_mission_intro.html';
+                }, 1500);
+                return;
+            }
+            
+            const slot = document.getElementById(`slot${currentSlot}`);
+            slot.classList.add('matching');
+            
+            // Simulate matching delay
+            setTimeout(() => {
+                slot.classList.remove('matching');
+                slot.classList.add('matched');
+                
+                const avatar = slot.querySelector('.member-avatar');
+                avatar.innerHTML = memberNames[currentSlot - 1].charAt(0);
+                
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'member-name';
+                nameDiv.textContent = memberNames[currentSlot - 1];
+                
+                const label = slot.querySelector('.member-label');
+                label.parentNode.insertBefore(nameDiv, label);
+                label.textContent = '参加者';
+                
+                currentSlot++;
+                
+                // Match next member
+                if (currentSlot <= 5) {
+                    setTimeout(matchNextMember, 1000);
+                } else {
+                    matchNextMember();
+                }
+            }, 2000);
+        }
+        
+        // Start matching after page load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(matchNextMember, 1000);
+        });
+    </script>
+</body>
+</html>

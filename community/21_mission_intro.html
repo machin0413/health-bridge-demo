@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>1weekミッション説明 - 似たもの同士で達成</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #50C878;
+            --gray-bg: #F8F9FA;
+            --gray-border: #E9ECEF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--gray-bg);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 120px;
+        }
+        
+        .trainer-header {
+            background: linear-gradient(135deg, #E3F2FD 0%, white 100%);
+            padding: 32px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-border);
+        }
+        
+        .trainer-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, var(--primary-color), #357ABD);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .trainer-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .trainer-role {
+            font-size: 14px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .message-container {
+            padding: 24px 20px;
+        }
+        
+        .speech-bubble {
+            background: #F8F9FA;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            position: relative;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 40px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #F8F9FA;
+        }
+        
+        .speech-text {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+        
+        .mission-card {
+            background: white;
+            border: 2px solid var(--accent-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .mission-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .mission-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-color), #3BA55D);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .mission-goal {
+            background: #E8F5E8;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .goal-label {
+            font-size: 13px;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .goal-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .reward-section {
+            background: #FFF9E6;
+            border-radius: 12px;
+            padding: 16px;
+        }
+        
+        .reward-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .reward-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .reward-item {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .reward-item::before {
+            content: '🎁';
+            position: absolute;
+            left: 0;
+        }
+        
+        .team-preview {
+            background: var(--gray-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .team-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .team-member {
+            text-align: center;
+        }
+        
+        .team-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E9ECEF, #DEE2E6);
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, var(--accent-color), #3BA55D);
+        }
+        
+        .team-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .action-footer {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 375px;
+            background: white;
+            padding: 16px 20px;
+            border-top: 1px solid var(--gray-border);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .start-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent-color), #3BA55D);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(80, 200, 120, 0.3);
+        }
+        
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(80, 200, 120, 0.4);
+        }
+        
+        /* iOS Optimization */
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none;
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Trainer Header -->
+        <div class="trainer-header">
+            <div class="trainer-avatar">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <h1 class="trainer-name">春井優太</h1>
+            <p class="trainer-role">1weekミッションの応援団長</p>
+        </div>
+        
+        <!-- Message Container -->
+        <div class="message-container">
+            <!-- Welcome Message -->
+            <div class="speech-bubble">
+                <p class="speech-text">
+                    はじめまして！「1weekミッション」の応援団長、春井優太です。<br><br>
+                    この1週間、あなたと仲間たちを全力でサポートします。<br><br>
+                    一緒に小さな成功体験を積み重ねていきましょう！
+                </p>
+            </div>
+            
+            <!-- Mission Card -->
+            <div class="mission-card">
+                <div class="mission-title">
+                    <div class="mission-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <span>今週のミッション</span>
+                </div>
+                
+                <div class="mission-goal">
+                    <div class="goal-label">🎯 達成目標</div>
+                    <div class="goal-text">週3回、30分以上のウォーキング</div>
+                </div>
+                
+                <div class="reward-section">
+                    <div class="reward-title">
+                        <span>🎁 達成特典</span>
+                    </div>
+                    <ul class="reward-list">
+                        <li class="reward-item">デジタルバッジ獲得</li>
+                        <li class="reward-item">次回ミッション優先参加権</li>
+                        <li class="reward-item">健康ポイント500pt</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Team Preview -->
+            <div class="team-preview">
+                <h3 class="team-title">👥 今回のチームメンバー</h3>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-avatar">た</div>
+                        <div class="team-name">たけし</div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-avatar">ひ</div>
+                        <div class="team-name">ひろし</div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-avatar">ま</div>
+                        <div class="team-name">まさお</div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-avatar">け</div>
+                        <div class="team-name">けんじ</div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-avatar">し</div>
+                        <div class="team-name">しんちゃん</div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, var(--primary-color), #357ABD);">
+                            <i class="fas fa-user-tie" style="font-size: 20px;"></i>
+                        </div>
+                        <div class="team-name">春井優太</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Final Message -->
+            <div class="speech-bubble">
+                <p class="speech-text">
+                    7日間、みんなで励まし合いながら頑張りましょう！<br><br>
+                    準備ができたら、下のボタンを押してミッションをスタートしてください。
+                </p>
+            </div>
+        </div>
+        
+        <!-- Action Footer -->
+        <div class="action-footer">
+            <button class="start-button" onclick="window.location.href='22_mission_timeline.html'">
+                <i class="fas fa-rocket"></i> ミッションスタート！
+            </button>
+        </div>
+    </div>
+</body>
+</html>
