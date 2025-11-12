@@ -543,6 +543,12 @@
         ];
         
         function showTutorial() {
+            // Hide all post cards during tutorial to prevent z-index issues
+            const postCards = document.querySelectorAll('.post-card');
+            postCards.forEach(card => {
+                card.style.visibility = 'hidden';
+            });
+            
             const modal = document.createElement('div');
             modal.id = 'tutorialModal';
             modal.style.cssText = `
@@ -650,6 +656,11 @@
                     document.querySelectorAll('.tutorial-highlight').forEach(el => {
                         el.classList.remove('tutorial-highlight');
                         el.style.zIndex = '';
+                    });
+                    // Show all post cards again
+                    const postCards = document.querySelectorAll('.post-card');
+                    postCards.forEach(card => {
+                        card.style.visibility = 'visible';
                     });
                 }, 300);
             }
