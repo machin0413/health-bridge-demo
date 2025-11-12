@@ -337,13 +337,7 @@
     <script>
         // Simulate matching process
         const memberNames = ['たけし', 'ひろし', 'まさお', 'けんじ', 'しんちゃん'];
-        const memberImages = [
-            'https://www.genspark.ai/api/files/s/3FkM0Ah7',
-            'https://www.genspark.ai/api/files/s/ABQO4j71',
-            'https://www.genspark.ai/api/files/s/iE8DkBXW',
-            'https://www.genspark.ai/api/files/s/oEDlw8Ep',
-            'https://www.genspark.ai/api/files/s/eOnoehdB'
-        ];
+        const memberInitials = ['た', 'ひ', 'ま', 'け', 'し'];
         let currentSlot = 1;
         
         function matchNextMember() {
@@ -364,11 +358,11 @@
                 slot.classList.add('matched');
                 
                 const avatar = slot.querySelector('.member-avatar');
-                const imageUrl = memberImages[currentSlot - 1];
-                console.log(`Setting member ${currentSlot} image:`, imageUrl);
+                const initial = memberInitials[currentSlot - 1];
+                console.log(`Setting member ${currentSlot} initial:`, initial);
                 
-                // Use img tag instead of background-image to avoid ORB issues
-                avatar.innerHTML = `<img src="${imageUrl}" alt="${memberNames[currentSlot - 1]}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                // Use text initial instead of image
+                avatar.textContent = initial;
                 
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'member-name';
