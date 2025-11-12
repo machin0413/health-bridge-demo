@@ -365,9 +365,12 @@
                 
                 const avatar = slot.querySelector('.member-avatar');
                 avatar.innerHTML = ''; // Clear the ? icon
-                avatar.style.backgroundImage = `url('${memberImages[currentSlot - 1]}')`;
+                const imageUrl = memberImages[currentSlot - 1];
+                console.log(`Setting member ${currentSlot} image:`, imageUrl);
+                avatar.style.backgroundImage = `url('${imageUrl}')`;
                 avatar.style.backgroundSize = 'cover';
                 avatar.style.backgroundPosition = 'center';
+                avatar.style.backgroundRepeat = 'no-repeat';
                 
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'member-name';
